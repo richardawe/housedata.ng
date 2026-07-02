@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Housedata.ng — Lagos Government Housing Estates</title>
+<meta name="description" content="A single view of government housing across Lagos State, compiled from public sources.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23073d27'/%3E%3Ccircle cx='16' cy='14' r='6' fill='none' stroke='%23a97a26' stroke-width='2.4'/%3E%3Cpath d='M16 20 L16 25' stroke='%23a97a26' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <p class="eyebrow">Housedata.ng &middot; Working Compilation</p>
+      <h1>Lagos Government Housing Estates</h1>
+      <p class="strap">A single view of government housing across Lagos State — compiled from public sources.</p>
+    </div>
+    <div class="stamp" aria-hidden="true">
+      <svg viewBox="0 0 200 200" width="120" height="120">
+        <defs>
+          <path id="stampArcTop" d="M 20,100 A 80,80 0 0 1 180,100" />
+          <path id="stampArcBottom" d="M 30,130 A 70,70 0 0 0 170,130" />
+        </defs>
+        <circle cx="100" cy="100" r="92" class="stamp-ring-outer" />
+        <circle cx="100" cy="100" r="78" class="stamp-ring-inner" />
+        <text class="stamp-text">
+          <textPath href="#stampArcTop" startOffset="50%" text-anchor="middle">PUBLIC SOURCES · UNVERIFIED</textPath>
+        </text>
+        <text class="stamp-text">
+          <textPath href="#stampArcBottom" startOffset="50%" text-anchor="middle">COMPILED JULY 2026</textPath>
+        </text>
+        <text x="100" y="94" class="stamp-center-1" text-anchor="middle">DEMO</text>
+        <text x="100" y="114" class="stamp-center-2" text-anchor="middle">MVP</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="filter-group" role="group" aria-label="Filter by status">
+      <span class="filter-label">Status</span>
+      <button class="chip chip-all is-active" data-filter-status="all">All <span class="chip-count" id="count-all"></span></button>
+      <button class="chip chip-completed" data-filter-status="Completed">Completed</button>
+      <button class="chip chip-announced" data-filter-status="Announced">Announced</button>
+      <button class="chip chip-progress" data-filter-status="In Progress">In progress</button>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label" for="lga-select">LGA</label>
+      <select id="lga-select" class="lga-select">
+        <option value="all">All LGAs</option>
+      </select>
+    </div>
+    <div class="view-toggle" role="group" aria-label="Switch view">
+      <button class="view-btn is-active" data-view="map">Map</button>
+      <button class="view-btn" data-view="list">List</button>
+    </div>
+  </div>
+</div>
+
+<main class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">All entries</span>
+      <span class="sidebar-count" id="sidebar-count"></span>
+    </div>
+    <ul class="estate-list" id="estate-list" aria-label="Estate list"></ul>
+  </aside>
+
+  <section class="map-pane">
+    <div id="map"></div>
+    <div class="legend" aria-label="Map legend">
+      <span class="legend-item"><i class="dot dot-completed"></i>Completed</span>
+      <span class="legend-item"><i class="dot dot-announced"></i>Announced / Planned</span>
+      <span class="legend-item"><i class="dot dot-progress"></i>In progress</span>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>This is an early compilation from public sources for demonstration purposes, pending verification and full data partnership with the Lagos State Ministry of Housing. Per-estate contacts are not yet available — enquiries route to the responsible agency.</p>
+</footer>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
