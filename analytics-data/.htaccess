@@ -1,0 +1,5 @@
+# Raw analytics event logs — never served directly over HTTP.
+# PHP (track.php, dashboard/stats.php) reads/writes these via the
+# filesystem, which this rule does not affect — it only blocks direct
+# browser requests to the .jsonl files themselves.
+Require all denied
