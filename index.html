@@ -61,7 +61,26 @@
   </div>
 </header>
 
-<div class="toolbar">
+<div class="compact-bar">
+  <div class="view-toggle" role="group" aria-label="Switch view">
+    <button class="view-btn is-active" data-view="map">Map</button>
+    <button class="view-btn" data-view="list">List</button>
+  </div>
+  <span class="compact-count" id="compact-count"></span>
+  <div class="compact-actions">
+    <button type="button" class="compact-btn" data-open-sheet="sheet-filters">Filters<span class="filter-badge" id="filter-badge" hidden></span></button>
+    <button type="button" class="compact-btn" data-open-sheet="sheet-financing">Financing</button>
+    <button type="button" class="compact-btn" data-open-sheet="sheet-infra">Infrastructure</button>
+  </div>
+</div>
+
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+
+<div class="toolbar" id="sheet-filters">
+  <div class="sheet-head">
+    <span class="sheet-head-title">Filters</span>
+    <button type="button" class="sheet-close" data-close-sheet aria-label="Close filters">&times;</button>
+  </div>
   <div class="toolbar-inner">
     <div class="filter-group">
       <label class="filter-label" for="state-select">State</label>
@@ -88,14 +107,14 @@
         <option value="all">All areas</option>
       </select>
     </div>
-    <div class="view-toggle" role="group" aria-label="Switch view">
-      <button class="view-btn is-active" data-view="map">Map</button>
-      <button class="view-btn" data-view="list">List</button>
-    </div>
   </div>
 </div>
 
-<div class="finance-banner">
+<div class="finance-banner" id="sheet-financing">
+  <div class="sheet-head">
+    <span class="sheet-head-title">Financing</span>
+    <button type="button" class="sheet-close" data-close-sheet aria-label="Close financing">&times;</button>
+  </div>
   <div class="finance-banner-inner">
     <div class="finance-banner-text">
       <span class="finance-banner-label">Financing</span>
@@ -130,7 +149,11 @@
       <span class="legend-item"><i class="shape shape-diamond"></i>Private</span>
     </div>
 
-    <div class="infra-control" aria-label="Infrastructure overlay">
+    <div class="infra-control" id="sheet-infra" aria-label="Infrastructure overlay">
+      <div class="sheet-head">
+        <span class="sheet-head-title">Infrastructure</span>
+        <button type="button" class="sheet-close" data-close-sheet aria-label="Close infrastructure">&times;</button>
+      </div>
       <label class="infra-master">
         <input type="checkbox" id="infra-toggle">
         <span>Infrastructure</span>

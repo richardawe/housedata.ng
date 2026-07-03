@@ -297,9 +297,23 @@
 
   function render() {
     var visible = ESTATES.filter(matchesFilter);
-    document.getElementById("sidebar-count").textContent = visible.length + " of " + ESTATES.length;
+    var countText = visible.length + " of " + ESTATES.length;
+    document.getElementById("sidebar-count").textContent = countText;
+    document.getElementById("compact-count").textContent = countText;
     renderList(visible);
     updateMarkerVisibility(visible);
+    updateFilterBadge();
+  }
+
+  function updateFilterBadge() {
+    var badge = document.getElementById("filter-badge");
+    var count = 0;
+    if (state.status !== "all") count++;
+    if (state.type !== "all") count++;
+    if (state.stateFilter !== "all") count++;
+    if (state.area !== "all") count++;
+    badge.hidden = count === 0;
+    badge.textContent = count;
   }
 
   function initChipGroup(selector, onSelect) {
@@ -315,6 +329,7 @@
   }
 
   function initViewToggle() {
+    document.body.dataset.view = "map";
     var buttons = document.querySelectorAll(".view-btn");
     buttons.forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -416,6 +431,44 @@
     });
   }
 
+  function openSheet(id) {
+    closeSheet();
+    var panel = document.getElementById(id);
+    if (!panel) return;
+    panel.classList.add("sheet-open");
+    document.getElementById("sheet-backdrop").hidden = false;
+    document.body.classList.add("sheet-locked");
+  }
+
+  function closeSheet() {
+    document.querySelectorAll(".sheet-open").forEach(function (el) {
+      el.classList.remove("sheet-open");
+    });
+    document.getElementById("sheet-backdrop").hidden = true;
+    document.body.classList.remove("sheet-locked");
+  }
+
+  function initSheets() {
+    document.addEventListener("click", function (e) {
+      var opener = e.target.closest("[data-open-sheet]");
+      if (opener) {
+        openSheet(opener.dataset.openSheet);
+        return;
+      }
+      if (e.target.closest("[data-close-sheet]")) {
+        closeSheet();
+        return;
+      }
+      if (e.target.id === "sheet-backdrop") {
+        closeSheet();
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeSheet();
+    });
+  }
+
   // Initial paint
   Object.keys(markers).forEach(function (id) { markers[id].addTo(map); });
   var bounds = L.latLngBounds(ESTATES.map(function (e) { return [e.lat, e.lng]; }));
@@ -432,5 +485,6 @@
   initCalculator();
   initModals();
   initInfraControls();
+  initSheets();
   render();
 })();
