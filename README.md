@@ -156,6 +156,52 @@ products without a public rate say so and point to the bank directly. If
 another lender gets added later, follow this same pattern rather than
 folding it into the MREIF modal.
 
+## Analytics (self-hosted, no third party)
+
+Requires **PHP** on the server (standard on cPanel shared hosting — check
+**cPanel → MultiPHP Manager** if unsure). No database, no external
+analytics service.
+
+- **`analytics.js`** — included on `index.html` and `access-bank.html`.
+  Listens for clicks/changes on the app's existing elements (filters,
+  estate cards, view toggle, modal openers, the Access Bank link) via
+  event delegation — it does not modify `app.js` or `access-bank.js`, so
+  if this script ever breaks, the app itself is unaffected. Sends events
+  with `navigator.sendBeacon`.
+- **`track.php`** (repo root) — receives events, validates the event
+  `type` against an allowlist, and appends one JSON line per event to
+  `analytics-data/events-YYYY-MM.jsonl` (rotated monthly).
+- **`analytics-data/`** — the raw logs. Ships with its own `.htaccess`
+  (`Require all denied`) so the `.jsonl` files can never be requested
+  directly over HTTP — PHP can still read/write them via the filesystem,
+  which that rule doesn't affect. The actual `.jsonl` files are
+  git-ignored; only the `.htaccess` and a `.gitkeep` are tracked.
+- **`dashboard/stats.php`** — reads the log files and returns an
+  aggregate JSON summary (pageviews, unique sessions, top states/estates,
+  filter usage, financing engagement, device mix).
+- **`dashboard/index.html`** + **`dashboard/dashboard.js`** — the summary
+  view. Loads `../data.js` client-side only to resolve estate IDs to
+  names for display — no data.js contents are sent anywhere.
+
+**Before this data is private, password-protect the `/dashboard/` folder
+on the live server** — this is a one-time manual step in **cPanel → Security
+→ Directory Privacy**, applied directly to `/public_html/dashboard/`. Do
+this on the server itself, not in the repo: an `.htpasswd` file must never
+be committed to git. CI/CD deploys won't touch or remove a
+server-created `.htaccess`/`.htpasswd` in that folder on future pushes,
+since the deploy only uploads/updates what's in the repo and doesn't
+delete extra files on the server. `robots.txt` also disallows
+`/dashboard/` and `/analytics-data/` as a second layer, and
+`dashboard/index.html` sets `<meta name="robots" content="noindex, nofollow">`.
+
+**Privacy by design**: no IP address, no user-agent string, and no
+persistent cross-session identifier is ever stored. The session id is
+random and lives only in `sessionStorage` (resets each browser session).
+Adding a new tracked event: add its type string to the `$allowedTypes`
+allowlist in `track.php`, add a `track(...)` call (or a new delegated
+listener) in `analytics.js`, then add an aggregation case in `stats.php`
+and a render call in `dashboard.js`.
+
 ## Production essentials
 
 - **SEO/meta**: title, description, `robots` meta, canonical URL, Open
@@ -187,3 +233,6 @@ folding it into the MREIF modal.
 - `data.md` — original human-readable working notes and source list
 - `robots.txt`, `sitemap.xml`, `404.html`, `.htaccess` — production/SEO config
 - `assets/` — favicons and social share image
+- `access-bank.html`, `access-bank-data.js`, `access-bank.js` — standalone Access Bank financing page
+- `track.php`, `analytics.js`, `analytics-data/` — self-hosted event logging (see Analytics section above)
+- `dashboard/` — password-protect this folder on the server; the analytics summary view

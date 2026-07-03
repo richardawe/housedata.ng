@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analytics — Housedata.ng</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .dash-main { max-width: 960px; margin: 0 auto; padding: 28px 24px 60px; }
+  .dash-section { margin-bottom: 36px; }
+  .dash-h2 { font-family: var(--font-display); font-weight: 600; font-size: 18px; color: var(--green-deep); margin: 0 0 14px; }
+  .dash-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .dash-tile { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--green); border-radius: 10px; padding: 14px 16px; }
+  .dash-tile-value { font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--green-deep); display: block; }
+  .dash-tile-label { font-size: 11.5px; color: var(--ink-soft); }
+  .dash-bar-row { display: grid; grid-template-columns: 140px 1fr 50px; align-items: center; gap: 10px; font-size: 12.5px; margin-bottom: 6px; }
+  .dash-bar-label { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dash-bar-track { background: var(--paper); border-radius: 4px; height: 10px; overflow: hidden; }
+  .dash-bar-fill { background: var(--green); height: 100%; }
+  .dash-bar-fill.gold { background: var(--gold); }
+  .dash-bar-count { font-family: var(--font-mono); color: var(--ink-faint); text-align: right; }
+  .dash-empty { color: var(--ink-faint); font-size: 13px; font-style: italic; }
+  .dash-note { font-size: 11px; color: var(--ink-faint); border-top: 1px dashed var(--line-strong); padding-top: 12px; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <p class="eyebrow">Housedata.ng &middot; Internal</p>
+      <h1>Analytics</h1>
+      <p class="strap">Aggregate usage of housedata.ng, self-hosted — no third-party service. No IP addresses, user agents, or persistent identifiers are stored.</p>
+    </div>
+  </div>
+</header>
+
+<main class="dash-main">
+
+  <section class="dash-section">
+    <div class="dash-tiles" id="dash-tiles">
+      <div class="dash-empty">Loading…</div>
+    </div>
+  </section>
+
+  <section class="dash-section">
+    <h2 class="dash-h2">Daily pageviews (last 30 days)</h2>
+    <div id="dash-daily"></div>
+  </section>
+
+  <section class="dash-section">
+    <h2 class="dash-h2">States filtered</h2>
+    <div id="dash-states"></div>
+  </section>
+
+  <section class="dash-section">
+    <h2 class="dash-h2">Top estates clicked</h2>
+    <div id="dash-estates"></div>
+  </section>
+
+  <section class="dash-section">
+    <h2 class="dash-h2">Type &amp; status filter usage</h2>
+    <div id="dash-type-filters"></div>
+    <div id="dash-status-filters" style="margin-top:10px;"></div>
+  </section>
+
+  <section class="dash-section">
+    <h2 class="dash-h2">View &amp; device</h2>
+    <div id="dash-view-toggle"></div>
+    <div id="dash-device" style="margin-top:10px;"></div>
+  </section>
+
+  <section class="dash-section">
+    <h2 class="dash-h2">Financing engagement</h2>
+    <div class="dash-tiles" id="dash-financing"></div>
+  </section>
+
+  <section class="dash-section">
+    <h2 class="dash-h2">Infrastructure overlay</h2>
+    <p id="dash-infra"></p>
+  </section>
+
+  <p class="dash-note">This page ships as part of the site's code (visible in the repo), but is only meaningful once the /dashboard/ folder is password-protected on the server via cPanel's Directory Privacy tool — see README.md. Data source: track.php events, aggregated by stats.php, both self-hosted.</p>
+
+</main>
+
+<script src="../data.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
