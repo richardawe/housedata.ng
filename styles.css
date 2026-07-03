@@ -37,7 +37,6 @@
 
   --header-h: 132px;
   --toolbar-h: 56px;
-  --footer-h: 40px;
 }
 
 * { box-sizing: border-box; }
@@ -576,22 +575,6 @@ body {
   font-size: 11px;
   color: var(--ink-faint);
   line-height: 1.4;
-}
-
-/* ---------------------------- footer ---------------------------- */
-
-.site-footer {
-  background: var(--ink);
-  border-top: 3px solid var(--gold);
-}
-
-.site-footer p {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 10px 24px;
-  font-size: 11.5px;
-  line-height: 1.5;
-  color: #b9c2ba;
 }
 
 /* ---------------------------- responsive ---------------------------- */
