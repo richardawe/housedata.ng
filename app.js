@@ -243,12 +243,23 @@
     refreshIcon(id);
 
     var marker = markers[id];
-    if (flyTo) map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 12), { duration: 0.6 });
-    marker.openPopup();
+    var isListView = document.body.dataset.view === "list";
+
+    if (isListView) {
+      openEstateDetailModal(marker.estate);
+    } else {
+      if (flyTo) map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 12), { duration: 0.6 });
+      marker.openPopup();
+    }
 
     document.querySelectorAll(".estate-card").forEach(function (card) {
       card.classList.toggle("is-selected", card.dataset.id === id);
     });
+  }
+
+  function openEstateDetailModal(estate) {
+    document.getElementById("estate-detail-content").innerHTML = popupHtml(estate);
+    openModal("modal-estate-detail");
   }
 
   function renderList(visible) {
