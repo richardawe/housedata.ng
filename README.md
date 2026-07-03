@@ -2,9 +2,11 @@
 
 A single-page map of government and private housing estates across
 Nigeria, live at [housedata.ng](https://housedata.ng/). Currently covers
-Lagos, FCT (Abuja), Rivers, Ogun, Kano, and Enugu — 129 estates across 6
-states — expanding state by state. Plain HTML/CSS/JS, no build step, no
-API keys — Leaflet.js + OpenStreetMap tiles for the map.
+12 states — Lagos, FCT (Abuja), Rivers, Ogun, Kano, Enugu, Ondo, Edo,
+Delta, Bayelsa, Akwa Ibom, and Cross River (the full Lagos-Calabar Coastal
+Highway corridor plus the original 6) — 220 estates — expanding state by
+state. Plain HTML/CSS/JS, no build step, no API keys — Leaflet.js +
+OpenStreetMap tiles for the map.
 
 Each estate links to an in-app mortgage calculator (modal, using
 [MREIF](https://www.mreif.com.ng/)'s published 9.75%-fixed terms as
