@@ -1,9 +1,10 @@
 # Housedata.ng — Nigeria Government & Private Housing Estates
 
 A single-page map of government and private housing estates across Nigeria,
-built as a demo/pitch tool. Currently covers Lagos, FCT (Abuja), and Rivers
-State, expanding state by state. Plain HTML/CSS/JS, no build step, no API
-keys — Leaflet.js + OpenStreetMap tiles for the map.
+built as a demo/pitch tool. Currently covers Lagos, FCT (Abuja), Rivers,
+Ogun, Kano, and Enugu — 129 estates across 6 states — expanding state by
+state. Plain HTML/CSS/JS, no build step, no API keys — Leaflet.js +
+OpenStreetMap tiles for the map.
 
 Each estate links out to [MREIF](https://www.mreif.com.ng/) (a federal
 9.75%-fixed mortgage program) as a general financing option — this is a
