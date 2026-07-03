@@ -104,28 +104,6 @@ body {
   max-width: 52ch;
 }
 
-.stamp { flex: none; opacity: 0.92; }
-.stamp-ring-outer { fill: none; stroke: var(--gold); stroke-width: 1.4; stroke-dasharray: 2 3; }
-.stamp-ring-inner { fill: none; stroke: var(--gold); stroke-width: 1; opacity: 0.7; }
-.stamp-text {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  fill: var(--gold-tint);
-}
-.stamp-center-1 {
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 600;
-  fill: var(--gold-tint);
-}
-.stamp-center-2 {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  fill: var(--gold-tint);
-}
-
 /* ---------------------------- toolbar ---------------------------- */
 
 .toolbar {
@@ -858,7 +836,6 @@ body.modal-open { overflow: hidden; }
 
 @media (max-width: 860px) {
   .header-inner { padding: 14px 16px; }
-  .stamp { display: none; }
   .strap { display: none; }
   .toolbar-inner { padding: 8px 16px; gap: 12px; }
   .view-toggle { display: flex; }

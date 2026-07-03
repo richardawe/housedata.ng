@@ -1,10 +1,10 @@
 # Housedata.ng — Nigeria Government & Private Housing Estates
 
-A single-page map of government and private housing estates across Nigeria,
-built as a demo/pitch tool. Currently covers Lagos, FCT (Abuja), Rivers,
-Ogun, Kano, and Enugu — 129 estates across 6 states — expanding state by
-state. Plain HTML/CSS/JS, no build step, no API keys — Leaflet.js +
-OpenStreetMap tiles for the map.
+A single-page map of government and private housing estates across
+Nigeria, live at [housedata.ng](https://housedata.ng/). Currently covers
+Lagos, FCT (Abuja), Rivers, Ogun, Kano, and Enugu — 129 estates across 6
+states — expanding state by state. Plain HTML/CSS/JS, no build step, no
+API keys — Leaflet.js + OpenStreetMap tiles for the map.
 
 Each estate links to an in-app mortgage calculator (modal, using
 [MREIF](https://www.mreif.com.ng/)'s published 9.75%-fixed terms as
@@ -28,21 +28,40 @@ offline once the page has loaded once. Leaflet itself is vendored locally
 under `vendor/leaflet/` (not loaded from a CDN), so the map still works
 even on a flaky connection — only the tile images need live internet.
 
-## Deploying to GitHub Pages
+## Deployment (CI/CD)
 
-This is a static site with no build step, so Pages can serve it directly:
+Every push to `main` automatically deploys to housedata.ng via
+`.github/workflows/deploy.yml`, which FTPS-uploads the repo straight to
+the cPanel document root using
+[SamKirkland/FTP-Deploy-Action](https://github.com/SamKirkland/FTP-Deploy-Action).
+No manual FTP or cPanel File Manager step is needed.
 
-1. Push this repo (or this branch, merged to your default branch) to GitHub.
-2. In the repo, go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, pick the
-   branch (e.g. `main`) and folder **/ (root)**, then save.
-4. GitHub publishes it at `https://<username>.github.io/<repo>/` within a
-   minute or two.
+Credentials live only as GitHub Actions repo secrets (**Settings → Secrets
+and variables → Actions**), never in the repo:
 
-All asset paths in `index.html` are relative, so it works whether the site
-is served from a domain root or a `/<repo>/` subpath. A `.nojekyll` file is
-included so GitHub Pages serves the files as-is without running them
-through Jekyll first.
+| Secret | Value |
+|---|---|
+| `FTP_SERVER` | FTP host (e.g. `ftp.housedata.ng`) |
+| `FTP_USERNAME` | FTP account username |
+| `FTP_PASSWORD` | FTP account password |
+| `FTP_SERVER_DIR` | Target directory — **must end with `/`**, e.g. `/public_html/` |
+
+To test without a new commit: **Actions tab → Deploy to housedata.ng → Run
+workflow**. Check progress and errors in the run log — secret values are
+automatically masked, so logs are safe to share for debugging.
+
+**SSL:** confirm HTTPS is active for housedata.ng in cPanel (**Security →
+SSL/TLS Status**, or AutoSSL) before turning on any HTTPS-forcing
+redirect. `.htaccess` ships with the redirect rule present but commented
+out for exactly this reason — enabling it before SSL is live would break
+the site. Prefer cPanel's own "Force HTTPS Redirect" toggle (Domains page)
+over the `.htaccess` rule once SSL is confirmed.
+
+This repo can also still be served from GitHub Pages (Settings → Pages →
+Deploy from a branch → root) as a fallback/staging preview — all asset
+paths are relative, so it works from either a domain root or a
+`/<repo>/` subpath. A `.nojekyll` file is included so Pages serves files
+as-is without running them through Jekyll.
 
 ## Data status — read before presenting
 
@@ -121,6 +140,27 @@ surveyed alignments — good enough to show a line passes near an estate,
 not for engineering use. Add a new entry the same way as an estate: copy
 an existing block, keep `path` as a plain array of `[lat, lng]` waypoints.
 
+## Production essentials
+
+- **SEO/meta**: title, description, `robots` meta, canonical URL, Open
+  Graph + Twitter Card tags (social link previews use `assets/og-image.png`),
+  and a `WebSite` JSON-LD block.
+- **`robots.txt`** — allows all crawlers, points to `sitemap.xml`.
+- **`sitemap.xml`** — single-entry (this is a one-page app); update
+  `<lastmod>` when content changes meaningfully.
+- **`404.html`** — branded error page, set via `.htaccess` `ErrorDocument`.
+- **`.htaccess`** — gzip/deflate compression, browser caching headers,
+  security headers (`X-Content-Type-Options`, `X-Frame-Options`,
+  `Referrer-Policy`, `Permissions-Policy`), directory-listing disabled.
+  HTTPS-forcing redirect is present but commented out — see the SSL note
+  above.
+- **Icons**: inline SVG favicon (primary) plus `assets/favicon-32.png` and
+  `assets/apple-touch-icon.png` fallbacks for browsers/devices that don't
+  support SVG favicons.
+- **Responsive**: single breakpoint at 860px switches from a two-pane
+  desktop layout to a stacked mobile layout with a map/list toggle;
+  verified at phone (390px), tablet (820px), and desktop (1440px) widths.
+
 ## Files
 
 - `index.html` — page structure
@@ -129,3 +169,5 @@ an existing block, keep `path` as a plain array of `[lat, lng]` waypoints.
 - `infrastructure.js` — railway/road overlay records
 - `app.js` — map/list/filter logic
 - `data.md` — original human-readable working notes and source list
+- `robots.txt`, `sitemap.xml`, `404.html`, `.htaccess` — production/SEO config
+- `assets/` — favicons and social share image
