@@ -188,6 +188,8 @@ body {
 .chip-completed.is-active { background: var(--status-completed); border-color: var(--status-completed); }
 .chip-announced.is-active { background: var(--status-announced); border-color: var(--status-announced); }
 .chip-progress.is-active { background: var(--status-progress); border-color: var(--status-progress); }
+.chip-gov.is-active { background: var(--green); border-color: var(--green); }
+.chip-priv.is-active { background: var(--gold); border-color: var(--gold); }
 
 .chip-count {
   font-family: var(--font-mono);
@@ -225,6 +227,66 @@ body {
 }
 
 .view-btn.is-active { background: var(--green); color: #fff; }
+
+/* ---------------------------- finance banner ---------------------------- */
+
+.finance-banner {
+  background: var(--gold-tint);
+  border-bottom: 1px solid var(--line);
+}
+
+.finance-banner-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 8px 24px 2px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.finance-banner-text { flex: 1; min-width: 240px; }
+
+.finance-banner-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.finance-banner-headline {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.finance-banner-actions { display: flex; gap: 8px; flex: none; }
+
+.finance-btn {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--gold);
+  white-space: nowrap;
+}
+
+.finance-btn-primary { background: var(--gold); color: #fff; }
+.finance-btn-ghost { background: transparent; color: var(--gold); }
+
+.finance-banner-disclaimer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2px 24px 8px;
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: var(--ink-faint);
+}
 
 /* ---------------------------- layout ---------------------------- */
 
@@ -344,6 +406,24 @@ body {
 .dot-announced { background: var(--status-announced); }
 .dot-progress { background: var(--status-progress); }
 
+/* shape markers: circle = government, diamond = private. Used standalone
+   (neutral fill, legend) or combined with a dot-* class (colored by status). */
+.shape {
+  display: inline-block;
+  flex: none;
+  width: 9px;
+  height: 9px;
+  background: var(--ink-faint);
+}
+.shape-circle { border-radius: 50%; }
+.shape-diamond { width: 7px; height: 7px; transform: rotate(45deg); border-radius: 1px; }
+
+.legend-divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--line-strong);
+}
+
 /* ---------------------------- map ---------------------------- */
 
 .map-pane {
@@ -394,8 +474,22 @@ body {
   padding: 2px 7px;
   border-radius: 4px;
   display: inline-block;
+  margin: 0 6px 6px 0;
+}
+
+.popup-type {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-block;
   margin-bottom: 6px;
 }
+
+.popup-type-gov { background: var(--green-tint); color: var(--green); }
+.popup-type-priv { background: var(--gold-tint); color: var(--gold); }
 
 .popup-name {
   font-family: var(--font-display);
@@ -455,6 +549,27 @@ body {
 }
 
 .popup-links a:hover { text-decoration: underline; }
+
+.popup-no-contact {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+.popup-finance {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line-strong);
+}
+
+.popup-finance a {
+  color: var(--gold);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.popup-finance a:hover { text-decoration: underline; }
 
 .popup-note {
   margin-top: 8px;

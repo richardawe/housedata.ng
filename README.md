@@ -1,8 +1,15 @@
-# Housedata.ng — Lagos Government Housing Estates
+# Housedata.ng — Nigeria Government & Private Housing Estates
 
-A single-page map of Lagos government housing estates, built as a demo for a
-pitch to the Lagos State Ministry of Housing. Plain HTML/CSS/JS, no build
-step, no API keys — Leaflet.js + OpenStreetMap tiles for the map.
+A single-page map of government and private housing estates across Nigeria,
+built as a demo/pitch tool. Currently covers Lagos, FCT (Abuja), and Rivers
+State, expanding state by state. Plain HTML/CSS/JS, no build step, no API
+keys — Leaflet.js + OpenStreetMap tiles for the map.
+
+Each estate links out to [MREIF](https://www.mreif.com.ng/) (a federal
+9.75%-fixed mortgage program) as a general financing option — this is a
+deep link to MREIF's own sign-up/pre-qualifier flow, not an embedded
+application. housedata.ng doesn't collect financial documents or claim any
+specific estate is in MREIF's approved developer network.
 
 ## Running it
 
@@ -37,18 +44,26 @@ through Jekyll first.
 ## Data status — read before presenting
 
 1. **The estate data is compiled from public sources, not verified
-   government records.** `data.md` lists the original working notes and
-   per-estate source (Ballers.ng, Propsult, Estate Intel, NPC, Wikipedia,
-   etc.). Coordinates in `data.js` are neighbourhood-level approximations
+   government records.** `data.md` has the original Lagos working notes.
+   FCT and Rivers entries were compiled the same way — public agency sites,
+   news coverage, and real estate aggregators — not verified government
+   records. Coordinates in `data.js` are neighbourhood-level approximations
    geocoded from place names — good enough for a map pin, not for a
    physical address. Verify before publishing this as authoritative.
-2. **Per-estate contacts are agency-level placeholders**, not verified
-   direct lines for individual estates. Every estate routes enquiries to
-   whichever agency plausibly manages it (Lagos HOMS, LSDPC, or the
-   Ministry of Housing), using only publicly listed agency contacts — no
-   phone number or email was invented for any estate. This gap is called
-   out in the UI (marker popups + footer) intentionally: it's the problem
-   Housedata.ng would exist to fix, with real ministry data access.
+2. **Per-estate contacts are agency-level placeholders** for government
+   estates — not verified direct lines for individual estates. Every
+   government estate routes enquiries to whichever agency plausibly
+   manages it (Lagos HOMS, LSDPC, FHA, FCDA, RSHPDA, etc.), using only
+   publicly listed agency contacts — no phone number or email was invented.
+3. **Private estates are a seed set, not developer submissions.** They were
+   sourced from public listings/aggregators (PropertyPro, Nigeria Property
+   Centre, Estate Intel) to prove the model. The intended long-term source
+   is developer self-submission with an eligibility bar, similar to
+   MREIF's own developer-eligibility process — that flow isn't built yet.
+4. **The MREIF financing link is informational only.** It routes to
+   MREIF's real sign-up/pre-qualifier pages; housedata.ng doesn't verify
+   which estates (if any) are in MREIF's approved developer network, and
+   says so directly in the banner, every popup, and the footer.
 
 ## Adding or editing an estate
 
@@ -59,25 +74,35 @@ objects. To add one, copy an existing entry and fill in:
 {
   id: "unique-slug",
   name: "Estate Name",
-  lat: 6.5000, lng: 3.5000,     // neighbourhood-level is fine
+  state: "Lagos",                // "Lagos" | "FCT" | "Rivers" | a new state
+  type: "Government",            // "Government" | "Private"
+  lat: 6.5000, lng: 3.5000,      // neighbourhood-level is fine
   area: "Neighbourhood, District",
-  lga: "Local Government Area",
+  lga: "Local Government Area / Area Council",
   unitTypes: "1, 2, 3 bed flats",
-  status: "Completed",          // "Completed" | "Announced" | "Planned" | "In Progress"
-  units: "84 units",            // or null if unknown
-  agency: AGENCIES.HOMS.name,   // or LSDPC / MINISTRY / FMHUD
-  enquiryContact: AGENCIES.HOMS,
+  status: "Completed",           // "Completed" | "Announced" | "Planned" | "In Progress"
+  units: "84 units",             // or null if unknown
+  priceRange: null,              // e.g. "₦50M – ₦200M" for private estates, else null
+  agency: AGENCIES.HOMS.name,    // or another AGENCIES entry, or a free-text developer name
+  enquiryContact: AGENCIES.HOMS, // an AGENCIES entry, or { name, phone, email, website } for a private developer
   sourceNote: "Source: ... — publicly reported, verify before publishing."
 }
 ```
 
 Reuse one of the `AGENCIES` entries at the top of `data.js` for
-`enquiryContact` rather than inventing a new phone/email — if the agency
-contact isn't already there, add it to `AGENCIES` once (with a real,
-citable source) rather than hardcoding it per estate.
+`enquiryContact` on government estates rather than inventing a new
+phone/email — if the agency isn't there yet, add it once (with a real,
+citable source). For private estates, use the developer's own public
+contact/website — leave `phone`/`email` as `null` if you can't verify one
+rather than guessing.
 
-Map markers, the sidebar list, filters (status + LGA), and popups all read
-from this one array — no other file needs to change to add a row.
+To add a new state, just start adding estates with that `state` value —
+the State filter, Area filter, and map bounds all populate dynamically
+from whatever's in the array, no other file needs to change.
+
+Map markers (circle = Government, diamond = Private, coloured by status),
+the sidebar list, all filters (state, type, status, area), and popups all
+read from this one array.
 
 ## Files
 

@@ -8,10 +8,10 @@
     "In Progress": "progress"
   };
 
-  var state = { status: "all", lga: "all", selectedId: null };
+  var state = { status: "all", type: "all", stateFilter: "all", area: "all", selectedId: null };
   var markers = {};
 
-  var map = L.map("map", { zoomControl: true, minZoom: 8 }).setView([6.52, 3.55], 10);
+  var map = L.map("map", { zoomControl: true, minZoom: 5 }).setView([7.5, 6.5], 6);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
@@ -29,12 +29,16 @@
     return "#1e7a4c";
   }
 
-  function makeIcon(status, isSelected) {
-    var color = markerColor(status);
+  function makeIcon(estate, isSelected) {
+    var color = markerColor(estate.status);
     var size = isSelected ? 20 : 14;
+    var shapeStyle =
+      estate.type === "Private"
+        ? "border-radius:3px;transform:rotate(45deg);"
+        : "border-radius:50%;";
     var html =
       '<span style="' +
-      "display:block;width:" + size + "px;height:" + size + "px;border-radius:50%;" +
+      "display:block;width:" + size + "px;height:" + size + "px;" + shapeStyle +
       "background:" + color + ";border:2px solid #fff;" +
       "box-shadow:0 1px 4px rgba(15,25,18,0.45);" +
       '"></span>';
@@ -58,7 +62,7 @@
     if (contact.website) {
       links.push('<a href="' + esc(contact.website) + '" target="_blank" rel="noopener">' + esc(contact.website.replace(/^https?:\/\//, "")) + "</a>");
     }
-    return links.join("");
+    return links.join("") || '<span class="popup-no-contact">No public contact found — verify with agency.</span>';
   }
 
   function esc(str) {
@@ -72,18 +76,28 @@
     var unitsLine = estate.units
       ? '<div class="popup-row"><span class="k">Scale</span><span>' + esc(estate.units) + "</span></div>"
       : "";
+    var priceLine = estate.priceRange
+      ? '<div class="popup-row"><span class="k">Price</span><span>' + esc(estate.priceRange) + "</span></div>"
+      : "";
     return (
       '<div class="popup">' +
       '<span class="popup-status status-' + cls + '">' + esc(estate.status) + "</span>" +
+      '<span class="popup-type popup-type-' + (estate.type === "Private" ? "priv" : "gov") + '">' + esc(estate.type) + "</span>" +
       '<p class="popup-name">' + esc(estate.name) + "</p>" +
-      '<p class="popup-area">' + esc(estate.area) + " &middot; " + esc(estate.lga) + "</p>" +
+      '<p class="popup-area">' + esc(estate.area) + " &middot; " + esc(estate.lga) + " &middot; " + esc(estate.state) + "</p>" +
       '<div class="popup-row"><span class="k">Unit types</span><span>' + esc(estate.unitTypes) + "</span></div>" +
       unitsLine +
+      priceLine +
       '<div class="popup-enquire">' +
       '<div class="popup-enquire-label">Enquire</div>' +
       '<div class="popup-enquire-agency">' + esc(estate.enquiryContact.name) + "</div>" +
       '<div class="popup-links">' + contactLinks(estate.enquiryContact) + "</div>" +
       '<p class="popup-note">' + esc(estate.sourceNote) + "</p>" +
+      "</div>" +
+      '<div class="popup-finance">' +
+      '<div class="popup-enquire-label">Financing (external)</div>' +
+      '<a href="' + esc(MREIF.prequalifyUrl) + '" target="_blank" rel="noopener">Check MREIF mortgage eligibility &rarr;</a>' +
+      '<p class="popup-note">' + esc(MREIF.disclaimer) + "</p>" +
       "</div>" +
       "</div>"
     );
@@ -92,12 +106,11 @@
   function refreshIcon(id) {
     var m = markers[id];
     if (!m) return;
-    var estate = m.estate;
-    m.setIcon(makeIcon(estate.status, state.selectedId === id));
+    m.setIcon(makeIcon(m.estate, state.selectedId === id));
   }
 
   ESTATES.forEach(function (estate) {
-    var marker = L.marker([estate.lat, estate.lng], { icon: makeIcon(estate.status, false) });
+    var marker = L.marker([estate.lat, estate.lng], { icon: makeIcon(estate, false) });
     marker.estate = estate;
     marker.bindPopup(popupHtml(estate));
     marker.on("click", function () {
@@ -106,25 +119,50 @@
     markers[estate.id] = marker;
   });
 
-  function populateLgaSelect() {
+  function populateStateSelect() {
+    var select = document.getElementById("state-select");
+    var states = Array.from(new Set(ESTATES.map(function (e) { return e.state; }))).sort();
+    states.forEach(function (s) {
+      var opt = document.createElement("option");
+      opt.value = s;
+      opt.textContent = s;
+      select.appendChild(opt);
+    });
+    select.addEventListener("change", function () {
+      state.stateFilter = select.value;
+      state.area = "all";
+      populateAreaSelect();
+      render();
+    });
+  }
+
+  function populateAreaSelect() {
     var select = document.getElementById("lga-select");
-    var lgas = Array.from(new Set(ESTATES.map(function (e) { return e.lga; }))).sort();
-    lgas.forEach(function (lga) {
+    select.innerHTML = '<option value="all">All areas</option>';
+    var pool = state.stateFilter === "all" ? ESTATES : ESTATES.filter(function (e) { return e.state === state.stateFilter; });
+    var areas = Array.from(new Set(pool.map(function (e) { return e.lga; }))).sort();
+    areas.forEach(function (lga) {
       var opt = document.createElement("option");
       opt.value = lga;
       opt.textContent = lga;
       select.appendChild(opt);
     });
+  }
+
+  function initAreaSelect() {
+    var select = document.getElementById("lga-select");
     select.addEventListener("change", function () {
-      state.lga = select.value;
+      state.area = select.value;
       render();
     });
   }
 
   function matchesFilter(estate) {
     var statusOk = state.status === "all" || estate.status === state.status;
-    var lgaOk = state.lga === "all" || estate.lga === state.lga;
-    return statusOk && lgaOk;
+    var typeOk = state.type === "all" || estate.type === state.type;
+    var stateOk = state.stateFilter === "all" || estate.state === state.stateFilter;
+    var areaOk = state.area === "all" || estate.lga === state.area;
+    return statusOk && typeOk && stateOk && areaOk;
   }
 
   function selectEstate(id, flyTo) {
@@ -134,7 +172,7 @@
     refreshIcon(id);
 
     var marker = markers[id];
-    if (flyTo) map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 13), { duration: 0.6 });
+    if (flyTo) map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 12), { duration: 0.6 });
     marker.openPopup();
 
     document.querySelectorAll(".estate-card").forEach(function (card) {
@@ -160,10 +198,11 @@
       btn.className = "estate-card" + (state.selectedId === estate.id ? " is-selected" : "");
       btn.dataset.id = estate.id;
       var cls = statusClass(estate.status);
+      var shapeCls = estate.type === "Private" ? "shape-diamond" : "shape-circle";
       btn.innerHTML =
-        '<div class="estate-card-top"><i class="dot dot-' + cls + '"></i>' +
+        '<div class="estate-card-top"><i class="shape ' + shapeCls + ' dot-' + cls + '"></i>' +
         '<span class="estate-card-name">' + esc(estate.name) + "</span></div>" +
-        '<p class="estate-card-area">' + esc(estate.area) + "</p>" +
+        '<p class="estate-card-area">' + esc(estate.area) + " &middot; " + esc(estate.state) + "</p>" +
         '<span class="estate-card-status status-' + cls + '">' + esc(estate.status) + "</span>";
       btn.addEventListener("click", function () {
         selectEstate(estate.id, true);
@@ -185,15 +224,6 @@
     });
   }
 
-  function updateChipCounts() {
-    var counts = { Completed: 0, Announced: 0, "In Progress": 0 };
-    ESTATES.forEach(function (e) {
-      var key = e.status === "Planned" ? "Announced" : e.status;
-      if (counts[key] !== undefined) counts[key]++;
-    });
-    document.getElementById("count-all").textContent = ESTATES.length;
-  }
-
   function render() {
     var visible = ESTATES.filter(matchesFilter);
     document.getElementById("sidebar-count").textContent = visible.length + " of " + ESTATES.length;
@@ -201,13 +231,13 @@
     updateMarkerVisibility(visible);
   }
 
-  function initChips() {
-    var chips = document.querySelectorAll(".chip");
+  function initChipGroup(selector, onSelect) {
+    var chips = document.querySelectorAll(selector);
     chips.forEach(function (chip) {
       chip.addEventListener("click", function () {
         chips.forEach(function (c) { c.classList.remove("is-active"); });
         chip.classList.add("is-active");
-        state.status = chip.dataset.filterStatus;
+        onSelect(chip);
         render();
       });
     });
@@ -230,9 +260,13 @@
   var bounds = L.latLngBounds(ESTATES.map(function (e) { return [e.lat, e.lng]; }));
   map.fitBounds(bounds, { padding: [30, 30] });
 
-  populateLgaSelect();
-  updateChipCounts();
-  initChips();
+  document.getElementById("count-all").textContent = ESTATES.length;
+
+  populateStateSelect();
+  populateAreaSelect();
+  initAreaSelect();
+  initChipGroup("[data-filter-status]", function (chip) { state.status = chip.dataset.filterStatus; });
+  initChipGroup("[data-filter-type]", function (chip) { state.type = chip.dataset.filterType; });
   initViewToggle();
   render();
 })();
