@@ -142,6 +142,20 @@ surveyed alignments — good enough to show a line passes near an estate,
 not for engineering use. Add a new entry the same way as an estate: copy
 an existing block, keep `path` as a plain array of `[lat, lng]` waypoints.
 
+## Financing partner pages
+
+`access-bank.html` is a standalone page (not a modal) summarizing Access
+Bank's mortgage products, with its own calculator defaulted to the one
+product with a publicly disclosed rate (My First Home Mortgage Savings
+Plan, 15% p.a.). It's linked from the main app's finance banner
+("Access Bank →") but otherwise independent — same design system, own
+data file (`access-bank-data.js`), own small script (`access-bank.js`,
+duplicates the amortization formula from `app.js` rather than sharing it,
+since it's one page). Same rule as everywhere else: no fabricated rates —
+products without a public rate say so and point to the bank directly. If
+another lender gets added later, follow this same pattern rather than
+folding it into the MREIF modal.
+
 ## Production essentials
 
 - **SEO/meta**: title, description, `robots` meta, canonical URL, Open

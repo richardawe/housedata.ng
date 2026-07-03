@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financing with Access Bank — Housedata.ng</title>
+<meta name="description" content="How Access Bank's mortgage products could finance a home found on Housedata.ng — rates, equity requirements, and eligibility, compiled from Access Bank's public site.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#073d27">
+<link rel="canonical" href="https://housedata.ng/access-bank.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Housedata.ng">
+<meta property="og:title" content="Financing with Access Bank — Housedata.ng">
+<meta property="og:description" content="How Access Bank's mortgage products could finance a home found on Housedata.ng.">
+<meta property="og:url" content="https://housedata.ng/access-bank.html">
+<meta property="og:image" content="https://housedata.ng/assets/og-image.png">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23073d27'/%3E%3Ccircle cx='16' cy='14' r='6' fill='none' stroke='%23a97a26' stroke-width='2.4'/%3E%3Cpath d='M16 20 L16 25' stroke='%23a97a26' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="ab-body">
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <p class="eyebrow">Housedata.ng</p>
+      <h1>Financing with Access Bank</h1>
+      <p class="strap">How Access Bank's mortgage products could finance a home found on Housedata.ng — this is not an official partnership, just a useful summary compiled from Access Bank's public site.</p>
+    </div>
+  </div>
+</header>
+
+<main class="ab-main">
+
+  <section class="ab-section">
+    <h2 class="ab-h2">Products for buying a home</h2>
+    <p class="ab-lede">Access Bank's "Access Mortgage Advantage" line covers several products. These five apply to buying or improving a residential property in Nigeria — the ones most relevant to estates listed on Housedata.ng.</p>
+    <div class="ab-grid" id="ab-product-grid"></div>
+  </section>
+
+  <section class="ab-section">
+    <h2 class="ab-h2">Estimate a monthly payment</h2>
+    <p class="ab-lede">Uses the terms of the My First Home Mortgage Savings Plan — the only Access Bank product with a publicly disclosed rate. This plan works in two stages: you save 20% equity over 24 months first, <em>then</em> the mortgage below covers the remaining 80%. The figures here estimate that second-stage payment, not an instant loan.</p>
+
+    <div class="calc-grid">
+      <label class="calc-field">
+        <span>Home price (₦)</span>
+        <input type="number" id="ab-calc-price" min="1000000" step="500000" value="30000000">
+      </label>
+      <label class="calc-field">
+        <span>Equity / down payment (%)</span>
+        <input type="number" id="ab-calc-equity" min="20" max="90" step="1" value="20">
+      </label>
+      <label class="calc-field">
+        <span>Interest rate (% p.a.)</span>
+        <input type="number" id="ab-calc-rate" min="1" max="30" step="0.05" value="15">
+      </label>
+      <label class="calc-field">
+        <span>Loan term (years)</span>
+        <input type="number" id="ab-calc-term" min="1" max="30" step="1" value="20">
+      </label>
+    </div>
+
+    <div class="calc-results">
+      <div class="calc-result">
+        <span class="calc-result-label">Loan amount</span>
+        <span class="calc-result-value" id="ab-calc-loan-amount">—</span>
+      </div>
+      <div class="calc-result calc-result-primary">
+        <span class="calc-result-label">Estimated monthly payment</span>
+        <span class="calc-result-value" id="ab-calc-monthly">—</span>
+      </div>
+      <div class="calc-result">
+        <span class="calc-result-label">Total interest over term</span>
+        <span class="calc-result-value" id="ab-calc-interest">—</span>
+      </div>
+      <div class="calc-result">
+        <span class="calc-result-label">Total repayment</span>
+        <span class="calc-result-value" id="ab-calc-total">—</span>
+      </div>
+    </div>
+    <p class="modal-disclaimer">Figures are illustrative only, not a loan offer. Access Bank's real rate depends on income, credit, and market conditions at time of application.</p>
+  </section>
+
+  <section class="ab-section">
+    <h2 class="ab-h2">Other Access Mortgage Advantage products</h2>
+    <p class="ab-lede">Facility limits: up to <strong id="ab-limit-individual"></strong> for individuals, up to <strong id="ab-limit-corporate"></strong> for corporates, tenor up to <strong id="ab-limit-tenor"></strong> years on certain facilities, maximum applicant age <strong id="ab-limit-age"></strong>.</p>
+    <ul class="ab-other-list" id="ab-other-list"></ul>
+  </section>
+
+  <section class="ab-section">
+    <h2 class="ab-h2">Eligibility</h2>
+    <ul class="ab-eligibility-list" id="ab-eligibility-list"></ul>
+  </section>
+
+  <section class="ab-section ab-cta-section">
+    <h2 class="ab-h2">Apply</h2>
+    <div class="ab-cta-row">
+      <a class="finance-btn finance-btn-primary" id="ab-apply-link" href="#" target="_blank" rel="noopener">Apply on Access Bank's site &rarr;</a>
+    </div>
+    <p class="ab-lede">Access Bank also processes MREIF's 9.75% federal mortgage financing directly, with mortgage offer letters reported within 48 hours (up to ₦100M) — a faster channel for the same MREIF product already on Housedata.ng.</p>
+    <a class="modal-external-link" id="ab-mreif-channel-link" href="#" target="_blank" rel="noopener">See Access Bank's MREIF mortgage channel &rarr;</a>
+  </section>
+
+  <p class="ab-back"><a href="index.html">&larr; Browse housing estates on Housedata.ng</a></p>
+
+  <p class="modal-disclaimer ab-disclaimer" id="ab-disclaimer"></p>
+
+</main>
+
+<script src="access-bank-data.js"></script>
+<script src="access-bank.js"></script>
+</body>
+</html>
