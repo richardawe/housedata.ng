@@ -1,0 +1,48 @@
+# Housedata.ng — production Apache config for cPanel hosting
+
+# Custom error page
+ErrorDocument 404 /404.html
+
+# Don't let visitors browse directory contents
+Options -Indexes
+
+# HTTPS redirect: intentionally NOT enabled here. Once SSL/AutoSSL is
+# confirmed active for housedata.ng in cPanel, either turn on cPanel's
+# built-in "Force HTTPS Redirect" (Domains page) — preferred — or
+# uncomment the block below.
+#
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+# Browser caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+</IfModule>
+
+# Block access to source/config files that shouldn't be served
+<FilesMatch "^\.(git|env)">
+  Require all denied
+</FilesMatch>
