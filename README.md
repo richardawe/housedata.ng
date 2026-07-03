@@ -216,6 +216,15 @@ and a render call in `dashboard.js`.
   `Referrer-Policy`, `Permissions-Policy`), directory-listing disabled.
   HTTPS-forcing redirect is present but commented out — see the SSL note
   above.
+- **Cache-busting**: `.htaccess` caches CSS/JS for a week client-side, so
+  every local `.css`/`.js` reference (in `index.html`, `access-bank.html`,
+  `dashboard/index.html`) carries a `?v=YYYYMMDD` query string. **Bump it
+  to today's date whenever you edit `styles.css`, `app.js`, `data.js`,
+  `infrastructure.js`, `analytics.js`, `access-bank.js`,
+  `access-bank-data.js`, or `dashboard.js`** — otherwise visitors with an
+  already-cached copy won't see the change for up to a week. `index.html`
+  itself isn't cached (`text/html` is `access plus 0 seconds`), so this is
+  the only place staleness can hide.
 - **Icons**: inline SVG favicon (primary) plus `assets/favicon-32.png` and
   `assets/apple-touch-icon.png` fallbacks for browsers/devices that don't
   support SVG favicons.
