@@ -86,11 +86,11 @@
       <p class="finance-banner-headline">Need a mortgage? MREIF offers financing at <strong>9.75% p.a. fixed</strong>, up to 20 years, from 10% equity.</p>
     </div>
     <div class="finance-banner-actions">
-      <a class="finance-btn finance-btn-primary" href="https://housing.mreif.com.ng/pre-qualifier" target="_blank" rel="noopener">Check eligibility</a>
-      <a class="finance-btn finance-btn-ghost" href="https://www.mreif.com.ng/" target="_blank" rel="noopener">About MREIF</a>
+      <button type="button" class="finance-btn finance-btn-primary" data-open-modal="modal-calculator">Calculate a mortgage</button>
+      <button type="button" class="finance-btn finance-btn-ghost" data-open-modal="modal-about-mreif">About MREIF</button>
     </div>
   </div>
-  <p class="finance-banner-disclaimer">External federal program, not run by housedata.ng. We can't confirm any listed estate is in MREIF's approved developer network — check eligibility directly on their site.</p>
+  <p class="finance-banner-disclaimer">External federal program, not run by housedata.ng. The calculator gives an unofficial estimate only — actual eligibility and terms are determined by MREIF.</p>
 </div>
 
 <main class="layout">
@@ -114,6 +114,81 @@
     </div>
   </section>
 </main>
+
+<div class="modal-overlay" id="modal-calculator" hidden>
+  <div class="modal-card modal-card-wide" role="dialog" aria-modal="true" aria-labelledby="calc-title">
+    <button type="button" class="modal-close" data-close-modal aria-label="Close">&times;</button>
+    <p class="modal-eyebrow">Mortgage calculator</p>
+    <h2 class="modal-title" id="calc-title">Estimate a monthly payment</h2>
+    <p class="modal-lede">Uses MREIF's published terms as defaults. This is an unofficial estimate for orientation only — not a loan offer, and not MREIF's actual eligibility decision.</p>
+    <p class="modal-context" id="calc-context" hidden></p>
+
+    <div class="calc-grid">
+      <label class="calc-field">
+        <span>Home price (₦)</span>
+        <input type="number" id="calc-price" min="1000000" step="500000" value="30000000">
+      </label>
+      <label class="calc-field">
+        <span>Equity / down payment (%)</span>
+        <input type="number" id="calc-equity" min="10" max="90" step="1" value="10">
+      </label>
+      <label class="calc-field">
+        <span>Interest rate (% p.a.)</span>
+        <input type="number" id="calc-rate" min="1" max="30" step="0.05" value="9.75">
+      </label>
+      <label class="calc-field">
+        <span>Loan term (years)</span>
+        <input type="number" id="calc-term" min="1" max="20" step="1" value="20">
+      </label>
+    </div>
+
+    <div class="calc-results">
+      <div class="calc-result">
+        <span class="calc-result-label">Loan amount</span>
+        <span class="calc-result-value" id="calc-loan-amount">—</span>
+      </div>
+      <div class="calc-result calc-result-primary">
+        <span class="calc-result-label">Estimated monthly payment</span>
+        <span class="calc-result-value" id="calc-monthly">—</span>
+      </div>
+      <div class="calc-result">
+        <span class="calc-result-label">Total interest over term</span>
+        <span class="calc-result-value" id="calc-interest">—</span>
+      </div>
+      <div class="calc-result">
+        <span class="calc-result-label">Total repayment</span>
+        <span class="calc-result-value" id="calc-total">—</span>
+      </div>
+    </div>
+
+    <a class="modal-external-link" href="https://housing.mreif.com.ng/pre-qualifier" target="_blank" rel="noopener">Apply / check real eligibility on MREIF &rarr;</a>
+    <p class="modal-disclaimer">housedata.ng is not affiliated with MREIF. Figures are illustrative — MREIF's real rate, term, and eligibility depend on income, credit, and program rules current at time of application.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-about-mreif" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="about-title">
+    <button type="button" class="modal-close" data-close-modal aria-label="Close">&times;</button>
+    <p class="modal-eyebrow">About</p>
+    <h2 class="modal-title" id="about-title">MREIF</h2>
+    <p class="modal-lede">The Mortgage Refinance Initiative Fund — a federal mortgage financing programme. Copyright held by Ministry of Finance Incorporated (MOFI); the fund is managed by ARM (Asset &amp; Resource Management Holding Company), with offices in Lagos and Abuja.</p>
+
+    <p class="modal-body-text"><strong>Mission:</strong> bridge Nigeria's housing gap by providing accessible financing options and supporting the development of affordable housing across the nation.</p>
+
+    <div class="about-terms">
+      <div class="about-term"><span class="about-term-value">9.75%</span><span class="about-term-label">Fixed rate p.a.</span></div>
+      <div class="about-term"><span class="about-term-value">20 yrs</span><span class="about-term-label">Max loan term</span></div>
+      <div class="about-term"><span class="about-term-value">10%</span><span class="about-term-label">Min. equity</span></div>
+    </div>
+
+    <p class="modal-body-text"><strong>For homebuyers:</strong> create a free account &rarr; select a property &rarr; get pre-approved &rarr; secure your mortgage.</p>
+    <p class="modal-body-text"><strong>For developers:</strong> can apply to list eligible projects — minimum 5 hectares of titled land, ₦500m net asset value, and 3+ completed projects delivered in the last 5 years.</p>
+
+    <a class="modal-external-link" href="https://www.mreif.com.ng/" target="_blank" rel="noopener">Visit MREIF's official site &rarr;</a>
+    <a class="modal-external-link" href="https://housing.mreif.com.ng/sign-up" target="_blank" rel="noopener">Start a MREIF application &rarr;</a>
+    <p class="modal-disclaimer">housedata.ng is not affiliated with MREIF. This is a general summary for orientation only — always confirm current terms and eligibility directly with MREIF.</p>
+  </div>
+</div>
 
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="data.js"></script>

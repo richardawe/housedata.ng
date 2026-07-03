@@ -6,11 +6,13 @@ Ogun, Kano, and Enugu — 129 estates across 6 states — expanding state by
 state. Plain HTML/CSS/JS, no build step, no API keys — Leaflet.js +
 OpenStreetMap tiles for the map.
 
-Each estate links out to [MREIF](https://www.mreif.com.ng/) (a federal
-9.75%-fixed mortgage program) as a general financing option — this is a
-deep link to MREIF's own sign-up/pre-qualifier flow, not an embedded
-application. housedata.ng doesn't collect financial documents or claim any
-specific estate is in MREIF's approved developer network.
+Each estate links to an in-app mortgage calculator (modal, using
+[MREIF](https://www.mreif.com.ng/)'s published 9.75%-fixed terms as
+defaults) and an "About MREIF" modal — both self-contained, no navigating
+away. The calculator is an unofficial estimate only; actually applying
+still happens on MREIF's own site (linked from both modals).
+housedata.ng doesn't collect financial documents or claim any specific
+estate is in MREIF's approved developer network.
 
 ## Running it
 
