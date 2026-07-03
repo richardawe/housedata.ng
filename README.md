@@ -219,9 +219,13 @@ and a render call in `dashboard.js`.
 - **Icons**: inline SVG favicon (primary) plus `assets/favicon-32.png` and
   `assets/apple-touch-icon.png` fallbacks for browsers/devices that don't
   support SVG favicons.
-- **Responsive**: single breakpoint at 860px switches from a two-pane
-  desktop layout to a stacked mobile layout with a map/list toggle;
-  verified at phone (390px), tablet (820px), and desktop (1440px) widths.
+- **Responsive**: two breakpoints. At ≤1024px (tablet + phone), the
+  toolbar, financing banner, and infrastructure control collapse into a
+  compact action bar (`Filters` / `Financing` / `Infrastructure`) that
+  opens each as a bottom sheet, reusing the same underlying elements and
+  `app.js` logic rather than duplicating them. At ≤860px, the layout also
+  stacks the sidebar below the map with a map/list toggle. Verified at
+  320/360/390px (phone), 900px (tablet), and 1440px (desktop).
 
 ## Files
 
