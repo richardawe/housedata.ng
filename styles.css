@@ -455,6 +455,80 @@ body {
 
 .legend-item { display: flex; align-items: center; gap: 6px; }
 
+/* ---------------------------- infrastructure control ---------------------------- */
+
+.infra-control {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 450;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  box-shadow: 0 2px 10px rgba(20, 30, 22, 0.08);
+  max-width: 220px;
+}
+
+.infra-master {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.infra-sub {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.infra-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.infra-color-dot {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.infra-color-rail { background: #6b4c9a; }
+.infra-color-road { background: #55606b; }
+
+.infra-line-legend {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+
+.infra-line-item { display: flex; align-items: center; gap: 7px; }
+
+.line-swatch { width: 20px; height: 0; display: inline-block; flex: none; }
+.line-existing { border-top: 2.5px solid var(--ink-faint); }
+.line-construction { border-top: 2.5px dashed var(--ink-faint); }
+.line-stalled { border-top: 2.5px dotted var(--ink-faint); }
+.line-planned { border-top: 2px dashed var(--ink-faint); opacity: 0.5; }
+
+.infra-status-existing { background: var(--status-completed-tint); color: var(--status-completed); }
+.infra-status-under-construction { background: var(--status-progress-tint); color: var(--status-progress); }
+.infra-status-stalled { background: var(--status-announced-tint); color: var(--status-announced); }
+.infra-status-planned { background: var(--line); color: var(--ink-faint); }
+
 /* Leaflet popup skin */
 .leaflet-popup-content-wrapper {
   border-radius: 10px;
@@ -490,6 +564,8 @@ body {
 
 .popup-type-gov { background: var(--green-tint); color: var(--green); }
 .popup-type-priv { background: var(--gold-tint); color: var(--gold); }
+.popup-type-rail { background: #ece6f4; color: #6b4c9a; }
+.popup-type-road { background: #e7e9ec; color: #55606b; }
 
 .popup-name {
   font-family: var(--font-display);

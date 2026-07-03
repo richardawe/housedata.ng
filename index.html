@@ -112,6 +112,23 @@
       <span class="legend-item"><i class="shape shape-circle"></i>Government</span>
       <span class="legend-item"><i class="shape shape-diamond"></i>Private</span>
     </div>
+
+    <div class="infra-control" aria-label="Infrastructure overlay">
+      <label class="infra-master">
+        <input type="checkbox" id="infra-toggle">
+        <span>Infrastructure</span>
+      </label>
+      <div class="infra-sub" id="infra-sub" hidden>
+        <label class="infra-check"><input type="checkbox" id="infra-toggle-rail" checked><i class="infra-color-dot infra-color-rail"></i><span>Railways</span></label>
+        <label class="infra-check"><input type="checkbox" id="infra-toggle-road" checked><i class="infra-color-dot infra-color-road"></i><span>Roads</span></label>
+        <div class="infra-line-legend">
+          <span class="infra-line-item"><i class="line-swatch line-existing"></i>Existing</span>
+          <span class="infra-line-item"><i class="line-swatch line-construction"></i>Under construction</span>
+          <span class="infra-line-item"><i class="line-swatch line-stalled"></i>Stalled</span>
+          <span class="infra-line-item"><i class="line-swatch line-planned"></i>Planned</span>
+        </div>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -192,6 +209,7 @@
 
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="data.js"></script>
+<script src="infrastructure.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

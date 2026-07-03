@@ -107,10 +107,25 @@ Map markers (circle = Government, diamond = Private, coloured by status),
 the sidebar list, all filters (state, type, status, area), and popups all
 read from this one array.
 
+## Infrastructure overlay
+
+`infrastructure.js` holds a separate `INFRASTRUCTURE` array — 20 major
+railways and roads (existing, under construction, stalled, or planned)
+near the covered states, each a named route built from waypoints, with a
+status, description, and source. It's off by default; the "Infrastructure"
+control at the top-right of the map toggles it, with separate Railways/
+Roads checkboxes. Existing = solid line, under construction = dashed,
+stalled = dotted, planned = sparse dashed — railways are purple, roads are
+grey. Routes are corridor-level approximations between named towns, not
+surveyed alignments — good enough to show a line passes near an estate,
+not for engineering use. Add a new entry the same way as an estate: copy
+an existing block, keep `path` as a plain array of `[lat, lng]` waypoints.
+
 ## Files
 
 - `index.html` — page structure
 - `styles.css` — design tokens + layout
 - `data.js` — estate records (edit this to update data)
+- `infrastructure.js` — railway/road overlay records
 - `app.js` — map/list/filter logic
 - `data.md` — original human-readable working notes and source list
