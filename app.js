@@ -18,6 +18,64 @@
     attribution: "&copy; OpenStreetMap contributors"
   }).addTo(map);
 
+  var INFRA_COLOR = { Railway: "#6b4c9a", Road: "#55606b" };
+  var INFRA_DASH = {
+    Existing: null,
+    "Under Construction": "9,7",
+    Stalled: "1,7",
+    Planned: "2,12"
+  };
+  var INFRA_WEIGHT = { Existing: 3.5, "Under Construction": 3.5, Stalled: 2.5, Planned: 2.5 };
+  var INFRA_OPACITY = { Existing: 0.85, "Under Construction": 0.85, Stalled: 0.55, Planned: 0.55 };
+
+  var infraLayers = { Railway: L.layerGroup(), Road: L.layerGroup() };
+
+  function infraPopupHtml(item) {
+    return (
+      '<div class="popup">' +
+      '<span class="popup-status infra-status-' + item.status.toLowerCase().replace(/\s+/g, "-") + '">' + esc(item.status) + "</span>" +
+      '<span class="popup-type ' + (item.category === "Railway" ? "popup-type-rail" : "popup-type-road") + '">' + esc(item.category) + "</span>" +
+      '<p class="popup-name">' + esc(item.name) + "</p>" +
+      '<p class="popup-note" style="margin-top:6px;">' + esc(item.description) + "</p>" +
+      '<p class="popup-note">' + esc(item.sourceNote) + "</p>" +
+      "</div>"
+    );
+  }
+
+  INFRASTRUCTURE.forEach(function (item) {
+    var line = L.polyline(item.path, {
+      color: INFRA_COLOR[item.category],
+      weight: INFRA_WEIGHT[item.status] || 3,
+      opacity: INFRA_OPACITY[item.status] != null ? INFRA_OPACITY[item.status] : 0.8,
+      dashArray: INFRA_DASH[item.status] || null
+    });
+    line.bindPopup(infraPopupHtml(item));
+    infraLayers[item.category].addLayer(line);
+  });
+
+  function updateInfraVisibility() {
+    var showInfra = document.getElementById("infra-toggle").checked;
+    var showRail = document.getElementById("infra-toggle-rail").checked;
+    var showRoad = document.getElementById("infra-toggle-road").checked;
+
+    if (showInfra && showRail) { if (!map.hasLayer(infraLayers.Railway)) infraLayers.Railway.addTo(map); }
+    else if (map.hasLayer(infraLayers.Railway)) map.removeLayer(infraLayers.Railway);
+
+    if (showInfra && showRoad) { if (!map.hasLayer(infraLayers.Road)) infraLayers.Road.addTo(map); }
+    else if (map.hasLayer(infraLayers.Road)) map.removeLayer(infraLayers.Road);
+  }
+
+  function initInfraControls() {
+    var master = document.getElementById("infra-toggle");
+    var sub = document.getElementById("infra-sub");
+    master.addEventListener("change", function () {
+      sub.hidden = !master.checked;
+      updateInfraVisibility();
+    });
+    document.getElementById("infra-toggle-rail").addEventListener("change", updateInfraVisibility);
+    document.getElementById("infra-toggle-road").addEventListener("change", updateInfraVisibility);
+  }
+
   function statusClass(status) {
     return STATUS_CLASS[status] || "completed";
   }
@@ -373,5 +431,6 @@
   initViewToggle();
   initCalculator();
   initModals();
+  initInfraControls();
   render();
 })();
