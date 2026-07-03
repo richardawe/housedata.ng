@@ -273,6 +273,7 @@ body {
   border-radius: 6px;
   border: 1px solid var(--gold);
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .finance-btn-primary { background: var(--gold); color: #fff; }
@@ -561,20 +562,220 @@ body {
   border-top: 1px dashed var(--line-strong);
 }
 
-.popup-finance a {
+.popup-finance-btn {
   color: var(--gold);
   font-size: 12.5px;
   font-weight: 600;
   text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
 }
 
-.popup-finance a:hover { text-decoration: underline; }
+.popup-finance-btn:hover { text-decoration: underline; }
 
 .popup-note {
   margin-top: 8px;
   font-size: 11px;
   color: var(--ink-faint);
   line-height: 1.4;
+}
+
+/* ---------------------------- modals ---------------------------- */
+
+body.modal-open { overflow: hidden; }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 16, 12, 0.55);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay[hidden] { display: none; }
+
+.modal-card {
+  position: relative;
+  background: var(--surface);
+  border-radius: 14px;
+  border-top: 4px solid var(--gold);
+  padding: 28px;
+  max-width: 420px;
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(10, 16, 12, 0.35);
+}
+
+.modal-card-wide { max-width: 520px; }
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: var(--paper);
+  border-radius: 50%;
+  color: var(--ink-soft);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-close:hover { background: var(--line); color: var(--ink); }
+
+.modal-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 4px;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0 0 10px;
+  color: var(--ink);
+  padding-right: 24px;
+}
+
+.modal-lede {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
+.modal-context {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--green);
+  background: var(--green-tint);
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin: -6px 0 16px;
+}
+
+.modal-body-text {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.modal-external-link {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green);
+  text-decoration: none;
+  margin-top: 12px;
+}
+
+.modal-external-link:hover { text-decoration: underline; }
+
+.modal-disclaimer {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line-strong);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-faint);
+}
+
+/* calculator */
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.calc-field input {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  padding: 7px 9px;
+}
+
+.calc-field input:focus { outline: 2px solid var(--green); outline-offset: 1px; }
+
+.calc-results {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.calc-result { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+
+.calc-result-label { font-size: 12px; color: var(--ink-soft); }
+
+.calc-result-value {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  text-align: right;
+}
+
+.calc-result-primary .calc-result-label { color: var(--green); font-weight: 600; }
+.calc-result-primary .calc-result-value { font-size: 19px; font-weight: 700; color: var(--green); }
+
+/* about MREIF */
+
+.about-terms {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 4px 0 16px;
+}
+
+.about-term {
+  background: var(--gold-tint);
+  border-radius: 8px;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.about-term-value {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--gold);
+}
+
+.about-term-label {
+  display: block;
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  margin-top: 2px;
 }
 
 /* ---------------------------- responsive ---------------------------- */
@@ -600,4 +801,7 @@ body {
   body[data-view="map"] .sidebar { display: none; }
   body[data-view="list"] .map-pane { display: none; }
   body[data-view="list"] .sidebar { max-height: none; flex: 1; }
+
+  .calc-grid { grid-template-columns: 1fr; }
+  .modal-card { padding: 22px; }
 }

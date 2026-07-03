@@ -95,12 +95,25 @@
       '<p class="popup-note">' + esc(estate.sourceNote) + "</p>" +
       "</div>" +
       '<div class="popup-finance">' +
-      '<div class="popup-enquire-label">Financing (external)</div>' +
-      '<a href="' + esc(MREIF.prequalifyUrl) + '" target="_blank" rel="noopener">Check MREIF mortgage eligibility &rarr;</a>' +
+      '<div class="popup-enquire-label">Financing</div>' +
+      '<button type="button" class="popup-finance-btn" data-open-modal="modal-calculator" data-estate-name="' + esc(estate.name) + '" data-estate-price="' + (extractPriceEstimate(estate.priceRange) || "") + '">Estimate a mortgage for this estate &rarr;</button>' +
       '<p class="popup-note">' + esc(MREIF.disclaimer) + "</p>" +
       "</div>" +
       "</div>"
     );
+  }
+
+  function extractPriceEstimate(priceRange) {
+    if (!priceRange) return null;
+    var avgMatch = priceRange.match(/avg[^\d₦]*₦\s*([\d,.]+)\s*([MB])?/i);
+    var match = avgMatch || priceRange.match(/₦\s*([\d,.]+)\s*([MB])?/i);
+    if (!match) return null;
+    var num = parseFloat(match[1].replace(/,/g, ""));
+    if (isNaN(num)) return null;
+    var suffix = (match[2] || "").toUpperCase();
+    if (suffix === "M") num *= 1e6;
+    else if (suffix === "B") num *= 1e9;
+    return Math.round(num);
   }
 
   function refreshIcon(id) {
@@ -255,6 +268,96 @@
     });
   }
 
+  var nairaFormat = new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", maximumFractionDigits: 0 });
+
+  function computeMortgage() {
+    var price = parseFloat(document.getElementById("calc-price").value) || 0;
+    var equityPct = parseFloat(document.getElementById("calc-equity").value) || 0;
+    var ratePct = parseFloat(document.getElementById("calc-rate").value) || 0;
+    var years = parseFloat(document.getElementById("calc-term").value) || 0;
+
+    var loanAmount = Math.max(price - price * (equityPct / 100), 0);
+    var months = Math.max(Math.round(years * 12), 1);
+    var monthlyRate = ratePct / 100 / 12;
+
+    var monthly;
+    if (monthlyRate === 0) {
+      monthly = loanAmount / months;
+    } else {
+      monthly = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
+    }
+    if (!isFinite(monthly)) monthly = 0;
+
+    var totalRepayment = monthly * months;
+    var totalInterest = totalRepayment - loanAmount;
+
+    document.getElementById("calc-loan-amount").textContent = nairaFormat.format(loanAmount);
+    document.getElementById("calc-monthly").textContent = nairaFormat.format(monthly);
+    document.getElementById("calc-interest").textContent = nairaFormat.format(Math.max(totalInterest, 0));
+    document.getElementById("calc-total").textContent = nairaFormat.format(totalRepayment);
+  }
+
+  function initCalculator() {
+    ["calc-price", "calc-equity", "calc-rate", "calc-term"].forEach(function (id) {
+      document.getElementById(id).addEventListener("input", computeMortgage);
+    });
+    computeMortgage();
+  }
+
+  function openModal(id, trigger) {
+    var overlay = document.getElementById(id);
+    if (!overlay) return;
+    overlay.hidden = false;
+    document.body.classList.add("modal-open");
+
+    if (id === "modal-calculator") {
+      var context = document.getElementById("calc-context");
+      var estateName = trigger && trigger.dataset.estateName;
+      var estatePrice = trigger && trigger.dataset.estatePrice;
+      if (estateName) {
+        context.hidden = false;
+        context.textContent = "Estimating for: " + estateName;
+      } else {
+        context.hidden = true;
+      }
+      if (estatePrice) {
+        document.getElementById("calc-price").value = estatePrice;
+      }
+      computeMortgage();
+    }
+  }
+
+  function closeModal(overlay) {
+    overlay.hidden = true;
+    document.body.classList.remove("modal-open");
+  }
+
+  function initModals() {
+    document.addEventListener("click", function (e) {
+      var opener = e.target.closest("[data-open-modal]");
+      if (opener) {
+        openModal(opener.dataset.openModal, opener);
+        return;
+      }
+      var closer = e.target.closest("[data-close-modal]");
+      if (closer) {
+        closeModal(closer.closest(".modal-overlay"));
+        return;
+      }
+      if (e.target.classList.contains("modal-overlay")) {
+        closeModal(e.target);
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal-overlay").forEach(function (overlay) {
+          if (!overlay.hidden) closeModal(overlay);
+        });
+      }
+    });
+  }
+
   // Initial paint
   Object.keys(markers).forEach(function (id) { markers[id].addTo(map); });
   var bounds = L.latLngBounds(ESTATES.map(function (e) { return [e.lat, e.lng]; }));
@@ -268,5 +371,7 @@
   initChipGroup("[data-filter-status]", function (chip) { state.status = chip.dataset.filterStatus; });
   initChipGroup("[data-filter-type]", function (chip) { state.type = chip.dataset.filterType; });
   initViewToggle();
+  initCalculator();
+  initModals();
   render();
 })();
