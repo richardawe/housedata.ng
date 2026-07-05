@@ -41,17 +41,9 @@ function require_user(): ?array {
     return $user;
 }
 
-// Temporary bootstrap allowlist: treated as admin even before the DB
-// `is_admin` flag is set via SQL on the server. Remove once regular
-// server access to run that UPDATE is confirmed.
-const BOOTSTRAP_ADMIN_EMAILS = ['richard3d7@gmail.com'];
-
 /** Same as require_user(), but 403s (and exits) if there's no admin session. */
 function require_admin(): array {
     $user = require_user();
-    if ($user && in_array(strtolower($user['email']), BOOTSTRAP_ADMIN_EMAILS, true)) {
-        $user['is_admin'] = true;
-    }
     if (!$user || !$user['is_admin']) {
         json_response(['error' => 'forbidden'], 403);
     }
