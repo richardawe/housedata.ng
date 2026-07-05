@@ -8,7 +8,7 @@
     "In Progress": "progress"
   };
 
-  var state = { status: "all", type: "all", stateFilter: "all", area: "all", selectedId: null };
+  var state = { status: "all", type: "all", stateFilter: "all", area: "all", query: "", selectedId: null };
   var markers = {};
 
   var map = L.map("map", { zoomControl: true, minZoom: 5 }).setView([7.5, 6.5], 6);
@@ -228,12 +228,25 @@
     });
   }
 
+  function matchesQuery(estate, query) {
+    var q = query.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      estate.name.toLowerCase().indexOf(q) !== -1 ||
+      estate.area.toLowerCase().indexOf(q) !== -1 ||
+      estate.lga.toLowerCase().indexOf(q) !== -1 ||
+      estate.state.toLowerCase().indexOf(q) !== -1 ||
+      (!!estate.agency && estate.agency.toLowerCase().indexOf(q) !== -1)
+    );
+  }
+
   function matchesFilter(estate) {
     var statusOk = state.status === "all" || estate.status === state.status;
     var typeOk = state.type === "all" || estate.type === state.type;
     var stateOk = state.stateFilter === "all" || estate.state === state.stateFilter;
     var areaOk = state.area === "all" || estate.lga === state.area;
-    return statusOk && typeOk && stateOk && areaOk;
+    var queryOk = matchesQuery(estate, state.query);
+    return statusOk && typeOk && stateOk && areaOk && queryOk;
   }
 
   function selectEstate(id, flyTo) {
@@ -323,8 +336,21 @@
     if (state.type !== "all") count++;
     if (state.stateFilter !== "all") count++;
     if (state.area !== "all") count++;
+    if (state.query.trim() !== "") count++;
     badge.hidden = count === 0;
     badge.textContent = count;
+  }
+
+  function initSearchInput() {
+    var input = document.getElementById("search-input");
+    var timer = null;
+    input.addEventListener("input", function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        state.query = input.value;
+        render();
+      }, 150);
+    });
   }
 
   function initChipGroup(selector, onSelect) {
@@ -490,6 +516,7 @@
   populateStateSelect();
   populateAreaSelect();
   initAreaSelect();
+  initSearchInput();
   initChipGroup("[data-filter-status]", function (chip) { state.status = chip.dataset.filterStatus; });
   initChipGroup("[data-filter-type]", function (chip) { state.type = chip.dataset.filterType; });
   initViewToggle();
