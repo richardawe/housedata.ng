@@ -184,6 +184,20 @@ body {
   padding: 5px 10px;
 }
 
+.search-input {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  padding: 5px 10px;
+  width: 200px;
+  max-width: 100%;
+}
+
+.search-input:focus { outline: 2px solid var(--green); outline-offset: 1px; }
+
 .view-toggle {
   margin-left: auto;
   display: none;
