@@ -143,6 +143,13 @@
     });
   }
 
+  function formatVerifiedDate(isoString) {
+    if (!isoString) return "";
+    var date = new Date(isoString);
+    if (isNaN(date.getTime())) return "";
+    return date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  }
+
   function popupHtml(estate) {
     var cls = statusClass(estate.status);
     var unitsLine = estate.units
@@ -152,6 +159,9 @@
       ? '<div class="popup-row"><span class="k">Price</span><span>' + esc(estate.priceRange) + "</span></div>"
       : "";
     var isBookmarked = bookmarkedIds.has(estate.id);
+    var sourceLine = estate.verified
+      ? '<p class="popup-verified">&#10003; Verified &mdash; confirmed ' + esc(formatVerifiedDate(estate.verifiedAt)) + "</p>"
+      : '<p class="popup-note">' + esc(estate.sourceNote) + "</p>";
     return (
       '<div class="popup">' +
       '<span class="popup-status status-' + cls + '">' + esc(estate.status) + "</span>" +
@@ -165,7 +175,7 @@
       '<div class="popup-enquire-label">Enquire</div>' +
       '<div class="popup-enquire-agency">' + esc(estate.enquiryContact.name) + "</div>" +
       '<div class="popup-links">' + contactLinks(estate.enquiryContact) + "</div>" +
-      '<p class="popup-note">' + esc(estate.sourceNote) + "</p>" +
+      sourceLine +
       "</div>" +
       '<div class="popup-finance">' +
       '<div class="popup-enquire-label">Financing</div>' +

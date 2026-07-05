@@ -1,0 +1,9 @@
+# User-uploaded verification photos. Uploads are validated as real
+# JPEG/PNG images server-side (api/verify-estate.php), but as a second
+# layer, never execute anything here even if that were ever bypassed.
+<IfModule mod_php7.c>
+  php_flag engine off
+</IfModule>
+<FilesMatch "\.(php|phtml|php3|php4|php5|phar|cgi|pl)$">
+  Require all denied
+</FilesMatch>

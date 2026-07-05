@@ -28,6 +28,8 @@ function format_estate(array $row): array {
         'agency' => $row['agency_display_name'],
         'enquiryContact' => $enquiryContact,
         'sourceNote' => $row['source_note'],
+        'verified' => (bool) $row['verified'],
+        'verifiedAt' => $row['verified_at'],
     ];
 }
 

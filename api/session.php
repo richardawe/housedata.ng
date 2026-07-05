@@ -21,7 +21,8 @@ if (empty($_COOKIE['hd_csrf'])) {
 $user = require_user();
 
 if ($user) {
-    json_response(['loggedIn' => true, 'email' => $user['email'], 'isAdmin' => $user['is_admin']]);
+    $isAdmin = $user['is_admin'] || in_array(strtolower($user['email']), BOOTSTRAP_ADMIN_EMAILS, true);
+    json_response(['loggedIn' => true, 'email' => $user['email'], 'isAdmin' => $isAdmin]);
 } else {
     json_response(['loggedIn' => false]);
 }

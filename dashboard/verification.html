@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verification — Housedata.ng</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../styles.css?v=20260712">
+<style>
+  .dash-main { max-width: 960px; margin: 0 auto; padding: 28px 24px 60px; }
+  .dash-section { margin-bottom: 36px; }
+  .dash-h2 { font-family: var(--font-display); font-weight: 600; font-size: 18px; color: var(--green-deep); margin: 0 0 14px; }
+  .dash-empty { color: var(--ink-faint); font-size: 13px; font-style: italic; }
+  .dash-note { font-size: 11px; color: var(--ink-faint); border-top: 1px dashed var(--line-strong); padding-top: 12px; margin-top: 40px; }
+
+  .v-search-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .v-search-row input { flex: 1; }
+  .v-result-list { display: flex; flex-direction: column; gap: 6px; }
+  .v-result-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; }
+  .v-result-name { font-weight: 600; }
+  .v-result-meta { color: var(--ink-faint); font-size: 11.5px; }
+  .v-invite-status { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-faint); }
+
+  .v-card { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+  .v-card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .v-card-name { font-weight: 700; }
+  .v-card-meta { font-size: 12px; color: var(--ink-soft); margin-bottom: 10px; }
+  .v-card-photos { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .v-card-photos img { width: 120px; height: 90px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); }
+  .v-card-actions { display: flex; gap: 8px; }
+  .v-btn { font-family: var(--font-body); font-size: 12.5px; font-weight: 600; border-radius: 999px; padding: 6px 14px; cursor: pointer; border: 1px solid var(--line-strong); background: var(--surface); }
+  .v-btn-approve { color: var(--green); border-color: var(--green); }
+  .v-btn-approve:hover { background: var(--green-tint); }
+  .v-btn-reject { color: #a3332b; border-color: #a3332b; }
+  .v-btn-reject:hover { background: #f6e6e4; }
+
+  .v-gate { max-width: 480px; margin: 60px auto; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <p class="eyebrow">Housedata.ng &middot; Internal</p>
+      <h1>Verification</h1>
+      <p class="strap">Invite an estate's on-file contact to confirm details and upload photos, then review submissions before marking a listing Verified.</p>
+    </div>
+  </div>
+</header>
+
+<main class="dash-main">
+
+  <section class="v-gate" id="v-gate" hidden>
+    <p>Admin sign-in required to use this page.</p>
+    <p><a href="../index.html">Sign in on the main site &rarr;</a>, then reload this page.</p>
+  </section>
+
+  <div id="v-content" hidden>
+    <section class="dash-section">
+      <h2 class="dash-h2">Invite an estate to verify</h2>
+      <div class="v-search-row">
+        <input type="search" id="v-search-input" placeholder="Search estate by name, area, or state…">
+      </div>
+      <div class="v-result-list" id="v-search-results"></div>
+    </section>
+
+    <section class="dash-section">
+      <h2 class="dash-h2">Pending review</h2>
+      <div id="v-review-queue"><p class="dash-empty">Loading…</p></div>
+    </section>
+
+    <section class="dash-section">
+      <h2 class="dash-h2">Recent invites</h2>
+      <div id="v-recent-invites"><p class="dash-empty">Loading…</p></div>
+    </section>
+  </div>
+
+  <p class="dash-note">Admin-gated via the same session as the main site (promote your account with <code>UPDATE users SET is_admin = true WHERE email = '…'</code>, or use the bootstrap admin email), and this folder should additionally be password-protected via cPanel Directory Privacy.</p>
+
+</main>
+
+<script src="verification.js?v=20260712"></script>
+</body>
+</html>
