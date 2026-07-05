@@ -1,13 +1,9 @@
 # Housedata.ng — Nigeria Government & Private Housing Estates
 
-A single-page map of government and private housing estates across
-Nigeria, live at [housedata.ng](https://housedata.ng/). Currently covers
-31 states — every geopolitical zone except the North West — 306
-estates — expanding state by state. South West, South East, North
-Central, and now North East (Adamawa, Bauchi, Borno, Gombe, Taraba,
-Yobe) are fully covered; only the North West (Jigawa, Kaduna, Katsina,
-Kebbi, Sokoto, Zamfara) remains. Plain HTML/CSS/JS frontend, no
-build step, no bundler — Leaflet.js
+A single-page map of government and private housing estates covering
+**all 36 Nigerian states and the FCT** — 328 estates and counting —
+live at [housedata.ng](https://housedata.ng/). Plain HTML/CSS/JS
+frontend, no build step, no bundler — Leaflet.js
 + OpenStreetMap tiles for the map. Estate data is served by a small PHP +
 PostgreSQL backend (see **Backend / database** below) rather than bundled
 into the page.

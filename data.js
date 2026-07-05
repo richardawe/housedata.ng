@@ -247,6 +247,42 @@ const AGENCIES = {
     phone: null,
     email: null,
     website: null
+  },
+  JSIPDC: {
+    name: "Jigawa State Investment & Property Development Company (JSIPDC)",
+    phone: null,
+    email: null,
+    website: "https://jsipdc.com"
+  },
+  KSDPC: {
+    name: "Kaduna State Development and Property Company (KSDPC)",
+    phone: null,
+    email: null,
+    website: "https://new.kdsg.gov.ng"
+  },
+  KATSINA_GOVT: {
+    name: "Katsina State Government",
+    phone: null,
+    email: null,
+    website: null
+  },
+  KEBBI_HOUSING: {
+    name: "Kebbi State Ministry of Lands and Housing",
+    phone: null,
+    email: null,
+    website: null
+  },
+  SOKOTO_GOVT: {
+    name: "Sokoto State Government",
+    phone: null,
+    email: null,
+    website: null
+  },
+  ZAMFARA_HOUSING: {
+    name: "Zamfara State Ministry of Housing and Urban Development",
+    phone: null,
+    email: null,
+    website: null
   }
 };
 
@@ -4993,5 +5029,363 @@ const ESTATES = [
     agency: "PWAN Group",
     enquiryContact: { name: "PWAN Group", phone: null, email: null, website: "https://www.pwanhomes.com/estates/northern/taraba" },
     sourceNote: "Source: pwanhomes.com, el-doradohomes.com — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // JIGAWA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "jigawa-nhp-dutse",
+    name: "National Housing Programme Estate, Dutse",
+    state: "Jigawa", type: "Government",
+    lat: 11.7700, lng: 9.3500,
+    area: "Dutse",
+    lga: "Dutse",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "1,465 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Commissioned by President Buhari, April 2022. Source: Housing Cable Nigeria — verify before publishing."
+  },
+  {
+    id: "jigawa-ibrahim-aliyu-bypass",
+    name: "Ibrahim Aliyu Bypass Road Estate",
+    state: "Jigawa", type: "Government",
+    lat: 11.7600, lng: 9.3300,
+    area: "Ibrahim Aliyu Bypass Road, Dutse",
+    lga: "Dutse",
+    unitTypes: "Not yet detailed publicly",
+    status: "In Progress",
+    units: "55 units",
+    priceRange: null,
+    agency: AGENCIES.JSIPDC.name,
+    enquiryContact: AGENCIES.JSIPDC,
+    sourceNote: "State government released a N2bn loan to the State Housing Development Authority for this and related estate development. Source: tvcnews.tv — verify before publishing."
+  },
+  {
+    id: "jigawa-560-mass-housing",
+    name: "560-Unit Mass Housing Programme",
+    state: "Jigawa", type: "Government",
+    lat: 11.7500, lng: 9.3600,
+    area: "9 LGAs: Babura, Birnin Kudu, Dutse, Gumel, Hadejia, Kafin Hausa, Kazaure, Maigatari, Ringim",
+    lga: "Dutse",
+    unitTypes: "2 bed semi-detached, 3 bed detached",
+    status: "In Progress",
+    units: "560 units (550 delivered 2024, 600 under construction 2025, 600 more approved for 2026)",
+    priceRange: null,
+    agency: AGENCIES.JSIPDC.name,
+    enquiryContact: AGENCIES.JSIPDC,
+    sourceNote: "N19.6bn approved; part of a rolling multi-year state-wide programme. Source: nigerianeye.com, tvcnews.tv — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // KADUNA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "kaduna-prefab-estate",
+    name: "Family Homes Prefabricated Housing Estate",
+    state: "Kaduna", type: "Government",
+    lat: 10.5100, lng: 7.4300,
+    area: "Kaduna",
+    lga: "Kaduna North",
+    unitTypes: "Prefabricated houses",
+    status: "Completed",
+    units: "100 buildings",
+    priceRange: null,
+    agency: AGENCIES.KSDPC.name,
+    enquiryContact: AGENCIES.KSDPC,
+    sourceNote: "Nigeria's first large-scale prefabricated mass housing estate, built by Family Homes Funds and executed by Karmod Nigeria in under 6 months. Source: EnviroNews Nigeria, karmod.com.ng — verify before publishing."
+  },
+  {
+    id: "kaduna-widows-estate",
+    name: "Widows Housing Estate",
+    state: "Kaduna", type: "Government",
+    lat: 10.6500, lng: 7.3800,
+    area: "Rigachikun, Igabi LGA",
+    lga: "Igabi",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.KSDPC.name,
+    enquiryContact: AGENCIES.KSDPC,
+    sourceNote: "Free housing for widows under the Family Homes Funds scheme. Source: housingtvafrica.com — verify before publishing."
+  },
+  {
+    id: "kaduna-renewed-hope-sobawa",
+    name: "Renewed Hope Housing Estate, Sobawa",
+    state: "Kaduna", type: "Government",
+    lat: 10.6400, lng: 7.3900,
+    area: "Sobawa, Rigachikun",
+    lga: "Igabi",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Groundbreaking performed by the Federal Housing Authority; construction start not independently confirmed. Source: ThisDayLive — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // KATSINA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "katsina-cosmos-agro-residential",
+    name: "COSMOS Agro-Residential Estate",
+    state: "Katsina", type: "Government",
+    lat: 12.5333, lng: 8.0333,
+    area: "Kankia (2,500 units) and Radda community, Charanchi LGA (1,250 units)",
+    lga: "Kankia",
+    unitTypes: "Mixed housing with backyard fish farming/vegetable gardens",
+    status: "Announced",
+    units: "3,750 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.KATSINA_GOVT.name,
+    enquiryContact: AGENCIES.KATSINA_GOVT,
+    sourceNote: "₦155bn MoU with COSMOS Residential City Nigeria Limited, 16-24 month build timeline; construction start not independently confirmed. Source: nigeriahousingmarket.com, ThisDayLive — verify before publishing."
+  },
+  {
+    id: "katsina-renewed-hope-estate",
+    name: "Renewed Hope Housing Estate",
+    state: "Katsina", type: "Government",
+    lat: 12.9800, lng: 7.6100,
+    area: "Katsina",
+    lga: "Katsina",
+    unitTypes: "1, 2, 3 bed semi-detached bungalows",
+    status: "Announced",
+    units: "200 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Source: Federal Ministry of Information and National Orientation — verify before publishing."
+  },
+  {
+    id: "katsina-jibia-mass-housing",
+    name: "Jibia Mass Housing Project",
+    state: "Katsina", type: "Government",
+    lat: 13.0967, lng: 7.2333,
+    area: "Jibia",
+    lga: "Jibia",
+    unitTypes: "2 bed houses with courtyard",
+    status: "Completed",
+    units: "152 units",
+    priceRange: null,
+    agency: AGENCIES.KATSINA_GOVT.name,
+    enquiryContact: AGENCIES.KATSINA_GOVT,
+    sourceNote: "Delivered in partnership with UNDP, funded by the Government of Germany; commissioned June 2026. Source: katsinastate.gov.ng, Leadership Newspaper — verify before publishing."
+  },
+  {
+    id: "katsina-batagarawa-estate",
+    name: "Batagarawa Housing Estate",
+    state: "Katsina", type: "Government",
+    lat: 13.0000, lng: 7.5900,
+    area: "Batagarawa, Katsina city",
+    lga: "Batagarawa",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.KATSINA_GOVT.name,
+    enquiryContact: AGENCIES.KATSINA_GOVT,
+    sourceNote: "One of several older state estates (1,848 units built since 1987 across Batagarawa, Kofar Marusa, Ahmadu Coomassie, Goruba and other sites). Source: katsinastate.gov.ng — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // KEBBI — Government
+  // ---------------------------------------------------------------
+  {
+    id: "kebbi-bagudu-estate",
+    name: "Gov. Abubakar Atiku Bagudu Housing Estate",
+    state: "Kebbi", type: "Government",
+    lat: 12.4600, lng: 4.2100,
+    area: "Sani Abacha Bypass, Birnin Kebbi",
+    lga: "Birnin Kebbi",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "500 units",
+    priceRange: null,
+    agency: AGENCIES.KEBBI_HOUSING.name,
+    enquiryContact: AGENCIES.KEBBI_HOUSING,
+    sourceNote: "Built in collaboration with Family Homes Limited. Source: promptnewsonline.com — verify before publishing."
+  },
+  {
+    id: "kebbi-5000-units-programme",
+    name: "5,000-Unit Housing Programme",
+    state: "Kebbi", type: "Government",
+    lat: 12.4500, lng: 4.1900,
+    area: "Birnin Kebbi",
+    lga: "Birnin Kebbi",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: "5,000 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.KEBBI_HOUSING.name,
+    enquiryContact: AGENCIES.KEBBI_HOUSING,
+    sourceNote: "Flagged off by the state governor; construction progress not independently confirmed. Source: newsdiaryonline.com — verify before publishing."
+  },
+  {
+    id: "kebbi-fha-pilot-500",
+    name: "FHA Pilot Housing Estate (500 units)",
+    state: "Kebbi", type: "Government",
+    lat: 12.4700, lng: 4.1800,
+    area: "Birnin Kebbi",
+    lga: "Birnin Kebbi",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: "500 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Governor pledged compensation to landowners for this FHA pilot; land allocation still in progress as of sourcing. Source: state government reporting — verify before publishing."
+  },
+  {
+    id: "kebbi-aliero-estate",
+    name: "M.A. Aliero Housing Estate",
+    state: "Kebbi", type: "Government",
+    lat: 12.4400, lng: 4.2000,
+    area: "Birnin Kebbi",
+    lga: "Birnin Kebbi",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.KEBBI_HOUSING.name,
+    enquiryContact: AGENCIES.KEBBI_HOUSING,
+    sourceNote: "Older, established estate in Birnin Kebbi. Source: local directory listings — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // SOKOTO — Government
+  // ---------------------------------------------------------------
+  {
+    id: "sokoto-new-city-500",
+    name: "New Sokoto City Housing Estate",
+    state: "Sokoto", type: "Government",
+    lat: 13.0700, lng: 5.1500,
+    area: "Wamakko LGA",
+    lga: "Wamakko",
+    unitTypes: "3 bed (300 units), 4 bed (200 units) flats",
+    status: "In Progress",
+    units: "500 units",
+    priceRange: null,
+    agency: AGENCIES.SOKOTO_GOVT.name,
+    enquiryContact: AGENCIES.SOKOTO_GOVT,
+    sourceNote: "₦22bn project with Teamwork Construction Company Nigeria Ltd, 12-month completion target disclosed at groundbreaking. Source: Tribune Online, Africa Housing News — verify before publishing."
+  },
+  {
+    id: "sokoto-gidan-salanke-estate",
+    name: "Gidan Salanke Housing Estate",
+    state: "Sokoto", type: "Government",
+    lat: 13.0200, lng: 5.2600,
+    area: "Gidan Salanke, Sokoto",
+    lga: "Sokoto North",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "500 units",
+    priceRange: null,
+    agency: AGENCIES.SOKOTO_GOVT.name,
+    enquiryContact: AGENCIES.SOKOTO_GOVT,
+    sourceNote: "Source: zawya.com — verify before publishing."
+  },
+  {
+    id: "sokoto-kwannawa-estate",
+    name: "Kwannawa Housing Estate",
+    state: "Sokoto", type: "Government",
+    lat: 13.0100, lng: 5.2300,
+    area: "Kwannawa, Sokoto",
+    lga: "Sokoto North",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "130 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Acquired by the state from the Federal Ministry of Housing. Source: zawya.com — verify before publishing."
+  },
+  {
+    id: "sokoto-nhp-80-units",
+    name: "National Housing Programme Estate",
+    state: "Sokoto", type: "Government",
+    lat: 13.0000, lng: 5.2500,
+    area: "Sokoto",
+    lga: "Sokoto North",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "80 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Inaugurated by President Buhari. Source: The Guardian Nigeria — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // ZAMFARA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "zamfara-nhp-damba",
+    name: "National Housing Programme Estate, Damba",
+    state: "Zamfara", type: "Government",
+    lat: 12.1600, lng: 6.6500,
+    area: "Damba, Gusau",
+    lga: "Gusau",
+    unitTypes: "1, 2, 3 bed bungalows",
+    status: "Completed",
+    units: "40 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Commissioned by President Buhari, May 2023. Source: state government reporting — verify before publishing."
+  },
+  {
+    id: "zamfara-police-estate",
+    name: "Police Housing Estate",
+    state: "Zamfara", type: "Government",
+    lat: 12.1800, lng: 6.6700,
+    area: "Gusau",
+    lga: "Gusau",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.ZAMFARA_HOUSING.name,
+    enquiryContact: AGENCIES.ZAMFARA_HOUSING,
+    sourceNote: "State governor pledged land in partnership with the Nigeria Police Trust Fund (NPTF); construction not yet confirmed started. Source: radionigeria.gov.ng — verify before publishing."
+  },
+  {
+    id: "zamfara-federal-low-cost-estate",
+    name: "Federal Low Cost Housing Estate",
+    state: "Zamfara", type: "Government",
+    lat: 12.1900, lng: 6.6300,
+    area: "Tudun Wada, Gusau-Kaura Namoda Road, Gusau",
+    lga: "Gusau",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Older, established federal estate in Gusau. Source: local directory listings — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // PRIVATE ESTATES — Kaduna
+  // ---------------------------------------------------------------
+  {
+    id: "pv-gimbiya-estate-kaduna",
+    name: "Gimbiya Estate",
+    state: "Kaduna", type: "Private",
+    lat: 10.5300, lng: 7.4500,
+    area: "Kaduna",
+    lga: "Kaduna North",
+    unitTypes: "500 sqm plots",
+    status: "In Progress",
+    units: null,
+    priceRange: "₦3M/plot",
+    agency: "PWAN Max",
+    enquiryContact: { name: "PWAN Max", phone: null, email: null, website: null },
+    sourceNote: "Source: pwan.com.ng — verify before publishing."
   }
 ];
