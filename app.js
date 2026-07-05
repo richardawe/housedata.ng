@@ -513,6 +513,71 @@
     if (banner) banner.hidden = false;
   }
 
+  function getCsrfCookie() {
+    var match = document.cookie.match(/(?:^|;\s*)hd_csrf=([^;]+)/);
+    return match ? decodeURIComponent(match[1]) : "";
+  }
+
+  function updateAccountUI(sessionData) {
+    var signinBtn = document.getElementById("account-signin-btn");
+    var signedIn = document.getElementById("account-signed-in");
+    var emailEl = document.getElementById("account-email");
+    if (sessionData && sessionData.loggedIn) {
+      signinBtn.hidden = true;
+      signedIn.hidden = false;
+      emailEl.textContent = sessionData.email;
+    } else {
+      signinBtn.hidden = false;
+      signedIn.hidden = true;
+    }
+  }
+
+  function initSession() {
+    fetch("api/session.php")
+      .then(function (r) { return r.json(); })
+      .then(updateAccountUI)
+      .catch(function () {});
+  }
+
+  function initLoginForm() {
+    var form = document.getElementById("login-form");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = document.getElementById("login-email").value.trim();
+      var status = document.getElementById("login-status");
+      var submitBtn = document.getElementById("login-submit");
+
+      submitBtn.disabled = true;
+      fetch("api/auth.php?action=request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+        body: JSON.stringify({ email: email, redirectTo: window.location.pathname })
+      })
+        .then(function () {
+          status.hidden = false;
+          status.textContent = "Check " + email + " for a sign-in link. It expires in 15 minutes.";
+        })
+        .catch(function () {
+          status.hidden = false;
+          status.textContent = "Something went wrong — try again.";
+        })
+        .then(function () {
+          submitBtn.disabled = false;
+        });
+    });
+  }
+
+  function initLogout() {
+    document.getElementById("account-signout-btn").addEventListener("click", function () {
+      fetch("api/auth.php?action=logout", {
+        method: "POST",
+        headers: { "X-CSRF-Token": getCsrfCookie() }
+      }).then(function () {
+        updateAccountUI({ loggedIn: false });
+      });
+    });
+  }
+
   function initApp(estates) {
     ESTATES = estates;
 
@@ -543,6 +608,9 @@
     initModals();
     initInfraControls();
     initSheets();
+    initSession();
+    initLoginForm();
+    initLogout();
     render();
   }
 

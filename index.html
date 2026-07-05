@@ -37,7 +37,7 @@
 
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 
-<link rel="stylesheet" href="styles.css?v=20260707">
+<link rel="stylesheet" href="styles.css?v=20260708">
 
 <script type="application/ld+json">
 {
@@ -65,6 +65,13 @@
 
 <div class="search-bar">
   <input type="search" id="search-input" class="search-input" placeholder="Search estate, area, or state…" autocomplete="off" aria-label="Search estates">
+  <div class="account-control">
+    <button type="button" class="account-btn" id="account-signin-btn" data-open-modal="modal-login">Sign in</button>
+    <div class="account-signed-in" id="account-signed-in" hidden>
+      <span class="account-email" id="account-email"></span>
+      <button type="button" class="account-btn" id="account-signout-btn">Log out</button>
+    </div>
+  </div>
 </div>
 
 <div class="compact-bar">
@@ -186,6 +193,24 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="modal-login" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <button type="button" class="modal-close" data-close-modal aria-label="Close">&times;</button>
+    <p class="modal-eyebrow">Account</p>
+    <h2 class="modal-title" id="login-title">Sign in</h2>
+    <p class="modal-lede">Enter your email and we'll send a one-time sign-in link — no password to remember.</p>
+    <form id="login-form">
+      <label class="calc-field">
+        <span>Email</span>
+        <input type="email" id="login-email" required placeholder="you@example.com">
+      </label>
+      <button type="submit" class="finance-btn finance-btn-primary login-submit-btn" id="login-submit">Send sign-in link</button>
+    </form>
+    <p class="modal-context" id="login-status" hidden></p>
+    <p class="modal-disclaimer">The link expires in 15 minutes and works once. We only ever use this to sign you in — no marketing email.</p>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-calculator" hidden>
   <div class="modal-card modal-card-wide" role="dialog" aria-modal="true" aria-labelledby="calc-title">
     <button type="button" class="modal-close" data-close-modal aria-label="Close">&times;</button>
@@ -262,8 +287,8 @@
 </div>
 
 <script src="vendor/leaflet/leaflet.js"></script>
-<script src="infrastructure.js?v=20260707"></script>
-<script src="app.js?v=20260707"></script>
-<script src="analytics.js?v=20260707"></script>
+<script src="infrastructure.js?v=20260708"></script>
+<script src="app.js?v=20260708"></script>
+<script src="analytics.js?v=20260708"></script>
 </body>
 </html>
