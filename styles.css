@@ -979,16 +979,55 @@ body.modal-open { overflow: hidden; }
 
 body.sheet-locked { overflow: hidden; }
 
+.sheet-backdrop:not([hidden]) { display: block; }
+
+/* Financing opens as a sheet at every width (not just mobile/tablet) —
+   triggered from a dedicated toolbar button on desktop instead of always
+   sitting inline, same interaction as the mobile Filters/Infrastructure
+   sheets just without waiting for the ≤1024px tier. */
+#sheet-financing {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  max-width: none;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -8px 30px rgba(10, 16, 12, 0.25);
+  z-index: 900;
+  transform: translateY(110%);
+  transition: transform 0.25s ease;
+}
+
+#sheet-financing.sheet-open { transform: translateY(0); }
+
+#sheet-financing .sheet-head { display: flex; }
+
+#sheet-financing .finance-banner-inner {
+  max-width: none;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 16px;
+  gap: 16px;
+}
+
+#sheet-financing .finance-banner-actions { flex-direction: column; align-items: stretch; }
+#sheet-financing .finance-banner-actions .finance-btn { width: 100%; text-align: center; }
+#sheet-financing .finance-banner-disclaimer { max-width: none; padding: 8px 16px 16px; }
+
+.toolbar-financing-btn { margin-left: auto; }
+
 /* ---------------------------- responsive ---------------------------- */
 
 @media (max-width: 1024px) {
   .compact-bar { display: flex; }
 
-  .sheet-backdrop:not([hidden]) { display: block; }
-
   .sheet-head { display: flex; }
 
-  #sheet-filters, #sheet-financing, #sheet-infra {
+  #sheet-filters, #sheet-infra {
     position: fixed;
     left: 0;
     right: 0;
@@ -1005,11 +1044,11 @@ body.sheet-locked { overflow: hidden; }
     transition: transform 0.25s ease;
   }
 
-  #sheet-filters.sheet-open, #sheet-financing.sheet-open, #sheet-infra.sheet-open {
+  #sheet-filters.sheet-open, #sheet-infra.sheet-open {
     transform: translateY(0);
   }
 
-  .toolbar-inner, .finance-banner-inner {
+  .toolbar-inner {
     max-width: none;
     flex-direction: column;
     align-items: stretch;
@@ -1017,9 +1056,7 @@ body.sheet-locked { overflow: hidden; }
     gap: 16px;
   }
 
-  .finance-banner-actions { flex-direction: column; align-items: stretch; }
-  .finance-banner-actions .finance-btn { width: 100%; text-align: center; }
-  .finance-banner-disclaimer { max-width: none; padding: 8px 16px 16px; }
+  .toolbar-financing-btn { display: none; }
 
   #sheet-infra.infra-control {
     padding: 0 0 16px;
