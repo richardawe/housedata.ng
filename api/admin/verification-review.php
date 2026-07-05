@@ -33,8 +33,17 @@ if ($action === 'approve') {
         ':person' => $invite['contact_person'],
         ':notes' => $invite['notes'],
     ]);
-    $pdo->prepare('UPDATE estates SET verified = true, verified_at = now() WHERE id = :eid')
-        ->execute([':eid' => $invite['estate_id']]);
+    $pdo->prepare(
+        'UPDATE estates
+         SET verified = true, verified_at = now(),
+             verified_photo1_path = :p1, verified_photo2_path = :p2, verified_photo3_path = :p3
+         WHERE id = :eid'
+    )->execute([
+        ':eid' => $invite['estate_id'],
+        ':p1' => $invite['image1_path'],
+        ':p2' => $invite['image2_path'],
+        ':p3' => $invite['image3_path'],
+    ]);
 }
 
 $pdo->prepare(
