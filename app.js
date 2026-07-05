@@ -24,6 +24,8 @@
   var ESTATES = [];
   var bookmarkedIds = new Set();
   var isLoggedIn = false;
+  var currentCalcEstate = { id: null, name: null };
+  var financiersLoaded = false;
 
   var map = L.map("map", { zoomControl: true, minZoom: 5 }).setView([7.5, 6.5], 6);
 
@@ -185,7 +187,7 @@
       "</div>" +
       '<div class="popup-finance">' +
       '<div class="popup-enquire-label">Financing</div>' +
-      '<button type="button" class="popup-finance-btn" data-open-modal="modal-calculator" data-estate-name="' + esc(estate.name) + '" data-estate-price="' + (extractPriceEstimate(estate.priceRange) || "") + '">Estimate a mortgage for this estate &rarr;</button>' +
+      '<button type="button" class="popup-finance-btn" data-open-modal="modal-calculator" data-estate-id="' + esc(estate.id) + '" data-estate-name="' + esc(estate.name) + '" data-estate-price="' + (extractPriceEstimate(estate.priceRange) || "") + '">Estimate a mortgage for this estate &rarr;</button>' +
       '<p class="popup-note">' + esc(MREIF.disclaimer) + "</p>" +
       "</div>" +
       '<button type="button" class="popup-bookmark-btn' + (isBookmarked ? " is-bookmarked" : "") + '" data-bookmark-id="' + esc(estate.id) + '" aria-label="' + (isBookmarked ? "Remove bookmark" : "Bookmark this estate") + '">' + (isBookmarked ? "★ Saved" : "☆ Save") + "</button>" +
@@ -452,6 +454,86 @@
     computeMortgage();
   }
 
+  function loadFinanciersOnce() {
+    if (financiersLoaded) return;
+    financiersLoaded = true;
+    fetch("api/financiers.php")
+      .then(function (r) { return r.json(); })
+      .then(function (financiers) {
+        var select = document.getElementById("lead-financier");
+        select.innerHTML = financiers.map(function (f) {
+          return '<option value="' + f.id + '">' + esc(f.name) + "</option>";
+        }).join("");
+      })
+      .catch(function () {});
+  }
+
+  function initLeadForm() {
+    loadFinanciersOnce();
+
+    document.getElementById("calc-lead-btn").addEventListener("click", function () {
+      var estateLabel = currentCalcEstate.name || "General financing inquiry";
+      document.getElementById("lead-context").textContent = "Regarding: " + estateLabel;
+      document.getElementById("lead-form").hidden = false;
+      document.getElementById("lead-form").reset();
+      document.getElementById("lead-success").hidden = true;
+      document.getElementById("lead-error").hidden = true;
+      document.getElementById("lead-submit").disabled = false;
+
+      closeModal(document.getElementById("modal-calculator"));
+      openModal("modal-lead");
+    });
+
+    document.getElementById("lead-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var errorEl = document.getElementById("lead-error");
+      var submitBtn = document.getElementById("lead-submit");
+      errorEl.hidden = true;
+      submitBtn.disabled = true;
+
+      var loanContext = {
+        homePrice: document.getElementById("calc-price").value,
+        equityPct: document.getElementById("calc-equity").value,
+        ratePct: document.getElementById("calc-rate").value,
+        termYears: document.getElementById("calc-term").value,
+        estimatedMonthlyPayment: document.getElementById("calc-monthly").textContent
+      };
+
+      var payload = {
+        estateId: currentCalcEstate.id,
+        estateName: currentCalcEstate.name,
+        financierId: document.getElementById("lead-financier").value,
+        applicantName: document.getElementById("lead-name").value.trim(),
+        applicantEmail: document.getElementById("lead-email").value.trim(),
+        applicantPhone: document.getElementById("lead-phone").value.trim(),
+        loanContext: loanContext,
+        company: document.getElementById("lead-company").value
+      };
+
+      fetch("api/leads.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+        body: JSON.stringify(payload)
+      })
+        .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
+        .then(function (result) {
+          if (!result.ok) {
+            errorEl.textContent = result.data.error || "Something went wrong — try again.";
+            errorEl.hidden = false;
+            submitBtn.disabled = false;
+            return;
+          }
+          document.getElementById("lead-form").hidden = true;
+          document.getElementById("lead-success").hidden = false;
+        })
+        .catch(function () {
+          errorEl.textContent = "Something went wrong — try again.";
+          errorEl.hidden = false;
+          submitBtn.disabled = false;
+        });
+    });
+  }
+
   function openModal(id, trigger) {
     var overlay = document.getElementById(id);
     if (!overlay) return;
@@ -462,6 +544,7 @@
       var context = document.getElementById("calc-context");
       var estateName = trigger && trigger.dataset.estateName;
       var estatePrice = trigger && trigger.dataset.estatePrice;
+      currentCalcEstate = { id: (trigger && trigger.dataset.estateId) || null, name: estateName || null };
       if (estateName) {
         context.hidden = false;
         context.textContent = "Estimating for: " + estateName;
@@ -748,7 +831,13 @@
     initLoginForm();
     initLogout();
     initBookmarks();
+    initLeadForm();
     render();
+
+    var deepLinkId = new URLSearchParams(window.location.search).get("estate");
+    if (deepLinkId && markers[deepLinkId]) {
+      selectEstate(deepLinkId, true);
+    }
   }
 
   // Estates now live in Postgres (see db/migrations/0001_init.sql) instead

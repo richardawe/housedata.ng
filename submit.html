@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Submit your estate — Housedata.ng</title>
+<meta name="description" content="Add your housing estate to Housedata.ng's map of Nigerian government and private housing.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#073d27">
+<link rel="canonical" href="https://housedata.ng/submit.html">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23073d27'/%3E%3Ccircle cx='16' cy='14' r='6' fill='none' stroke='%23a97a26' stroke-width='2.4'/%3E%3Cpath d='M16 20 L16 25' stroke='%23a97a26' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css?v=20260716">
+</head>
+<body class="ab-body">
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <p class="eyebrow">Housedata.ng</p>
+      <h1>Submit your estate</h1>
+      <p class="strap">Developer or agency with an estate that isn't listed yet? Add it here. Every submission is reviewed before it goes live — nothing publishes automatically.</p>
+    </div>
+  </div>
+</header>
+
+<main class="ab-main">
+
+  <section class="ab-section" id="submit-form-section">
+    <form id="submit-form">
+      <h2 class="ab-h2">The estate</h2>
+      <label class="calc-field">
+        <span>Estate name</span>
+        <input type="text" id="sub-name" required maxlength="200">
+      </label>
+      <div class="calc-grid">
+        <label class="calc-field">
+          <span>State</span>
+          <input type="text" id="sub-state" required maxlength="60">
+        </label>
+        <label class="calc-field">
+          <span>LGA</span>
+          <input type="text" id="sub-lga" required maxlength="80">
+        </label>
+      </div>
+      <label class="calc-field">
+        <span>Area / neighborhood</span>
+        <input type="text" id="sub-area" required maxlength="200">
+      </label>
+      <div class="calc-grid">
+        <label class="calc-field">
+          <span>Type</span>
+          <select id="sub-type">
+            <option value="Private" selected>Private</option>
+            <option value="Government">Government</option>
+          </select>
+        </label>
+        <label class="calc-field">
+          <span>Status</span>
+          <select id="sub-status">
+            <option value="Announced" selected>Announced</option>
+            <option value="Planned">Planned</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Stalled">Stalled</option>
+          </select>
+        </label>
+      </div>
+      <div class="calc-grid">
+        <label class="calc-field">
+          <span>Latitude</span>
+          <input type="number" id="sub-lat" step="any" required placeholder="e.g. 6.5244">
+        </label>
+        <label class="calc-field">
+          <span>Longitude</span>
+          <input type="number" id="sub-lng" step="any" required placeholder="e.g. 3.3792">
+        </label>
+      </div>
+      <p class="modal-disclaimer">Find coordinates by right-clicking the location on Google Maps and copying the numbers shown.</p>
+
+      <div class="calc-grid">
+        <label class="calc-field">
+          <span>Unit types (optional)</span>
+          <input type="text" id="sub-unit-types" maxlength="200" placeholder="e.g. 2, 3 bed flats">
+        </label>
+        <label class="calc-field">
+          <span>Scale (optional)</span>
+          <input type="text" id="sub-units-text" maxlength="100" placeholder="e.g. 200 units">
+        </label>
+      </div>
+      <label class="calc-field">
+        <span>Price range (optional)</span>
+        <input type="text" id="sub-price-range" maxlength="200" placeholder="e.g. ₦25M – ₦40M">
+      </label>
+
+      <h2 class="ab-h2" style="margin-top:24px;">Your details</h2>
+      <label class="calc-field">
+        <span>Developer / organization</span>
+        <input type="text" id="sub-developer-org" required maxlength="200">
+      </label>
+      <div class="calc-grid">
+        <label class="calc-field">
+          <span>Your name</span>
+          <input type="text" id="sub-submitter-name" required maxlength="120" autocomplete="name">
+        </label>
+        <label class="calc-field">
+          <span>Your email</span>
+          <input type="email" id="sub-submitter-email" required maxlength="200" autocomplete="email">
+        </label>
+      </div>
+      <label class="calc-field">
+        <span>Your phone (optional)</span>
+        <input type="tel" id="sub-submitter-phone" maxlength="40" autocomplete="tel">
+      </label>
+
+      <h2 class="ab-h2" style="margin-top:24px;">Public enquiry contact (optional)</h2>
+      <p class="ab-lede">Shown to visitors on the listing. Leave blank to use your own details above.</p>
+      <div class="calc-grid">
+        <label class="calc-field">
+          <span>Contact name</span>
+          <input type="text" id="sub-contact-name" maxlength="200">
+        </label>
+        <label class="calc-field">
+          <span>Contact phone</span>
+          <input type="tel" id="sub-contact-phone" maxlength="60">
+        </label>
+      </div>
+      <div class="calc-grid">
+        <label class="calc-field">
+          <span>Contact email</span>
+          <input type="email" id="sub-contact-email" maxlength="200">
+        </label>
+        <label class="calc-field">
+          <span>Website</span>
+          <input type="url" id="sub-contact-website" maxlength="200">
+        </label>
+      </div>
+
+      <label class="calc-field">
+        <span>Source / status note (optional)</span>
+        <input type="text" id="sub-source-note" maxlength="500" placeholder="e.g. how you'd like this described on the listing">
+      </label>
+
+      <input type="text" id="sub-company" name="company" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;">
+
+      <p class="modal-disclaimer" id="submit-error" hidden></p>
+      <button type="submit" class="finance-btn finance-btn-primary login-submit-btn" id="submit-btn">Submit for review</button>
+    </form>
+  </section>
+
+  <section class="ab-section" id="submit-done" hidden>
+    <h2 class="ab-h2">Thanks — submitted for review</h2>
+    <p class="ab-lede">A team member will review this shortly. If approved, it goes live immediately with no further action from you — you'll get an email either way.</p>
+    <p class="ab-back"><a href="index.html">&larr; Back to Housedata.ng</a></p>
+  </section>
+
+  <p class="ab-back"><a href="index.html">&larr; Browse housing estates on Housedata.ng</a></p>
+
+</main>
+
+<script src="submit.js?v=20260716"></script>
+</body>
+</html>

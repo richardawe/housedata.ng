@@ -1060,6 +1060,7 @@ body.modal-open { overflow: hidden; }
   padding: 6px 12px;
   cursor: pointer;
   white-space: nowrap;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 6px;

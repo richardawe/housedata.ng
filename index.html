@@ -37,7 +37,7 @@
 
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 
-<link rel="stylesheet" href="styles.css?v=20260713">
+<link rel="stylesheet" href="styles.css?v=20260716">
 
 <script type="application/ld+json">
 {
@@ -121,6 +121,7 @@
         <option value="all">All areas</option>
       </select>
     </div>
+    <a class="compact-btn" href="submit.html">Submit an estate</a>
     <button type="button" class="compact-btn toolbar-financing-btn" data-open-sheet="sheet-financing">Financing</button>
   </div>
 </div>
@@ -258,8 +259,48 @@
       </div>
     </div>
 
+    <button type="button" class="finance-btn finance-btn-ghost" id="calc-lead-btn">Talk to a lender about this &rarr;</button>
     <a class="modal-external-link" href="https://housing.mreif.com.ng/pre-qualifier" target="_blank" rel="noopener">Apply / check real eligibility on MREIF &rarr;</a>
     <p class="modal-disclaimer">housedata.ng is not affiliated with MREIF. Figures are illustrative — MREIF's real rate, term, and eligibility depend on income, credit, and program rules current at time of application.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-lead" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="lead-title">
+    <button type="button" class="modal-close" data-close-modal aria-label="Close">&times;</button>
+    <p class="modal-eyebrow">Financing</p>
+    <h2 class="modal-title" id="lead-title">Talk to a lender</h2>
+    <p class="modal-lede">Share your details and this estimate with a real lender. housedata.ng doesn't process applications — this just passes your enquiry along.</p>
+    <p class="modal-context" id="lead-context"></p>
+
+    <form id="lead-form">
+      <label class="calc-field">
+        <span>Lender</span>
+        <select id="lead-financier" required></select>
+      </label>
+      <label class="calc-field">
+        <span>Your name</span>
+        <input type="text" id="lead-name" required maxlength="120" autocomplete="name">
+      </label>
+      <label class="calc-field">
+        <span>Email</span>
+        <input type="email" id="lead-email" required maxlength="200" autocomplete="email">
+      </label>
+      <label class="calc-field">
+        <span>Phone</span>
+        <input type="tel" id="lead-phone" required maxlength="40" autocomplete="tel">
+      </label>
+      <input type="text" id="lead-company" name="company" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;">
+
+      <p class="modal-disclaimer" id="lead-error" hidden></p>
+      <button type="submit" class="finance-btn finance-btn-primary login-submit-btn" id="lead-submit">Send my details</button>
+    </form>
+
+    <div id="lead-success" hidden>
+      <p class="modal-body-text">Thanks — your details were sent. The lender may reach out directly.</p>
+    </div>
+
+    <p class="modal-disclaimer">housedata.ng is not a lender and can't guarantee a response. Your details are shared only with the lender you select above.</p>
   </div>
 </div>
 
@@ -288,8 +329,8 @@
 </div>
 
 <script src="vendor/leaflet/leaflet.js"></script>
-<script src="infrastructure.js?v=20260713"></script>
-<script src="app.js?v=20260713"></script>
-<script src="analytics.js?v=20260713"></script>
+<script src="infrastructure.js?v=20260716"></script>
+<script src="app.js?v=20260716"></script>
+<script src="analytics.js?v=20260716"></script>
 </body>
 </html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financier leads — Housedata.ng</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../styles.css?v=20260716">
+<style>
+  .dash-main { max-width: 960px; margin: 0 auto; padding: 28px 24px 60px; }
+  .dash-section { margin-bottom: 36px; }
+  .dash-h2 { font-family: var(--font-display); font-weight: 600; font-size: 18px; color: var(--green-deep); margin: 0 0 14px; }
+  .dash-empty { color: var(--ink-faint); font-size: 13px; font-style: italic; }
+  .dash-note { font-size: 11px; color: var(--ink-faint); border-top: 1px dashed var(--line-strong); padding-top: 12px; margin-top: 40px; }
+
+  .fin-form-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .fin-form-row input { flex: 1; min-width: 140px; }
+  .fin-list, .lead-list { display: flex; flex-direction: column; gap: 6px; }
+  .fin-row, .lead-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; }
+  .fin-row.is-inactive { opacity: 0.55; }
+  .fin-name, .lead-name { font-weight: 600; }
+  .fin-meta, .lead-meta { color: var(--ink-faint); font-size: 11.5px; }
+  .lead-status { font-family: var(--font-mono); font-size: 10.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line-strong); }
+  .lead-status-sent { color: var(--green); border-color: var(--green); }
+  .lead-status-failed { color: #a3332b; border-color: #a3332b; }
+  .lead-status-new { color: var(--ink-soft); }
+  .v-btn { font-family: var(--font-body); font-size: 12.5px; font-weight: 600; border-radius: 999px; padding: 6px 14px; cursor: pointer; border: 1px solid var(--line-strong); background: var(--surface); }
+
+  .v-gate { max-width: 480px; margin: 60px auto; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <p class="eyebrow">Housedata.ng &middot; Internal</p>
+      <h1>Financier leads</h1>
+      <p class="strap">Manage lenders shown in the mortgage calculator's "Talk to a lender" flow, and see every lead captured so far.</p>
+    </div>
+  </div>
+</header>
+
+<main class="dash-main">
+
+  <section class="v-gate" id="v-gate" hidden>
+    <p>Admin sign-in required to use this page.</p>
+    <p><a href="../index.html">Sign in on the main site &rarr;</a>, then reload this page.</p>
+  </section>
+
+  <div id="v-content" hidden>
+    <section class="dash-section">
+      <h2 class="dash-h2">Add a lender</h2>
+      <form id="fin-form" class="fin-form-row">
+        <input type="text" id="fin-name" placeholder="Lender name" required maxlength="200">
+        <input type="email" id="fin-email" placeholder="Contact email" required maxlength="200">
+        <input type="tel" id="fin-phone" placeholder="Contact phone (optional)" maxlength="40">
+        <button type="submit" class="v-btn">Add</button>
+      </form>
+      <div class="fin-list" id="fin-list"><p class="dash-empty">Loading…</p></div>
+    </section>
+
+    <section class="dash-section">
+      <h2 class="dash-h2">Recent leads</h2>
+      <div class="lead-list" id="lead-list"><p class="dash-empty">Loading…</p></div>
+    </section>
+  </div>
+
+  <p class="dash-note">Admin-gated via the same session as the main site, and this folder should additionally be password-protected via cPanel Directory Privacy.</p>
+
+</main>
+
+<script src="leads.js?v=20260716"></script>
+</body>
+</html>
