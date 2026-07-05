@@ -833,6 +833,11 @@
     initBookmarks();
     initLeadForm();
     render();
+
+    var deepLinkId = new URLSearchParams(window.location.search).get("estate");
+    if (deepLinkId && markers[deepLinkId]) {
+      selectEstate(deepLinkId, true);
+    }
   }
 
   // Estates now live in Postgres (see db/migrations/0001_init.sql) instead
