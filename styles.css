@@ -810,6 +810,20 @@ body {
   line-height: 1.4;
 }
 
+.popup-verified-photos {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.popup-verified-photos img {
+  width: 60px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+}
+
 /* ---------------------------- modals ---------------------------- */
 
 body.modal-open { overflow: hidden; }

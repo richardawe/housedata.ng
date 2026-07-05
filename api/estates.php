@@ -30,6 +30,9 @@ function format_estate(array $row): array {
         'sourceNote' => $row['source_note'],
         'verified' => (bool) $row['verified'],
         'verifiedAt' => $row['verified_at'],
+        'verifiedPhotos' => array_values(array_filter([
+            $row['verified_photo1_path'], $row['verified_photo2_path'], $row['verified_photo3_path'],
+        ])),
     ];
 }
 

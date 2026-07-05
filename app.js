@@ -162,6 +162,11 @@
     var sourceLine = estate.verified
       ? '<p class="popup-verified">&#10003; Verified &mdash; confirmed ' + esc(formatVerifiedDate(estate.verifiedAt)) + "</p>"
       : '<p class="popup-note">' + esc(estate.sourceNote) + "</p>";
+    var photosHtml = estate.verified && estate.verifiedPhotos && estate.verifiedPhotos.length
+      ? '<div class="popup-verified-photos">' + estate.verifiedPhotos.map(function (path) {
+          return '<a href="' + esc(path) + '" target="_blank" rel="noopener"><img src="' + esc(path) + '" alt="Verified photo of ' + esc(estate.name) + '" loading="lazy"></a>';
+        }).join("") + "</div>"
+      : "";
     return (
       '<div class="popup">' +
       '<span class="popup-status status-' + cls + '">' + esc(estate.status) + "</span>" +
@@ -176,6 +181,7 @@
       '<div class="popup-enquire-agency">' + esc(estate.enquiryContact.name) + "</div>" +
       '<div class="popup-links">' + contactLinks(estate.enquiryContact) + "</div>" +
       sourceLine +
+      photosHtml +
       "</div>" +
       '<div class="popup-finance">' +
       '<div class="popup-enquire-label">Financing</div>' +
