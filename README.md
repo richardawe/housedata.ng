@@ -93,7 +93,14 @@ below — nothing reads it at runtime anymore.
 **One-time setup** (cPanel → PostgreSQL Databases + MultiPHP Manager):
 
 1. Create a Postgres database + role, and enable the `pdo_pgsql`/`pgsql`
-   PHP extensions for the site.
+   PHP extensions for the site. **Gotcha**: MultiPHP Manager's extension
+   toggle applies to the *web* PHP handler for your domain, but the `php`
+   you get over SSH/Terminal can be a completely different install —
+   check with `php -m | grep pgsql` after enabling it. If that's empty,
+   the extension package may not even be installed on the box; on a
+   cPanel/EasyApache server that's `sudo yum install ea-phpXX-php-pgsql`
+   (swap `XX` for your version, e.g. `ea-php83`) via WHM's EasyApache 4 if
+   you don't have root yourself.
 2. Copy `api/config.example.php` to `api/config.php` **directly on the
    server** (cPanel File Manager or SFTP) and fill in the real DB/SMTP
    values. This file is gitignored and must never be committed or pushed
@@ -113,11 +120,39 @@ below — nothing reads it at runtime anymore.
 `api/estates.php` is the only public read endpoint so far
 (`?q=`/`state=`/`lga=`/`type=`/`status=` filters, backed by a Postgres
 `tsvector`/GIN index for `q`). `api/_db.php`/`api/_lib.php` hold shared
-PDO/response helpers that later phases (accounts, verification,
-submissions, financier leads — see the project's phased roadmap) build
-on top of. `scripts/`, `db/`, and `api/config.php` are all blocked from
-direct HTTP access via their own `.htaccess` files, on top of not being
-web-routable in the first place.
+PDO/response helpers that later phases (verification, submissions,
+financier leads — see the project's phased roadmap) build on top of.
+`scripts/`, `db/`, and `api/config.php` are all blocked from direct HTTP
+access via their own `.htaccess` files, on top of not being web-routable
+in the first place.
+
+### Accounts (magic-link, no passwords)
+
+`api/auth.php` (`?action=request|verify|logout`) + `api/session.php`
+implement email magic-link sign-in: enter an email (via the "Sign in"
+button next to the search bar) → a one-time link is emailed (15-minute
+expiry, single-use, only ever stored as a SHA-256 hash) → clicking it
+sets a 30-day session cookie. No passwords anywhere. `api/session.php`
+also issues the `hd_csrf` cookie used by every state-changing endpoint
+(double-submit pattern — the frontend sends it back as an `X-CSRF-Token`
+header).
+
+- **PHPMailer** is vendored at `vendor/phpmailer/` (same pattern as
+  Leaflet — fetched once, not a Composer dependency), wrapped by
+  `api/mailer.php`'s `send_mail()`. Uses the `SMTP_*` values from
+  `api/config.php`, with a 10-second connect timeout so a slow/unreachable
+  SMTP host fails fast instead of tying up a PHP worker indefinitely.
+- **Becoming an admin**: there's no self-service admin signup. Sign in
+  once with your own email through the normal flow, then run
+  `UPDATE users SET is_admin = true WHERE email = 'you@example.com';`
+  directly against the database. `is_admin` is what later phases'
+  moderation/verification/leads admin screens check.
+- **Rate limiting**: magic-link requests are capped per-email and per-IP
+  (`rate_limits` table, hashed identifiers — raw IPs are never stored,
+  matching the analytics privacy stance) and the response is identical
+  whether a request succeeds, is rate-limited, or the email doesn't have
+  an account yet, so the endpoint can't be used to enumerate registered
+  emails.
 
 ## Data status — read before presenting
 
@@ -302,8 +337,12 @@ and a render call in `dashboard.js`.
 - `infrastructure.js` — railway/road overlay records (still static)
 - `data.md` — original human-readable working notes and source list
 - `api/` — PHP backend: `estates.php` (public read endpoint),
-  `_db.php`/`_lib.php` (shared helpers), `config.example.php` (committed
-  template — real `config.php` is gitignored and created on the server)
+  `auth.php`/`session.php` (magic-link accounts), `mailer.php` (PHPMailer
+  wrapper), `_db.php`/`_lib.php` (shared helpers), `config.example.php`
+  (committed template — real `config.php` is gitignored and created on
+  the server)
+- `vendor/phpmailer/` — vendored PHPMailer (same pattern as
+  `vendor/leaflet/` — fetched once, not a Composer dependency)
 - `db/migrations/` — Postgres schema (one file covers every backend phase)
 - `scripts/` — one-time `data.js` → Postgres migration tooling (CLI-only,
   blocked from HTTP access)
