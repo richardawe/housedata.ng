@@ -181,6 +181,36 @@ const AGENCIES = {
     phone: null,
     email: null,
     website: "https://imostate.gov.ng"
+  },
+  BIPC: {
+    name: "Benue Investment and Property Company Limited (BIPC)",
+    phone: null,
+    email: null,
+    website: null
+  },
+  KIPL: {
+    name: "Kogi Investment and Properties Limited (KIPL)",
+    phone: null,
+    email: null,
+    website: "https://kiplonline.com.ng"
+  },
+  KWARA_HOUSING: {
+    name: "Kwara State Ministry of Housing and Urban Development",
+    phone: null,
+    email: null,
+    website: "https://kwarastate.gov.ng/ministry-of-housing-and-urban-development/"
+  },
+  NIGER_HOUSING: {
+    name: "Niger State Housing Corporation",
+    phone: null,
+    email: null,
+    website: null
+  },
+  PLATEAU_HOUSING: {
+    name: "Plateau State Ministry of Housing and Urban Development",
+    phone: null,
+    email: null,
+    website: "https://www.plateaustate.gov.ng"
   }
 };
 
@@ -4151,5 +4181,408 @@ const ESTATES = [
     agency: "PWAN Haven",
     enquiryContact: { name: "PWAN Haven", phone: null, email: null, website: null },
     sourceNote: "Source: property listing aggregators — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // BENUE — Government
+  // ---------------------------------------------------------------
+  {
+    id: "benue-eco-city-estate",
+    name: "Eco-City Housing Estate",
+    state: "Benue", type: "Government",
+    lat: 7.7200, lng: 8.5450,
+    area: "Former Benue Brewery Limited Quarters, Makurdi",
+    lga: "Makurdi",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: "1,080 units (planned, first phases 32 + 48 units)",
+    priceRange: null,
+    agency: AGENCIES.BIPC.name,
+    enquiryContact: AGENCIES.BIPC,
+    sourceNote: "Flagged off by the state government via BIPC; allocation planned 40% civil servants / 40% general public / 20% low-income. Source: ThisDayLive, ndigerianhousingmarket.com, Tribune — verify before publishing."
+  },
+  {
+    id: "benue-nhp-welfare-quarters",
+    name: "National Housing Programme Estate, Welfare Quarters",
+    state: "Benue", type: "Government",
+    lat: 7.7400, lng: 8.5200,
+    area: "Welfare Quarters–Mopol Barracks Road, Makurdi",
+    lga: "Makurdi",
+    unitTypes: "1, 2, 3 bed bungalows",
+    status: "Completed",
+    units: "116 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Handed over from FMHUD to BIPC on behalf of Benue State Government. Source: Federal Ministry of Information and National Orientation, AIT — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // KOGI — Government
+  // ---------------------------------------------------------------
+  {
+    id: "kogi-nhp-crusher-lokoja",
+    name: "National Housing Estate, Crusher",
+    state: "Kogi", type: "Government",
+    lat: 7.7900, lng: 6.7400,
+    area: "Crusher, Lokoja",
+    lga: "Lokoja",
+    unitTypes: "1, 2, 3 bed bungalows",
+    status: "Completed",
+    units: "76 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Commissioned by President Buhari; Kogi State Government provided the land. Source: Tribune Online — verify before publishing."
+  },
+  {
+    id: "kogi-fhf-228-units",
+    name: "Family Homes Funds Estate (228 units)",
+    state: "Kogi", type: "Government",
+    lat: 7.8100, lng: 6.7300,
+    area: "Lokoja",
+    lga: "Lokoja",
+    unitTypes: "Semi-detached homes",
+    status: "Announced",
+    units: "228 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.KIPL.name,
+    enquiryContact: AGENCIES.KIPL,
+    sourceNote: "MoU signed between Kogi State Government and Family Homes Funds Limited, March 2025; exact site not yet disclosed. Source: kogistate.gov.ng — verify before publishing."
+  },
+  {
+    id: "kogi-smart-housing-estate",
+    name: "Smart Housing Estate",
+    state: "Kogi", type: "Government",
+    lat: 7.8000, lng: 6.7450,
+    area: "Lokoja",
+    lga: "Lokoja",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.KIPL.name,
+    enquiryContact: AGENCIES.KIPL,
+    sourceNote: "Public-private partnership between KIPL and MC Dream Ltd. Source: newsnowexpress.com.ng — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // KWARA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "kwara-nhp-ogbondoroko",
+    name: "National Housing Programme Estate, Ogbondoroko",
+    state: "Kwara", type: "Government",
+    lat: 8.5300, lng: 4.5100,
+    area: "Ogbondoroko, Ilorin",
+    lga: "Ilorin East",
+    unitTypes: "1, 2, 3 bed detached/semi-detached",
+    status: "Completed",
+    units: "132 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Handed over from the Federal Government to Kwara State. Source: News Agency of Nigeria (NAN) — verify before publishing."
+  },
+  {
+    id: "kwara-nhp-osin-aremu",
+    name: "National Housing Programme Estate, Osin Aremu",
+    state: "Kwara", type: "Government",
+    lat: 8.4700, lng: 4.5700,
+    area: "Osin Aremu, off Asa Dam, Ilorin West",
+    lga: "Ilorin West",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "76 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Commissioned by President Buhari, first phase of the National Housing Programme in Kwara. Source: fmhud.gov.ng, ilorin.info — verify before publishing."
+  },
+  {
+    id: "kwara-harmony-estate",
+    name: "Harmony Estate",
+    state: "Kwara", type: "Government",
+    lat: 8.5100, lng: 4.5500,
+    area: "Akerebiata, Sobi Road, Ilorin",
+    lga: "Ilorin East",
+    unitTypes: "2 bed housing units",
+    status: "Completed",
+    units: "100 units (phase 1)",
+    priceRange: null,
+    agency: AGENCIES.KWARA_HOUSING.name,
+    enquiryContact: AGENCIES.KWARA_HOUSING,
+    sourceNote: "Public-private-partnership mass housing, commissioned by then-Governor Bukola Saraki; older sourcing (c.2008-09) but property listings suggest the estate is still active. Source: ilorin.info, ResearchGate — verify before publishing."
+  },
+  {
+    id: "kwara-renewed-hope-estate",
+    name: "Renewed Hope Housing Estate",
+    state: "Kwara", type: "Government",
+    lat: 8.5000, lng: 4.5450,
+    area: "Ilorin (exact site not yet disclosed)",
+    lga: "Ilorin West",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Federal-state collaboration under the Renewed Hope Housing Programme; construction not yet confirmed started. Source: nannews.ng — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // NASARAWA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "nasarawa-renewed-hope-shabu",
+    name: "Renewed Hope Housing Estate, Shabu",
+    state: "Nasarawa", type: "Government",
+    lat: 8.4700, lng: 8.5300,
+    area: "Shabu (Azuba), Lafia",
+    lga: "Lafia",
+    unitTypes: "1, 2, 3 bed semi-detached bungalows",
+    status: "In Progress",
+    units: "250 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Ground-broken by Governor Abdullahi Sule, July 2024, under FG's Renewed Hope Cities and Housing programme. Source: nasarawastate.gov.ng — verify before publishing."
+  },
+  {
+    id: "nasarawa-nhp-ungwar-rere",
+    name: "National Housing Programme Estate, Ungwar Rere",
+    state: "Nasarawa", type: "Government",
+    lat: 8.5100, lng: 8.5000,
+    area: "Shendam Road, Lafia",
+    lga: "Lafia",
+    unitTypes: "1, 2, 3 bed bungalows",
+    status: "Completed",
+    units: "76 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Completed and unveiled March 2022, but a 2024 report found the estate unoccupied with visible deterioration (blown roofs, vandalized fittings) — flagged here rather than smoothed over. Source: Leadership Newspaper — verify before publishing."
+  },
+  {
+    id: "nasarawa-nhp-kwandere",
+    name: "National Housing Programme Estate, Kwandere",
+    state: "Nasarawa", type: "Government",
+    lat: 8.4800, lng: 8.5400,
+    area: "Kwandere, Lafia",
+    lga: "Lafia",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "100 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "FMBN ground-broke 2018, inaugurated 2021; a 2024 report found it similarly unoccupied to the nearby Ungwar Rere estate. Source: Leadership Newspaper — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // NIGER — Government
+  // ---------------------------------------------------------------
+  {
+    id: "niger-wushishi-estate",
+    name: "M.I. Wushishi Housing Estate",
+    state: "Niger", type: "Government",
+    lat: 9.6000, lng: 6.5800,
+    area: "Eastern By-pass, Minna",
+    lga: "Chanchaga",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "500 units",
+    priceRange: null,
+    agency: AGENCIES.NIGER_HOUSING.name,
+    enquiryContact: AGENCIES.NIGER_HOUSING,
+    sourceNote: "Built under a Build-Transfer-Operate model. Source: academic PPP case study (academia.edu) — verify before publishing."
+  },
+  {
+    id: "niger-talba-estate",
+    name: "Talba Housing Estate",
+    state: "Niger", type: "Government",
+    lat: 9.5900, lng: 6.5400,
+    area: "Bida Road, Minna",
+    lga: "Chanchaga",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.NIGER_HOUSING.name,
+    enquiryContact: AGENCIES.NIGER_HOUSING,
+    sourceNote: "One of 3 flagship Niger State Housing Corporation estates in Minna. Source: academic PPP case study (academia.edu) — verify before publishing."
+  },
+  {
+    id: "niger-airport-city-estate",
+    name: "Airport City Housing Estate",
+    state: "Niger", type: "Government",
+    lat: 9.6700, lng: 6.4800,
+    area: "Airport Road, Maikunkele",
+    lga: "Chanchaga",
+    unitTypes: "Not yet detailed publicly",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.NIGER_HOUSING.name,
+    enquiryContact: AGENCIES.NIGER_HOUSING,
+    sourceNote: "Source: academic PPP case study (academia.edu) — verify before publishing."
+  },
+  {
+    id: "niger-tisbuk-ppp-pilot",
+    name: "Tis-Buk Reality PPP Estate (pilot)",
+    state: "Niger", type: "Government",
+    lat: 9.5800, lng: 6.5200,
+    area: "Kpakugu, Minna-Bida Road",
+    lga: "Chanchaga",
+    unitTypes: "2, 3, 4 bed terrace triplexes with BQ",
+    status: "Announced",
+    units: "120 units (pilot); 10,000 units planned overall",
+    priceRange: null,
+    agency: AGENCIES.NIGER_HOUSING.name,
+    enquiryContact: AGENCIES.NIGER_HOUSING,
+    sourceNote: "Niger State Housing Corporation as land provider, Tis-Buk Reality Ltd as developer; large-scale plan announced across the state, this pilot is the first disclosed site. Source: Tribune Online — verify before publishing."
+  },
+  {
+    id: "niger-tugungo-village-estate",
+    name: "Tugungo Village Estate",
+    state: "Niger", type: "Government",
+    lat: 9.6300, lng: 6.6000,
+    area: "Tugungo",
+    lga: "Chanchaga",
+    unitTypes: "1, 2, 3 bed apartments",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.NIGER_HOUSING.name,
+    enquiryContact: AGENCIES.NIGER_HOUSING,
+    sourceNote: "Aimed at civil servants and the general public. Source: state government reporting — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // PLATEAU — Government
+  // ---------------------------------------------------------------
+  {
+    id: "plateau-fhp-laminga",
+    name: "Federal Housing Programme Estate, Laminga",
+    state: "Plateau", type: "Government",
+    lat: 9.9200, lng: 8.8900,
+    area: "Laminga village, Jos",
+    lga: "Jos North",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "80 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "N771 million Federal Government investment. Source: OnlineNigeria.com — verify before publishing."
+  },
+  {
+    id: "plateau-mhunulg-mass-housing",
+    name: "MHUNULG Mass Housing Scheme",
+    state: "Plateau", type: "Government",
+    lat: 9.9000, lng: 8.8700,
+    area: "Across all 17 LGAs, Plateau State",
+    lga: "Jos North",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: "6,290 units planned (370 per LGA × 17 LGAs)",
+    priceRange: null,
+    agency: AGENCIES.PLATEAU_HOUSING.name,
+    enquiryContact: AGENCIES.PLATEAU_HOUSING,
+    sourceNote: "State government partnership with MHUNULG Housing Ltd for local government staff housing. Source: National Accord Newspaper — verify before publishing."
+  },
+  {
+    id: "plateau-nlc-bassa-estate",
+    name: "NLC Housing Project, Bassa",
+    state: "Plateau", type: "Government",
+    lat: 9.9800, lng: 8.8200,
+    area: "Bassa LGA",
+    lga: "Bassa",
+    unitTypes: "Not yet detailed publicly",
+    status: "Stalled",
+    units: "2,000 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.PLATEAU_HOUSING.name,
+    enquiryContact: AGENCIES.PLATEAU_HOUSING,
+    sourceNote: "A civil society organisation has publicly demanded refund of a N150m loan tied to the governor's brother over this stalled project. Source: The Newspointer — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // PRIVATE ESTATES — Benue, Kogi, Kwara, Niger, Plateau
+  // ---------------------------------------------------------------
+  {
+    id: "pv-max-court-benue",
+    name: "MAX Court Estate",
+    state: "Benue", type: "Private",
+    lat: 7.7100, lng: 8.5300,
+    area: "Makurdi",
+    lga: "Makurdi",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "PWAN Group",
+    enquiryContact: { name: "PWAN Group", phone: null, email: null, website: null },
+    sourceNote: "Source: property listing aggregators — verify before publishing."
+  },
+  {
+    id: "pv-lokogoma-kogi",
+    name: "Lokogoma Phase One Housing Estate",
+    state: "Kogi", type: "Private",
+    lat: 7.8150, lng: 6.7250,
+    area: "Lokogoma, Lokoja",
+    lga: "Lokoja",
+    unitTypes: "Apartments, duplexes, detached houses",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Developer unconfirmed",
+    enquiryContact: { name: "Lokogoma Estate listing", phone: null, email: null, website: null },
+    sourceNote: "Source: nigeria-property.com listings — verify before publishing."
+  },
+  {
+    id: "pv-pwan-ilorin-east",
+    name: "PWAN Estate, Oke Oyi",
+    state: "Kwara", type: "Private",
+    lat: 8.5200, lng: 4.6000,
+    area: "Oke Oyi, Jebba Road, Ilorin East",
+    lga: "Ilorin East",
+    unitTypes: "464 sqm plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "PWAN Group",
+    enquiryContact: { name: "PWAN Group", phone: null, email: null, website: null },
+    sourceNote: "Source: property listing aggregators — verify before publishing."
+  },
+  {
+    id: "pv-emirates-park-niger",
+    name: "Emirates Park and Garden",
+    state: "Niger", type: "Private",
+    lat: 9.5700, lng: 6.5100,
+    area: "Garatu, Minna/Bida Road, opposite FUT Minna",
+    lga: "Chanchaga",
+    unitTypes: "225, 450 sqm plots",
+    status: "In Progress",
+    units: null,
+    priceRange: "₦2M–₦4M/plot",
+    agency: "Adron Homes and Properties Ltd",
+    enquiryContact: { name: "Adron Homes and Properties Ltd", phone: "+234 908 666 7666", email: null, website: "https://adronhomesproperties.com/state/niger/" },
+    sourceNote: "Source: adronhomesproperties.com — verify before publishing."
+  },
+  {
+    id: "pv-snowfall-park-plateau",
+    name: "Snowfall Park and Gardens",
+    state: "Plateau", type: "Private",
+    lat: 9.8300, lng: 8.8900,
+    area: "Jos South",
+    lga: "Jos South",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Adron Homes and Properties Ltd",
+    enquiryContact: { name: "Adron Homes and Properties Ltd", phone: "+234 908 666 7666", email: null, website: "https://adronhomesproperties.com/state/plateau/" },
+    sourceNote: "Source: adronhomesproperties.com — verify before publishing."
   }
 ];
