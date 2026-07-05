@@ -2,5 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /dashboard/
 Disallow: /analytics-data/
+Disallow: /api/
+Disallow: /scripts/
+Disallow: /db/
 
 Sitemap: https://housedata.ng/sitemap.xml

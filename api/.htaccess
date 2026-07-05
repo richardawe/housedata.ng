@@ -1,0 +1,9 @@
+# config.php holds real DB/SMTP credentials (gitignored, created directly
+# on the server — see config.example.php). Belt-and-suspenders: even
+# though it's only ever require_once'd by other PHP files and never
+# routed to directly, block direct HTTP access in case PHP execution is
+# ever misconfigured and .php files get served as plain text instead of
+# executed.
+<Files "config.php">
+  Require all denied
+</Files>

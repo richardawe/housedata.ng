@@ -142,18 +142,6 @@ const AGENCIES = {
   }
 };
 
-// Federal mortgage financing option shown as a general, non-endorsing
-// link-out — not tied to any specific estate's developer network.
-const MREIF = {
-  name: "MREIF (Mortgage Refinance Initiative Fund)",
-  rate: "9.75% p.a. fixed",
-  term: "Up to 20 years",
-  equity: "From 10% equity",
-  signupUrl: "https://housing.mreif.com.ng/sign-up",
-  prequalifyUrl: "https://housing.mreif.com.ng/pre-qualifier",
-  infoUrl: "https://www.mreif.com.ng/",
-  disclaimer: "Federal mortgage program managed by ARM for Ministry of Finance Incorporated. housedata.ng is not affiliated with MREIF and cannot confirm any specific estate is in MREIF's approved developer network — check eligibility directly."
-};
 
 const ESTATES = [
   // ---------------------------------------------------------------

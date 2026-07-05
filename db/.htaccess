@@ -1,0 +1,2 @@
+# Raw SQL migrations — must never be reachable over HTTP.
+Require all denied

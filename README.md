@@ -5,8 +5,10 @@ Nigeria, live at [housedata.ng](https://housedata.ng/). Currently covers
 12 states — Lagos, FCT (Abuja), Rivers, Ogun, Kano, Enugu, Ondo, Edo,
 Delta, Bayelsa, Akwa Ibom, and Cross River (the full Lagos-Calabar Coastal
 Highway corridor plus the original 6) — 220 estates — expanding state by
-state. Plain HTML/CSS/JS, no build step, no API keys — Leaflet.js +
-OpenStreetMap tiles for the map.
+state. Plain HTML/CSS/JS frontend, no build step, no bundler — Leaflet.js
++ OpenStreetMap tiles for the map. Estate data is served by a small PHP +
+PostgreSQL backend (see **Backend / database** below) rather than bundled
+into the page.
 
 Each estate links to an in-app mortgage calculator (modal, using
 [MREIF](https://www.mreif.com.ng/)'s published 9.75%-fixed terms as
@@ -18,17 +20,28 @@ estate is in MREIF's approved developer network.
 
 ## Running it
 
-Open `index.html` directly in a browser, or serve the folder locally:
+The frontend is static, but estate data now comes from `api/estates.php`
+(PHP + PostgreSQL), so `index.html` needs a PHP server with a reachable
+database to show real data — see **Backend / database** below for the
+one-time setup. Once that's done:
 
 ```
-python3 -m http.server 8000
+php -S localhost:8000
 ```
 
-then visit `http://localhost:8000`. Map tiles require an internet
-connection (OpenStreetMap); everything else (data, layout, filters) works
-offline once the page has loaded once. Leaflet itself is vendored locally
-under `vendor/leaflet/` (not loaded from a CDN), so the map still works
-even on a flaky connection — only the tile images need live internet.
+then visit `http://localhost:8000`. (Plain `python3 -m http.server` still
+works for quickly checking static changes — layout, CSS, `access-bank.html`
+— but the map will show no estates without the PHP API.)
+
+Map tiles require an internet connection (OpenStreetMap) regardless.
+Leaflet itself is vendored locally under `vendor/leaflet/` (not loaded
+from a CDN), so the map still works even on a flaky connection — only the
+tile images and the estates API need live connectivity. `app.js` caches
+the last successful `api/estates.php` response in `localStorage` and
+falls back to it (with a small "showing previously loaded data" banner)
+if a later page load can't reach the API — the closest practical
+equivalent to the old fully-static "works offline after first load"
+property, now that estate data is fetched rather than bundled.
 
 ## Deployment (CI/CD)
 
@@ -60,10 +73,51 @@ the site. Prefer cPanel's own "Force HTTPS Redirect" toggle (Domains page)
 over the `.htaccess` rule once SSL is confirmed.
 
 This repo can also still be served from GitHub Pages (Settings → Pages →
-Deploy from a branch → root) as a fallback/staging preview — all asset
+Deploy from a branch → root) for a **static-only preview** — all asset
 paths are relative, so it works from either a domain root or a
-`/<repo>/` subpath. A `.nojekyll` file is included so Pages serves files
-as-is without running them through Jekyll.
+`/<repo>/` subpath, and a `.nojekyll` file is included so Pages serves
+files as-is without running them through Jekyll. Pages has no PHP/Postgres,
+though, so the map itself will show no estates there now that estate data
+comes from `api/estates.php` — it's only useful for checking static pages
+like `access-bank.html` or layout/CSS changes, not the full app.
+
+## Backend / database
+
+Estate data used to be a static, committed `data.js` bundled into the
+page. It now lives in PostgreSQL and is served by `api/estates.php`, so
+new estates (developer submissions, admin edits, future phases) can go
+live without a git commit/deploy. `data.js` is kept in the repo as a
+frozen historical snapshot and as the seed input for the one-time import
+below — nothing reads it at runtime anymore.
+
+**One-time setup** (cPanel → PostgreSQL Databases + MultiPHP Manager):
+
+1. Create a Postgres database + role, and enable the `pdo_pgsql`/`pgsql`
+   PHP extensions for the site.
+2. Copy `api/config.example.php` to `api/config.php` **directly on the
+   server** (cPanel File Manager or SFTP) and fill in the real DB/SMTP
+   values. This file is gitignored and must never be committed or pushed
+   — same handling as the FTP secrets above, just server-side instead of
+   in GitHub Actions. Deploys never touch or delete it (same reason
+   `dashboard/.htpasswd` survives deploys — see **Analytics** below).
+3. Apply the schema once: `psql "host=... dbname=... user=..." -f db/migrations/0001_init.sql`.
+   One file covers every phase of the backend (estates today; accounts,
+   verification, financier leads, and developer submissions as they
+   land), so this is the only manual SQL step ever needed.
+4. Import the existing 220 estates: `node scripts/dump-data-js.js` (reads
+   `data.js`, writes clean JSON — Node is only needed for this one-time
+   local step, not by the deployed site), then
+   `php scripts/import-data-js.php` (reads that JSON, inserts into
+   Postgres, safe to re-run).
+
+`api/estates.php` is the only public read endpoint so far
+(`?q=`/`state=`/`lga=`/`type=`/`status=` filters, backed by a Postgres
+`tsvector`/GIN index for `q`). `api/_db.php`/`api/_lib.php` hold shared
+PDO/response helpers that later phases (accounts, verification,
+submissions, financier leads — see the project's phased roadmap) build
+on top of. `scripts/`, `db/`, and `api/config.php` are all blocked from
+direct HTTP access via their own `.htaccess` files, on top of not being
+web-routable in the first place.
 
 ## Data status — read before presenting
 
@@ -83,7 +137,10 @@ as-is without running them through Jekyll.
    sourced from public listings/aggregators (PropertyPro, Nigeria Property
    Centre, Estate Intel) to prove the model. The intended long-term source
    is developer self-submission with an eligibility bar, similar to
-   MREIF's own developer-eligibility process — that flow isn't built yet.
+   MREIF's own developer-eligibility process — that's a later phase of the
+   backend roadmap (submissions table + moderation queue already exist in
+   the schema, the public submission form and admin review screen don't
+   yet).
 4. **The MREIF financing link is informational only.** It routes to
    MREIF's real sign-up/pre-qualifier pages; housedata.ng doesn't verify
    which estates (if any) are in MREIF's approved developer network, and
@@ -91,42 +148,39 @@ as-is without running them through Jekyll.
 
 ## Adding or editing an estate
 
-All estate records live in `data.js`, as a flat array (`ESTATES`) of plain
-objects. To add one, copy an existing entry and fill in:
+Estates live in Postgres now, not `data.js`. Until the admin edit screen
+and developer-submission form (later roadmap phases) exist, add or edit
+one directly:
 
-```js
-{
-  id: "unique-slug",
-  name: "Estate Name",
-  state: "Lagos",                // "Lagos" | "FCT" | "Rivers" | a new state
-  type: "Government",            // "Government" | "Private"
-  lat: 6.5000, lng: 3.5000,      // neighbourhood-level is fine
-  area: "Neighbourhood, District",
-  lga: "Local Government Area / Area Council",
-  unitTypes: "1, 2, 3 bed flats",
-  status: "Completed",           // "Completed" | "Announced" | "Planned" | "In Progress"
-  units: "84 units",             // or null if unknown
-  priceRange: null,              // e.g. "₦50M – ₦200M" for private estates, else null
-  agency: AGENCIES.HOMS.name,    // or another AGENCIES entry, or a free-text developer name
-  enquiryContact: AGENCIES.HOMS, // an AGENCIES entry, or { name, phone, email, website } for a private developer
-  sourceNote: "Source: ... — publicly reported, verify before publishing."
-}
+```sql
+INSERT INTO estates (
+  id, name, state, lga, area, type, status, lat, lng,
+  unit_types, units_text, price_range, agency_key, source_note
+) VALUES (
+  'unique-slug', 'Estate Name', 'Lagos', 'Local Government Area', 'Neighbourhood, District',
+  'Government', 'Completed', 6.5000, 3.5000,
+  '1, 2, 3 bed flats', '84 units', NULL, 'HOMS',
+  'Source: ... — publicly reported, verify before publishing.'
+);
 ```
 
-Reuse one of the `AGENCIES` entries at the top of `data.js` for
-`enquiryContact` on government estates rather than inventing a new
-phone/email — if the agency isn't there yet, add it once (with a real,
-citable source). For private estates, use the developer's own public
-contact/website — leave `phone`/`email` as `null` if you can't verify one
-rather than guessing.
+Reuse an existing `agencies.key` (e.g. `'HOMS'`) for `agency_key` on
+government estates rather than inventing a new phone/email — if the
+agency isn't there yet, add a row to `agencies` once (with a real,
+citable source). For private estates, leave `agency_key` `NULL` and set
+`contact_name`/`contact_phone`/`contact_email`/`contact_website` instead,
+using the developer's own public contact — leave phone/email `NULL`
+rather than guessing if you can't verify one. `search_vector` and
+`agency_display_name` are maintained automatically by triggers; no need
+to set them.
 
-To add a new state, just start adding estates with that `state` value —
-the State filter, Area filter, and map bounds all populate dynamically
-from whatever's in the array, no other file needs to change.
+To add a new state, just insert estates with that `state` value — the
+State filter, Area filter, and map bounds all populate dynamically from
+whatever `api/estates.php` returns, no other file needs to change.
 
 Map markers (circle = Government, diamond = Private, coloured by status),
-the sidebar list, all filters (state, type, status, area), and popups all
-read from this one array.
+the sidebar list, all filters (state, type, status, area, and free-text
+search), and popups all read from this one table via the API.
 
 ## Infrastructure overlay
 
@@ -180,8 +234,9 @@ analytics service.
   aggregate JSON summary (pageviews, unique sessions, top states/estates,
   filter usage, financing engagement, device mix).
 - **`dashboard/index.html`** + **`dashboard/dashboard.js`** — the summary
-  view. Loads `../data.js` client-side only to resolve estate IDs to
-  names for display — no data.js contents are sent anywhere.
+  view. Fetches `../api/estates.php` client-side only to resolve estate
+  IDs to names for display — falls back to showing raw IDs if that
+  fetch fails, rather than breaking the whole dashboard.
 
 **Before this data is private, password-protect the `/dashboard/` folder
 on the live server** — this is a one-time manual step in **cPanel → Security
@@ -240,10 +295,18 @@ and a render call in `dashboard.js`.
 
 - `index.html` — page structure
 - `styles.css` — design tokens + layout
-- `data.js` — estate records (edit this to update data)
-- `infrastructure.js` — railway/road overlay records
-- `app.js` — map/list/filter logic
+- `app.js` — map/list/filter logic, fetches estate data from `api/estates.php`
+- `data.js` — frozen historical snapshot of the original estate records;
+  no longer read at runtime, kept as the seed input for
+  `scripts/dump-data-js.js` (see Backend / database above)
+- `infrastructure.js` — railway/road overlay records (still static)
 - `data.md` — original human-readable working notes and source list
+- `api/` — PHP backend: `estates.php` (public read endpoint),
+  `_db.php`/`_lib.php` (shared helpers), `config.example.php` (committed
+  template — real `config.php` is gitignored and created on the server)
+- `db/migrations/` — Postgres schema (one file covers every backend phase)
+- `scripts/` — one-time `data.js` → Postgres migration tooling (CLI-only,
+  blocked from HTTP access)
 - `robots.txt`, `sitemap.xml`, `404.html`, `.htaccess` — production/SEO config
 - `assets/` — favicons and social share image
 - `access-bank.html`, `access-bank-data.js`, `access-bank.js` — standalone Access Bank financing page
