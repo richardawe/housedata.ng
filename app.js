@@ -8,8 +8,20 @@
     "In Progress": "progress"
   };
 
+  var MREIF = {
+    name: "MREIF (Mortgage Refinance Initiative Fund)",
+    rate: "9.75% p.a. fixed",
+    term: "Up to 20 years",
+    equity: "From 10% equity",
+    signupUrl: "https://housing.mreif.com.ng/sign-up",
+    prequalifyUrl: "https://housing.mreif.com.ng/pre-qualifier",
+    infoUrl: "https://www.mreif.com.ng/",
+    disclaimer: "Federal mortgage program managed by ARM for Ministry of Finance Incorporated. housedata.ng is not affiliated with MREIF and cannot confirm any specific estate is in MREIF's approved developer network — check eligibility directly."
+  };
+
   var state = { status: "all", type: "all", stateFilter: "all", area: "all", query: "", selectedId: null };
   var markers = {};
+  var ESTATES = [];
 
   var map = L.map("map", { zoomControl: true, minZoom: 5 }).setView([7.5, 6.5], 6);
 
@@ -179,16 +191,6 @@
     if (!m) return;
     m.setIcon(makeIcon(m.estate, state.selectedId === id));
   }
-
-  ESTATES.forEach(function (estate) {
-    var marker = L.marker([estate.lat, estate.lng], { icon: makeIcon(estate, false) });
-    marker.estate = estate;
-    marker.bindPopup(popupHtml(estate));
-    marker.on("click", function () {
-      selectEstate(estate.id, false);
-    });
-    markers[estate.id] = marker;
-  });
 
   function populateStateSelect() {
     var select = document.getElementById("state-select");
@@ -506,23 +508,68 @@
     });
   }
 
-  // Initial paint
-  Object.keys(markers).forEach(function (id) { markers[id].addTo(map); });
-  var bounds = L.latLngBounds(ESTATES.map(function (e) { return [e.lat, e.lng]; }));
-  map.fitBounds(bounds, { padding: [30, 30] });
+  function showStaleDataBanner() {
+    var banner = document.getElementById("stale-data-banner");
+    if (banner) banner.hidden = false;
+  }
 
-  document.getElementById("count-all").textContent = ESTATES.length;
+  function initApp(estates) {
+    ESTATES = estates;
 
-  populateStateSelect();
-  populateAreaSelect();
-  initAreaSelect();
-  initSearchInput();
-  initChipGroup("[data-filter-status]", function (chip) { state.status = chip.dataset.filterStatus; });
-  initChipGroup("[data-filter-type]", function (chip) { state.type = chip.dataset.filterType; });
-  initViewToggle();
-  initCalculator();
-  initModals();
-  initInfraControls();
-  initSheets();
-  render();
+    ESTATES.forEach(function (estate) {
+      var marker = L.marker([estate.lat, estate.lng], { icon: makeIcon(estate, false) });
+      marker.estate = estate;
+      marker.bindPopup(popupHtml(estate));
+      marker.on("click", function () {
+        selectEstate(estate.id, false);
+      });
+      markers[estate.id] = marker;
+    });
+
+    Object.keys(markers).forEach(function (id) { markers[id].addTo(map); });
+    var bounds = L.latLngBounds(ESTATES.map(function (e) { return [e.lat, e.lng]; }));
+    map.fitBounds(bounds, { padding: [30, 30] });
+
+    document.getElementById("count-all").textContent = ESTATES.length;
+
+    populateStateSelect();
+    populateAreaSelect();
+    initAreaSelect();
+    initSearchInput();
+    initChipGroup("[data-filter-status]", function (chip) { state.status = chip.dataset.filterStatus; });
+    initChipGroup("[data-filter-type]", function (chip) { state.type = chip.dataset.filterType; });
+    initViewToggle();
+    initCalculator();
+    initModals();
+    initInfraControls();
+    initSheets();
+    render();
+  }
+
+  // Estates now live in Postgres (see db/migrations/0001_init.sql) instead
+  // of the old static data.js — fetched once per page load rather than
+  // bundled at deploy time, so approved developer submissions or admin
+  // edits go live without a git commit/deploy. Falls back to the last
+  // successful response (cached in localStorage) if the API is ever
+  // unreachable, rather than a blank map.
+  fetch("api/estates.php")
+    .then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(function (data) {
+      try { localStorage.setItem("hd_estates_cache", JSON.stringify(data)); } catch (e) {}
+      initApp(data);
+    })
+    .catch(function (err) {
+      console.error("Failed to load estates from API:", err);
+      var cached = null;
+      try { cached = localStorage.getItem("hd_estates_cache"); } catch (e) {}
+      if (cached) {
+        showStaleDataBanner();
+        initApp(JSON.parse(cached));
+      } else {
+        document.getElementById("sidebar-count").textContent = "Unable to load data";
+      }
+    });
 })();

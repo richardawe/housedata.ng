@@ -1,1 +1,3 @@
 analytics-data/*.jsonl
+api/config.php
+scripts/*.json

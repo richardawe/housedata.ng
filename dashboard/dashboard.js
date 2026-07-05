@@ -1,6 +1,8 @@
 (function () {
   "use strict";
 
+  var estateNames = {};
+
   function esc(str) {
     return String(str).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -8,9 +10,7 @@
   }
 
   function estateName(id) {
-    if (typeof ESTATES === "undefined") return id;
-    var found = ESTATES.find(function (e) { return e.id === id; });
-    return found ? found.name : id;
+    return estateNames[id] || id;
   }
 
   function renderTiles(el, tiles) {
@@ -42,9 +42,14 @@
     }).join("");
   }
 
-  fetch("stats.php")
-    .then(function (r) { return r.json(); })
-    .then(function (s) {
+  Promise.all([
+    fetch("stats.php").then(function (r) { return r.json(); }),
+    fetch("../api/estates.php").then(function (r) { return r.json(); }).catch(function () { return []; })
+  ])
+    .then(function (results) {
+      var s = results[0];
+      results[1].forEach(function (e) { estateNames[e.id] = e.name; });
+
       renderTiles(document.getElementById("dash-tiles"), [
         { value: s.totalPageviews, label: "Total pageviews" },
         { value: s.uniqueSessions, label: "Unique sessions" },

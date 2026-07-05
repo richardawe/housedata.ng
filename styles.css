@@ -212,6 +212,18 @@ body {
   display: block;
 }
 
+.stale-data-banner {
+  margin: 0;
+  padding: 8px 24px;
+  background: var(--status-announced-tint);
+  color: var(--status-announced);
+  font-size: 12.5px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.stale-data-banner[hidden] { display: none; }
+
 .view-toggle {
   margin-left: auto;
   display: none;
