@@ -211,6 +211,42 @@ const AGENCIES = {
     phone: null,
     email: null,
     website: "https://www.plateaustate.gov.ng"
+  },
+  ADAMAWA_IPDC: {
+    name: "Adamawa Investment and Property Development Company",
+    phone: null,
+    email: null,
+    website: null
+  },
+  BAUCHI_GOVT: {
+    name: "Bauchi State Government",
+    phone: null,
+    email: null,
+    website: "https://home.bauchistate.gov.ng"
+  },
+  BORNO_HOUSING: {
+    name: "Borno State Ministry of Works and Housing",
+    phone: null,
+    email: null,
+    website: "https://bomwh.bornostate.gov.ng"
+  },
+  GOMBE_IPDC: {
+    name: "Gombe State Investment and Property Development Company Limited",
+    phone: null,
+    email: null,
+    website: "https://gombeinvestment.com.ng"
+  },
+  TARABA_GOVT: {
+    name: "Taraba State Government",
+    phone: null,
+    email: null,
+    website: "https://www.tarabastate.gov.ng"
+  },
+  YSHPDC: {
+    name: "Yobe State Housing and Property Development Corporation (YSHPDC)",
+    phone: null,
+    email: null,
+    website: null
   }
 };
 
@@ -4584,5 +4620,378 @@ const ESTATES = [
     agency: "Adron Homes and Properties Ltd",
     enquiryContact: { name: "Adron Homes and Properties Ltd", phone: "+234 908 666 7666", email: null, website: "https://adronhomesproperties.com/state/plateau/" },
     sourceNote: "Source: adronhomesproperties.com — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // ADAMAWA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "adamawa-malkohi-estate",
+    name: "Malkohi Housing Estate",
+    state: "Adamawa", type: "Government",
+    lat: 9.1700, lng: 12.4600,
+    area: "Malkohi, Yola South",
+    lga: "Yola South",
+    unitTypes: "2, 3 bed flats",
+    status: "In Progress",
+    units: "1,000 units (planned)",
+    priceRange: "₦9.7M (2 bed) / ₦11.7M (3 bed)",
+    agency: AGENCIES.ADAMAWA_IPDC.name,
+    enquiryContact: AGENCIES.ADAMAWA_IPDC,
+    sourceNote: "Stalled for years due to inflation/economic setbacks, now being revived and sold to civil servants under the current administration. Source: adamawastate.gov.ng — verify before publishing."
+  },
+  {
+    id: "adamawa-bajubure-estate",
+    name: "Bajubure Federal Housing Estate",
+    state: "Adamawa", type: "Government",
+    lat: 9.2800, lng: 12.5500,
+    area: "Girei",
+    lga: "Girei",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "State council sanctioned over N16bn for a 17km internal road network; construction timeline not independently confirmed. Source: nasfm.com.ng — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // BAUCHI — Government
+  // ---------------------------------------------------------------
+  {
+    id: "bauchi-unity-estate",
+    name: "Unity Housing Estate",
+    state: "Bauchi", type: "Government",
+    lat: 10.3000, lng: 9.8300,
+    area: "Bauchi Town",
+    lga: "Bauchi",
+    unitTypes: "Low-cost housing units",
+    status: "Completed",
+    units: "571 units across 3 phases (288+171+112)",
+    priceRange: null,
+    agency: AGENCIES.BAUCHI_GOVT.name,
+    enquiryContact: AGENCIES.BAUCHI_GOVT,
+    sourceNote: "Public-private partnership with Terraquest Development Company Ltd; World Bank PPP database records a contract dispute over an unpaid state compensation of ~N23m. Source: World Bank PPP Knowledge Lab, academic PPP case study — verify before publishing."
+  },
+  {
+    id: "bauchi-2500-units-fhf",
+    name: "2,500-Unit Housing Project (Family Homes Funds)",
+    state: "Bauchi", type: "Government",
+    lat: 10.3200, lng: 9.8600,
+    area: "Bauchi, Azare, Misau, Ningi, Dass, Jama'are (all 5 emirate councils)",
+    lga: "Bauchi",
+    unitTypes: "Not yet detailed publicly",
+    status: "In Progress",
+    units: "2,500 units",
+    priceRange: null,
+    agency: AGENCIES.BAUCHI_GOVT.name,
+    enquiryContact: AGENCIES.BAUCHI_GOVT,
+    sourceNote: "State government reported units nearing completion across the state's 5 emirate councils. Source: Voice of Nigeria, politicsnigeria.com — verify before publishing."
+  },
+  {
+    id: "bauchi-fg-500-units",
+    name: "Federal Housing Programme, Bauchi",
+    state: "Bauchi", type: "Government",
+    lat: 10.3300, lng: 9.8200,
+    area: "Bauchi",
+    lga: "Bauchi",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: "500 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Source: The Guardian Nigeria — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // BORNO — Government
+  // ---------------------------------------------------------------
+  {
+    id: "borno-777-estate",
+    name: "777 Housing Estate",
+    state: "Borno", type: "Government",
+    lat: 11.8400, lng: 13.1600,
+    area: "Maiduguri",
+    lga: "Maiduguri",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.BORNO_HOUSING.name,
+    enquiryContact: AGENCIES.BORNO_HOUSING,
+    sourceNote: "Long-established Maiduguri estate, subject of an academic property-management case study. Source: academia.edu — verify before publishing."
+  },
+  {
+    id: "borno-bakassi-gra-estate",
+    name: "Bakassi GRA Housing Estate",
+    state: "Borno", type: "Government",
+    lat: 11.8000, lng: 13.1800,
+    area: "Bakassi GRA, Biu Road, Maiduguri",
+    lga: "Maiduguri",
+    unitTypes: "Not yet detailed publicly",
+    status: "In Progress",
+    units: "404 units",
+    priceRange: null,
+    agency: AGENCIES.BORNO_HOUSING.name,
+    enquiryContact: AGENCIES.BORNO_HOUSING,
+    sourceNote: "PPP with Thinklab Group Limited to complete a previously uncompleted housing project. Source: state government reporting — verify before publishing."
+  },
+  {
+    id: "borno-teachers-village",
+    name: "Dr. Shettima Ali Monguno Teacher's Village",
+    state: "Borno", type: "Government",
+    lat: 11.8600, lng: 13.1200,
+    area: "Pompomari Bye-pass, Maiduguri",
+    lga: "Maiduguri",
+    unitTypes: "Not yet detailed publicly",
+    status: "In Progress",
+    units: "190 units",
+    priceRange: null,
+    agency: AGENCIES.BORNO_HOUSING.name,
+    enquiryContact: AGENCIES.BORNO_HOUSING,
+    sourceNote: "PPP with Thinklab Group Limited, part of the same completion-of-uncompleted-projects initiative as Bakassi GRA. Source: state government reporting — verify before publishing."
+  },
+  {
+    id: "borno-kashim-shettima-estate",
+    name: "Kashim Shettima Housing Estate",
+    state: "Borno", type: "Government",
+    lat: 11.8500, lng: 13.1700,
+    area: "Maiduguri",
+    lga: "Maiduguri",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.BORNO_HOUSING.name,
+    enquiryContact: AGENCIES.BORNO_HOUSING,
+    sourceNote: "Formerly Metro Housing Estate, renamed for the Vice President; earmarked for military/security personnel and federal workers. Source: state government reporting — verify before publishing."
+  },
+  {
+    id: "borno-mai-mala-buni-estate",
+    name: "Mai Mala Buni Housing Estate",
+    state: "Borno", type: "Government",
+    lat: 11.8200, lng: 13.1400,
+    area: "Maiduguri",
+    lga: "Maiduguri",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "500 units",
+    priceRange: null,
+    agency: AGENCIES.BORNO_HOUSING.name,
+    enquiryContact: AGENCIES.BORNO_HOUSING,
+    sourceNote: "Named for Yobe State Governor Mai Mala Buni. Source: thehumanitariantimes.news.blog — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // GOMBE — Government
+  // ---------------------------------------------------------------
+  {
+    id: "gombe-shungo-tunfure-estates",
+    name: "Shungo and Tunfure Housing Estates",
+    state: "Gombe", type: "Government",
+    lat: 10.2800, lng: 11.1500,
+    area: "Gombe City",
+    lga: "Gombe",
+    unitTypes: "2, 3 bed houses",
+    status: "Completed",
+    units: "490 units",
+    priceRange: null,
+    agency: AGENCIES.GOMBE_IPDC.name,
+    enquiryContact: AGENCIES.GOMBE_IPDC,
+    sourceNote: "Source: gombeinvestment.com.ng — verify before publishing."
+  },
+  {
+    id: "gombe-dukku-road-estate",
+    name: "Dukku Road Estate",
+    state: "Gombe", type: "Government",
+    lat: 10.3000, lng: 11.1900,
+    area: "Dukku Road, Gombe metropolis",
+    lga: "Gombe",
+    unitTypes: "2, 3 bed houses",
+    status: "Completed",
+    units: "150 units",
+    priceRange: null,
+    agency: AGENCIES.GOMBE_IPDC.name,
+    enquiryContact: AGENCIES.GOMBE_IPDC,
+    sourceNote: "Source: gombeinvestment.com.ng — verify before publishing."
+  },
+  {
+    id: "gombe-renewed-hope-estate",
+    name: "Gombe House Estate (Renewed Hope)",
+    state: "Gombe", type: "Government",
+    lat: 10.2700, lng: 11.1800,
+    area: "Gombe",
+    lga: "Gombe",
+    unitTypes: "1, 2 bed semi-detached bungalows",
+    status: "Completed",
+    units: "250 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Commissioned under the Renewed Hope Housing Project's first phase. Source: fmhud.gov.ng, Blueprint Newspapers — verify before publishing."
+  },
+  {
+    id: "gombe-fhf-600-homes",
+    name: "Family Homes Funds Estate (600 homes)",
+    state: "Gombe", type: "Government",
+    lat: 10.2500, lng: 11.2000,
+    area: "Muhammadu Buhari Industrial Park, Dadinkowa & former NNPC New Layout, Western Bye Pass Road",
+    lga: "Gombe",
+    unitTypes: "Not yet detailed publicly",
+    status: "In Progress",
+    units: "600 units",
+    priceRange: null,
+    agency: AGENCIES.GOMBE_IPDC.name,
+    enquiryContact: AGENCIES.GOMBE_IPDC,
+    sourceNote: "Across two sites, for low-income families. Source: fhfl.com.ng — verify before publishing."
+  },
+  {
+    id: "gombe-shongo-gardens",
+    name: "Shongo Gardens Layout",
+    state: "Gombe", type: "Government",
+    lat: 10.3100, lng: 11.1400,
+    area: "Gombe",
+    lga: "Gombe",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: "550 units",
+    priceRange: null,
+    agency: AGENCIES.GOMBE_IPDC.name,
+    enquiryContact: AGENCIES.GOMBE_IPDC,
+    sourceNote: "Newly unveiled layout with groundbreaking performed by the state governor. Source: Tribune Online — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // TARABA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "taraba-buhari-estate",
+    name: "Muhammadu Buhari Housing Estate",
+    state: "Taraba", type: "Government",
+    lat: 8.8600, lng: 11.3500,
+    area: "Welcome Gate, Wukari–Jalingo Road, Jalingo",
+    lga: "Jalingo",
+    unitTypes: "1, 2, 3 bed bungalows",
+    status: "Completed",
+    units: "80 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "National Housing Programme estate valued at over N700m. Source: fmhud.gov.ng — verify before publishing."
+  },
+  {
+    id: "taraba-ddi-ishaku-garden",
+    name: "DDI Ishaku Garden Estate",
+    state: "Taraba", type: "Government",
+    lat: 8.9000, lng: 11.3800,
+    area: "Airport Road, Jalingo",
+    lga: "Jalingo",
+    unitTypes: "Not yet detailed publicly",
+    status: "Stalled",
+    units: "500 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.TARABA_GOVT.name,
+    enquiryContact: AGENCIES.TARABA_GOVT,
+    sourceNote: "PPP with Wesany International Concept Ltd, begun 2017; an investigative report found most units still incomplete at the time the governor commissioned the estate. Source: Premium Times — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // YOBE — Government
+  // ---------------------------------------------------------------
+  {
+    id: "yobe-180-unit-estate",
+    name: "180-Unit Housing Estate",
+    state: "Yobe", type: "Government",
+    lat: 11.7500, lng: 11.9700,
+    area: "Damaturu",
+    lga: "Damaturu",
+    unitTypes: "Not yet detailed publicly",
+    status: "In Progress",
+    units: "180 units",
+    priceRange: null,
+    agency: AGENCIES.YSHPDC.name,
+    enquiryContact: AGENCIES.YSHPDC,
+    sourceNote: "For low- and middle-income earners. Source: propertyaccess.ng — verify before publishing."
+  },
+  {
+    id: "yobe-maisandari-estate",
+    name: "Maisandari Housing Estate",
+    state: "Yobe", type: "Government",
+    lat: 11.7400, lng: 11.9500,
+    area: "Maisandari, Damaturu",
+    lga: "Damaturu",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: "176 units",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Taken over from the Federal Government at a cost of over N2bn. Source: Leadership Newspaper — verify before publishing."
+  },
+  {
+    id: "yobe-1000-unit-programme",
+    name: "1,000-Unit Housing Programme, Damaturu",
+    state: "Yobe", type: "Government",
+    lat: 11.7600, lng: 11.9800,
+    area: "Potiskum Road, Maiduguri Road & Gujba Road, Damaturu",
+    lga: "Damaturu",
+    unitTypes: "Not yet detailed publicly",
+    status: "In Progress",
+    units: "1,000 units (500 Potiskum Rd, 250 Maiduguri Rd, 250 Gujba Rd)",
+    priceRange: null,
+    agency: AGENCIES.YSHPDC.name,
+    enquiryContact: AGENCIES.YSHPDC,
+    sourceNote: "Part of a wider 2,350-unit state housing programme. Source: Daily Trust, housingtvafrica.com — verify before publishing."
+  },
+  {
+    id: "yobe-don-etiebet-estate",
+    name: "Don Etiebet Housing Estate",
+    state: "Yobe", type: "Government",
+    lat: 11.7300, lng: 11.9600,
+    area: "Damaturu",
+    lga: "Damaturu",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.YSHPDC.name,
+    enquiryContact: AGENCIES.YSHPDC,
+    sourceNote: "Older, established estate bordering Malari Quarters. Source: Daily Trust (5 locations real estate thrives in Damaturu) — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // PRIVATE ESTATES — Adamawa, Taraba
+  // ---------------------------------------------------------------
+  {
+    id: "pv-nich-home-adamawa",
+    name: "Nich Home",
+    state: "Adamawa", type: "Private",
+    lat: 9.2300, lng: 12.4900,
+    area: "Yola North",
+    lga: "Yola North",
+    unitTypes: "4 bed duplexes",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Developer unconfirmed",
+    enquiryContact: { name: "Nich Home listing", phone: null, email: null, website: null },
+    sourceNote: "Source: property listing aggregators — verify before publishing."
+  },
+  {
+    id: "pv-flourish-court-taraba",
+    name: "Flourish Court Estate",
+    state: "Taraba", type: "Private",
+    lat: 8.8700, lng: 11.3900,
+    area: "Jalingo City Gate, off Jalingo–Wukari Dual Expressway",
+    lga: "Jalingo",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "PWAN Group",
+    enquiryContact: { name: "PWAN Group", phone: null, email: null, website: "https://www.pwanhomes.com/estates/northern/taraba" },
+    sourceNote: "Source: pwanhomes.com, el-doradohomes.com — verify before publishing."
   }
 ];

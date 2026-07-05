@@ -2,13 +2,11 @@
 
 A single-page map of government and private housing estates across
 Nigeria, live at [housedata.ng](https://housedata.ng/). Currently covers
-25 states — Lagos, FCT (Abuja), Rivers, Ogun, Kano, Enugu, Ondo, Edo,
-Delta, Bayelsa, Akwa Ibom, Cross River (the full Lagos-Calabar Coastal
-Highway corridor plus the original 6), Ekiti, Osun, and Oyo (completing
-the South West zone), Abia, Anambra, Ebonyi, and Imo (completing
-the South East zone), and Benue, Kogi, Kwara, Nasarawa, Niger, and
-Plateau (completing the North Central zone, alongside FCT) — 283
-estates — expanding state by state. Plain HTML/CSS/JS frontend, no
+31 states — every geopolitical zone except the North West — 306
+estates — expanding state by state. South West, South East, North
+Central, and now North East (Adamawa, Bauchi, Borno, Gombe, Taraba,
+Yobe) are fully covered; only the North West (Jigawa, Kaduna, Katsina,
+Kebbi, Sokoto, Zamfara) remains. Plain HTML/CSS/JS frontend, no
 build step, no bundler — Leaflet.js
 + OpenStreetMap tiles for the map. Estate data is served by a small PHP +
 PostgreSQL backend (see **Backend / database** below) rather than bundled
