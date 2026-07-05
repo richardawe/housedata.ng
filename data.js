@@ -139,6 +139,24 @@ const AGENCIES = {
     phone: null,
     email: null,
     website: "https://www.crospil.ng"
+  },
+  EKITI_HOUSING: {
+    name: "Ekiti State Ministry of Housing & Urban Development",
+    phone: null,
+    email: "mhud@ekitistate.gov.ng",
+    website: "https://www.ekitistate.gov.ng"
+  },
+  OSUN_LANDS: {
+    name: "Osun State Ministry of Lands and Physical Planning",
+    phone: "+234 803 675 7771",
+    email: "lands@osunstate.gov.ng",
+    website: "https://lands.osunstate.gov.ng"
+  },
+  OYO_HOUSING: {
+    name: "Oyo State Housing Corporation",
+    phone: null,
+    email: null,
+    website: "https://oyostate.gov.ng"
   }
 };
 
@@ -3503,5 +3521,261 @@ const ESTATES = [
     agency: "Developer unconfirmed (marketed via Ishpeace Global Ltd, PWAN)",
     enquiryContact: { name: "NigeriaPropertyCentre listing", phone: null, email: null, website: "https://nigeriapropertycentre.com/cross-river/calabar?n=estates" },
     sourceNote: "Source: NigeriaPropertyCentre — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // EKITI — Government
+  // ---------------------------------------------------------------
+  {
+    id: "ekiti-obasanjo-estate",
+    name: "Olusegun Obasanjo Housing Estate",
+    state: "Ekiti", type: "Government",
+    lat: 7.6050, lng: 5.2350,
+    area: "Ado-Ekiti",
+    lga: "Ado Ekiti",
+    unitTypes: "1, 2, 3 bed flats",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.EKITI_HOUSING.name,
+    enquiryContact: AGENCIES.EKITI_HOUSING,
+    sourceNote: "Built by Ekiti State Housing Corporation, allocated mostly to low-income civil servants. Source: academic housing studies, ResearchGate — verify before publishing."
+  },
+  {
+    id: "ekiti-irewolede-estate",
+    name: "Irewolede Housing Estate",
+    state: "Ekiti", type: "Government",
+    lat: 7.5980, lng: 5.2280,
+    area: "Ado-Ilawe Road, Ado-Ekiti",
+    lga: "Ado Ekiti",
+    unitTypes: "Bungalows, 4 bed duplexes",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.EKITI_HOUSING.name,
+    enquiryContact: AGENCIES.EKITI_HOUSING,
+    sourceNote: "Earlier state-government-built estate, studied alongside Obasanjo Estate in housing-the-urban-poor research. Source: ResearchGate, Nigeria Property Centre listings — verify before publishing."
+  },
+  {
+    id: "ekiti-federal-housing-agric-olope",
+    name: "Federal Housing Estate (National Housing Programme, Agric-Olope)",
+    state: "Ekiti", type: "Government",
+    lat: 7.6280, lng: 5.2150,
+    area: "Agric-Olope, Ado-Ekiti",
+    lga: "Ado Ekiti",
+    unitTypes: "1, 2, 3 bed flats, semi-detached bungalows",
+    status: "In Progress",
+    units: "70 flats (first phase)",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Designed 2016 under the National Housing Programme; more than half reported complete as of a 2024 site update, road/power/water infrastructure 40–70% done. Source: Punch Newspapers, FMHUD — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // OSUN — Government
+  // ---------------------------------------------------------------
+  {
+    id: "osun-nhp-abere",
+    name: "National Housing Programme Estate, Abere",
+    state: "Osun", type: "Government",
+    lat: 7.7850, lng: 4.5450,
+    area: "Abere, AIG Zone 2, Osogbo",
+    lga: "Osogbo",
+    unitTypes: "1, 2, 3 bed condominium units, 2 & 3 bed bungalows",
+    status: "Completed",
+    units: "72 units",
+    priceRange: "₦7.2M–₦16.4M/unit",
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Commissioned March 2022, keys handed to paid-up beneficiaries June 2022. Source: Vanguard, FMHUD — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // OYO — Government
+  // ---------------------------------------------------------------
+  {
+    id: "oyo-ajoda-new-town",
+    name: "Ajoda New Town Housing Estate",
+    state: "Oyo", type: "Government",
+    lat: 7.3050, lng: 3.8300,
+    area: "Ajoda, Ibadan",
+    lga: "Akinyele",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: "2,500 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.OYO_HOUSING.name,
+    enquiryContact: AGENCIES.OYO_HOUSING,
+    sourceNote: "Oyo State Housing Corporation unveiled a plan to complete 2,500 units within 12 months of launch; construction status unconfirmed. Source: nigeriahousingmarket.com — verify before publishing."
+  },
+  {
+    id: "oyo-egbeda-360-units",
+    name: "Egbeda 360 Housing Units",
+    state: "Oyo", type: "Government",
+    lat: 7.3550, lng: 3.8600,
+    area: "Egbeda LGA, Ibadan",
+    lga: "Egbeda",
+    unitTypes: "2 & 3 bed semi-detached, 3 bed detached houses",
+    status: "In Progress",
+    units: "360 units",
+    priceRange: null,
+    agency: AGENCIES.OYO_HOUSING.name,
+    enquiryContact: AGENCIES.OYO_HOUSING,
+    sourceNote: "Public-private partnership: Oyo State Housing Corporation provided 13 hectares, Remax Realtors Limited financing/building. Flagged off with a December 2022 completion target — not independently confirmed complete. Source: seyimakinde.com, Voice of Nigeria — verify before publishing."
+  },
+  {
+    id: "oyo-owode-estate-phase-2",
+    name: "Owode Estate Phase II",
+    state: "Oyo", type: "Government",
+    lat: 7.3480, lng: 3.8350,
+    area: "Apata, Ibadan",
+    lga: "Ido",
+    unitTypes: "Serviced plots",
+    status: "Stalled",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.OYO_HOUSING.name,
+    enquiryContact: AGENCIES.OYO_HOUSING,
+    sourceNote: "State government has threatened to revoke undeveloped plots over slow uptake by allottees. Source: The Guardian Nigeria — verify before publishing."
+  },
+  {
+    id: "oyo-bodija-estate",
+    name: "Bodija Housing Estate",
+    state: "Oyo", type: "Government",
+    lat: 7.4180, lng: 3.9080,
+    area: "Bodija, Ibadan",
+    lga: "Ibadan North",
+    unitTypes: "Bungalows, detached houses",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.OYO_HOUSING.name,
+    enquiryContact: AGENCIES.OYO_HOUSING,
+    sourceNote: "Long-established state-developed estate; Oyo State Housing Corporation's own head office sits within it. Source: oyostate.gov.ng — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // PRIVATE ESTATES — Ekiti, Osun, Oyo
+  // ---------------------------------------------------------------
+  {
+    id: "pv-orisun-estate-ekiti",
+    name: "Orisun Estate",
+    state: "Ekiti", type: "Private",
+    lat: 7.5750, lng: 5.2550,
+    area: "Ago Aduloju, Ado-Ekiti",
+    lga: "Ado Ekiti",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Mercy Homes",
+    enquiryContact: { name: "Mercy Homes", phone: null, email: null, website: "https://mercy-homes.com/ado-ekiti-estate-land-for-sale/" },
+    sourceNote: "Source: mercy-homes.com — verify before publishing."
+  },
+  {
+    id: "pv-washington-parks-ekiti",
+    name: "Washington Parks & Gardens (Alafia Estate)",
+    state: "Ekiti", type: "Private",
+    lat: 7.6400, lng: 5.1950,
+    area: "Afao Road, Ado-Ekiti",
+    lga: "Ado Ekiti",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Adron Homes and Properties Ltd",
+    enquiryContact: { name: "Adron Homes and Properties Ltd", phone: "+234 908 666 7666", email: null, website: "https://adronhomesproperties.com/state/ekiti/" },
+    sourceNote: "Source: adronhomesproperties.com — verify before publishing."
+  },
+  {
+    id: "pv-wemabod-estate-ekiti",
+    name: "Wemabod Estate",
+    state: "Ekiti", type: "Private",
+    lat: 7.6350, lng: 5.2500,
+    area: "Iworoko Road, Ado-Ekiti",
+    lga: "Ado Ekiti",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Wemabod Limited",
+    enquiryContact: { name: "Wemabod Limited", phone: null, email: null, website: "https://wemabod.com/properties/wemabod-esate-ado-ekiti/" },
+    sourceNote: "Source: wemabod.com — verify before publishing."
+  },
+  {
+    id: "pv-springfield-park-ekiti",
+    name: "Springfield Park & Gardens",
+    state: "Ekiti", type: "Private",
+    lat: 7.6420, lng: 5.1980,
+    area: "Afao Road, Ado-Ekiti",
+    lga: "Ado Ekiti",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: "600+ plots",
+    priceRange: null,
+    agency: "Jomav Homes and Properties",
+    enquiryContact: { name: "Jomav Homes and Properties", phone: null, email: null, website: "https://jomavhomesproperties.com/springfield-park-gardens/" },
+    sourceNote: "Source: jomavhomesproperties.com — verify before publishing."
+  },
+  {
+    id: "pv-gra-estate-osogbo",
+    name: "GRA Housing Estate",
+    state: "Osun", type: "Private",
+    lat: 7.7650, lng: 4.5700,
+    area: "Government Reserved Area, Osogbo",
+    lga: "Osogbo",
+    unitTypes: "46 detached & semi-detached duplexes",
+    status: "In Progress",
+    units: "46 units",
+    priceRange: null,
+    agency: "Thirty Three Nigeria Limited",
+    enquiryContact: { name: "Thirty Three Nigeria Limited", phone: null, email: null, website: null },
+    sourceNote: "2.79-hectare site; swimming pool, tennis court, gym amenities planned. Source: Punch Newspapers — verify before publishing."
+  },
+  {
+    id: "pv-buckingham-park-osun",
+    name: "Buckingham Park and Gardens",
+    state: "Osun", type: "Private",
+    lat: 7.7350, lng: 4.4450,
+    area: "Aisu Road, Ede North",
+    lga: "Ede North",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Adron Homes and Properties Ltd",
+    enquiryContact: { name: "Adron Homes and Properties Ltd", phone: "+234 908 666 7666", email: null, website: "https://adronhomesproperties.com/state/osun/" },
+    sourceNote: "Source: Nigeria Property Centre, adronhomesproperties.com — verify before publishing."
+  },
+  {
+    id: "pv-west-park-gardens-oyo",
+    name: "West Park and Gardens (Paradise City) Phase 1",
+    state: "Oyo", type: "Private",
+    lat: 7.4300, lng: 3.8150,
+    area: "Aiyegun, Oleyo, Ibadan",
+    lga: "Ido",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Adron Homes and Properties Ltd",
+    enquiryContact: { name: "Adron Homes and Properties Ltd", phone: "+234 908 666 7666", email: null, website: "https://adronhomesproperties.com/property/west-park-and-gardens-exceptional-adron-homes/" },
+    sourceNote: "Described as Adron's most-developed/flagship estate in Ibadan, 600+ houses reportedly built with residents in occupation. Source: adronhomesproperties.com — verify before publishing."
+  },
+  {
+    id: "pv-max-heights-ido-oyo",
+    name: "MAX Heights",
+    state: "Oyo", type: "Private",
+    lat: 7.3300, lng: 3.8100,
+    area: "Ido, Ibadan",
+    lga: "Ido",
+    unitTypes: "Serviced plots",
+    status: "Planned",
+    units: null,
+    priceRange: null,
+    agency: "PWAN Group (MAX Ibadan Estates)",
+    enquiryContact: { name: "PWAN Group", phone: null, email: null, website: "https://www.pwanmax.com/ibadan-estates/" },
+    sourceNote: "Land-sale/land-flipping subscription stage as listed. Source: pwanmax.com — verify before publishing."
   }
 ];
