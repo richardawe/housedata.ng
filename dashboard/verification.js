@@ -21,12 +21,24 @@
     });
   }
 
-  function renderSearchResults(estates, invitesByEstate) {
+  function renderSearchResults(allEstates, invitesByEstate) {
     var el = document.getElementById("v-search-results");
-    if (!estates.length) {
+    var estates = allEstates.filter(function (e) { return e.enquiryContact && e.enquiryContact.email; });
+
+    if (!allEstates.length) {
       el.innerHTML = '<p class="dash-empty">No matches.</p>';
       return;
     }
+    if (!estates.length) {
+      el.innerHTML = '<p class="dash-empty">' + allEstates.length + ' match' + (allEstates.length === 1 ? "" : "es") + ", but none have a contact email on file to invite.</p>";
+      return;
+    }
+
+    var skipped = allEstates.length - estates.length;
+    var skippedNote = skipped
+      ? '<p class="dash-empty">' + skipped + " more match" + (skipped === 1 ? "" : "es") + " skipped — no contact email on file.</p>"
+      : "";
+
     el.innerHTML = estates.slice(0, 20).map(function (e) {
       var invite = invitesByEstate[e.id];
       var statusNote = invite ? '<span class="v-invite-status">last invite: ' + esc(invite.status) + "</span>" : "";
@@ -36,7 +48,7 @@
         '<div>' + statusNote + ' <button type="button" class="v-btn" data-invite-estate="' + esc(e.id) + '">Invite to verify</button></div>' +
         "</div>"
       );
-    }).join("");
+    }).join("") + skippedNote;
   }
 
   function initSearch(invitesByEstate) {
