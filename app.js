@@ -550,6 +550,8 @@
     } else {
       signinBtn.hidden = false;
       signedIn.hidden = true;
+      state.bookmarkedOnly = false;
+      document.getElementById("bookmarked-filter-btn").classList.remove("is-active");
     }
     fetchBookmarks();
   }
@@ -557,6 +559,7 @@
   function fetchBookmarks() {
     if (!isLoggedIn) {
       bookmarkedIds = new Set();
+      updateSavedCount();
       render();
       return;
     }
@@ -564,9 +567,17 @@
       .then(function (r) { return r.json(); })
       .then(function (data) {
         bookmarkedIds = new Set(data.estateIds || []);
+        updateSavedCount();
         render();
       })
       .catch(function () {});
+  }
+
+  function updateSavedCount() {
+    var badge = document.getElementById("saved-count");
+    if (!badge) return;
+    badge.hidden = bookmarkedIds.size === 0;
+    badge.textContent = bookmarkedIds.size;
   }
 
   function updateBookmarkButtonEl(button, bookmarked) {
@@ -586,6 +597,7 @@
 
     if (willBeBookmarked) bookmarkedIds.add(estateId); else bookmarkedIds.delete(estateId);
     updateBookmarkButtonEl(button, willBeBookmarked);
+    updateSavedCount();
     if (state.bookmarkedOnly) render();
 
     var opts = { headers: { "X-CSRF-Token": getCsrfCookie() } };
@@ -605,6 +617,7 @@
     }).catch(function () {
       if (willBeBookmarked) bookmarkedIds.delete(estateId); else bookmarkedIds.add(estateId);
       updateBookmarkButtonEl(button, wasBookmarked);
+      updateSavedCount();
       if (state.bookmarkedOnly) render();
     });
   }
@@ -623,10 +636,6 @@
     });
 
     document.getElementById("bookmarked-filter-btn").addEventListener("click", function () {
-      if (!isLoggedIn) {
-        openModal("modal-login");
-        return;
-      }
       state.bookmarkedOnly = !state.bookmarkedOnly;
       this.classList.toggle("is-active", state.bookmarkedOnly);
       render();

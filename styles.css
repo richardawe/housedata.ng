@@ -253,6 +253,39 @@ body {
   white-space: nowrap;
 }
 
+.saved-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.saved-btn:hover { background: var(--gold-tint); }
+
+.saved-btn.is-active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #fff;
+}
+
+.saved-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--gold);
+  color: #fff;
+  border-radius: 999px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saved-btn.is-active .saved-count { background: #fff; color: var(--gold); }
+.saved-count[hidden] { display: none; }
+
 .login-submit-btn {
   width: 100%;
   text-align: center;
@@ -1011,11 +1044,6 @@ body.modal-open { overflow: hidden; }
   flex: none;
 }
 
-#bookmarked-filter-btn.is-active {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: #fff;
-}
 
 .filter-badge {
   background: var(--green);
