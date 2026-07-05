@@ -19,9 +19,11 @@
     disclaimer: "Federal mortgage program managed by ARM for Ministry of Finance Incorporated. housedata.ng is not affiliated with MREIF and cannot confirm any specific estate is in MREIF's approved developer network — check eligibility directly."
   };
 
-  var state = { status: "all", type: "all", stateFilter: "all", area: "all", query: "", selectedId: null };
+  var state = { status: "all", type: "all", stateFilter: "all", area: "all", query: "", bookmarkedOnly: false, selectedId: null };
   var markers = {};
   var ESTATES = [];
+  var bookmarkedIds = new Set();
+  var isLoggedIn = false;
 
   var map = L.map("map", { zoomControl: true, minZoom: 5 }).setView([7.5, 6.5], 6);
 
@@ -149,6 +151,7 @@
     var priceLine = estate.priceRange
       ? '<div class="popup-row"><span class="k">Price</span><span>' + esc(estate.priceRange) + "</span></div>"
       : "";
+    var isBookmarked = bookmarkedIds.has(estate.id);
     return (
       '<div class="popup">' +
       '<span class="popup-status status-' + cls + '">' + esc(estate.status) + "</span>" +
@@ -169,6 +172,7 @@
       '<button type="button" class="popup-finance-btn" data-open-modal="modal-calculator" data-estate-name="' + esc(estate.name) + '" data-estate-price="' + (extractPriceEstimate(estate.priceRange) || "") + '">Estimate a mortgage for this estate &rarr;</button>' +
       '<p class="popup-note">' + esc(MREIF.disclaimer) + "</p>" +
       "</div>" +
+      '<button type="button" class="popup-bookmark-btn' + (isBookmarked ? " is-bookmarked" : "") + '" data-bookmark-id="' + esc(estate.id) + '" aria-label="' + (isBookmarked ? "Remove bookmark" : "Bookmark this estate") + '">' + (isBookmarked ? "★ Saved" : "☆ Save") + "</button>" +
       "</div>"
     );
   }
@@ -248,7 +252,8 @@
     var stateOk = state.stateFilter === "all" || estate.state === state.stateFilter;
     var areaOk = state.area === "all" || estate.lga === state.area;
     var queryOk = matchesQuery(estate, state.query);
-    return statusOk && typeOk && stateOk && areaOk && queryOk;
+    var bookmarkOk = !state.bookmarkedOnly || bookmarkedIds.has(estate.id);
+    return statusOk && typeOk && stateOk && areaOk && queryOk && bookmarkOk;
   }
 
   function selectEstate(id, flyTo) {
@@ -291,6 +296,7 @@
 
     visible.forEach(function (estate) {
       var li = document.createElement("li");
+      li.className = "estate-list-item";
       var btn = document.createElement("button");
       btn.className = "estate-card" + (state.selectedId === estate.id ? " is-selected" : "");
       btn.dataset.id = estate.id;
@@ -305,6 +311,19 @@
         selectEstate(estate.id, true);
       });
       li.appendChild(btn);
+
+      // Sibling, not nested inside .estate-card (which is itself a
+      // <button>) — nested buttons are invalid HTML and break click
+      // handling unpredictably.
+      var isBookmarked = bookmarkedIds.has(estate.id);
+      var star = document.createElement("button");
+      star.type = "button";
+      star.className = "bookmark-star" + (isBookmarked ? " is-bookmarked" : "");
+      star.dataset.bookmarkId = estate.id;
+      star.setAttribute("aria-label", isBookmarked ? "Remove bookmark" : "Bookmark this estate");
+      star.textContent = isBookmarked ? "★" : "☆";
+      li.appendChild(star);
+
       list.appendChild(li);
     });
   }
@@ -339,6 +358,7 @@
     if (state.stateFilter !== "all") count++;
     if (state.area !== "all") count++;
     if (state.query.trim() !== "") count++;
+    if (state.bookmarkedOnly) count++;
     badge.hidden = count === 0;
     badge.textContent = count;
   }
@@ -522,7 +542,8 @@
     var signinBtn = document.getElementById("account-signin-btn");
     var signedIn = document.getElementById("account-signed-in");
     var emailEl = document.getElementById("account-email");
-    if (sessionData && sessionData.loggedIn) {
+    isLoggedIn = !!(sessionData && sessionData.loggedIn);
+    if (isLoggedIn) {
       signinBtn.hidden = true;
       signedIn.hidden = false;
       emailEl.textContent = sessionData.email;
@@ -530,6 +551,96 @@
       signinBtn.hidden = false;
       signedIn.hidden = true;
     }
+    fetchBookmarks();
+  }
+
+  function fetchBookmarks() {
+    if (!isLoggedIn) {
+      bookmarkedIds = new Set();
+      render();
+      return;
+    }
+    fetch("api/bookmarks.php")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        bookmarkedIds = new Set(data.estateIds || []);
+        render();
+      })
+      .catch(function () {});
+  }
+
+  function updateBookmarkButtonEl(button, bookmarked) {
+    if (!button) return;
+    button.classList.toggle("is-bookmarked", bookmarked);
+    if (button.classList.contains("popup-bookmark-btn")) {
+      button.textContent = bookmarked ? "★ Saved" : "☆ Save";
+    } else {
+      button.textContent = bookmarked ? "★" : "☆";
+    }
+    button.setAttribute("aria-label", bookmarked ? "Remove bookmark" : "Bookmark this estate");
+  }
+
+  function toggleBookmark(estateId, button) {
+    var wasBookmarked = bookmarkedIds.has(estateId);
+    var willBeBookmarked = !wasBookmarked;
+
+    if (willBeBookmarked) bookmarkedIds.add(estateId); else bookmarkedIds.delete(estateId);
+    updateBookmarkButtonEl(button, willBeBookmarked);
+    if (state.bookmarkedOnly) render();
+
+    var opts = { headers: { "X-CSRF-Token": getCsrfCookie() } };
+    var url;
+    if (willBeBookmarked) {
+      opts.method = "POST";
+      opts.headers["Content-Type"] = "application/json";
+      opts.body = JSON.stringify({ estateId: estateId });
+      url = "api/bookmarks.php";
+    } else {
+      opts.method = "DELETE";
+      url = "api/bookmarks.php?estateId=" + encodeURIComponent(estateId);
+    }
+
+    fetch(url, opts).then(function (r) {
+      if (!r.ok) throw new Error("bookmark request failed");
+    }).catch(function () {
+      if (willBeBookmarked) bookmarkedIds.delete(estateId); else bookmarkedIds.add(estateId);
+      updateBookmarkButtonEl(button, wasBookmarked);
+      if (state.bookmarkedOnly) render();
+    });
+  }
+
+  function initBookmarks() {
+    document.addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-bookmark-id]");
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (!isLoggedIn) {
+        openModal("modal-login");
+        return;
+      }
+      toggleBookmark(btn.dataset.bookmarkId, btn);
+    });
+
+    document.getElementById("bookmarked-filter-btn").addEventListener("click", function () {
+      if (!isLoggedIn) {
+        openModal("modal-login");
+        return;
+      }
+      state.bookmarkedOnly = !state.bookmarkedOnly;
+      this.classList.toggle("is-active", state.bookmarkedOnly);
+      render();
+    });
+
+    // Popups are bound to markers once at load time — refresh content on
+    // every open so the bookmark star reflects the current state rather
+    // than whatever it was when the marker was first created.
+    map.on("popupopen", function (e) {
+      var marker = e.popup._source;
+      if (marker && marker.estate) {
+        e.popup.setContent(popupHtml(marker.estate));
+      }
+    });
   }
 
   function initSession() {
@@ -611,6 +722,7 @@
     initSession();
     initLoginForm();
     initLogout();
+    initBookmarks();
     render();
   }
 
