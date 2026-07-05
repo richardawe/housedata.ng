@@ -198,6 +198,20 @@ body {
 
 .search-input:focus { outline: 2px solid var(--green); outline-offset: 1px; }
 
+/* Its own always-visible bar (not gated behind the mobile Filters sheet) —
+   search is used often enough that it shouldn't cost an extra tap. */
+.search-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 24px;
+}
+
+.search-bar .search-input {
+  width: 100%;
+  max-width: 420px;
+  display: block;
+}
+
 .view-toggle {
   margin-left: auto;
   display: none;
@@ -1009,6 +1023,8 @@ body.sheet-locked { overflow: hidden; }
   .header-inner { padding: 14px 16px; }
   .strap { display: none; }
   .view-toggle { display: flex; }
+  .search-bar { padding: 8px 16px; }
+  .search-bar .search-input { max-width: none; }
 
   .layout { flex-direction: column; }
 
