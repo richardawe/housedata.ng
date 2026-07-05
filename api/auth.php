@@ -72,27 +72,105 @@ if ($action === 'request') {
     json_response(['ok' => true]);
 }
 
+/** Looks up a magic link token by its raw value, or null if unusable. */
+function lookup_usable_token(PDO $pdo, string $rawToken): ?array {
+    $tokenHash = hash('sha256', $rawToken);
+    $stmt = $pdo->prepare('SELECT * FROM magic_link_tokens WHERE token_hash = :hash');
+    $stmt->execute([':hash' => $tokenHash]);
+    $token = $stmt->fetch();
+    if (!$token || $token['used_at'] !== null || strtotime($token['expires_at']) < time()) {
+        return null;
+    }
+    return $token;
+}
+
+/**
+ * Renders a same-origin, one-click confirmation page instead of completing
+ * login on the bare GET. Some email providers/security scanners auto-visit
+ * links in emails to check for malware before a human ever clicks — since
+ * this token is single-use, that alone would silently burn it. Requiring
+ * an explicit button click (a JS-driven POST) defeats that: scanners fetch
+ * the URL but don't execute JS or click buttons.
+ */
+function render_confirm_page(string $rawToken): void {
+    header('Content-Type: text/html; charset=UTF-8');
+    ?>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confirm sign-in — Housedata.ng</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body class="ab-body">
+<main class="ab-main" style="max-width:480px;margin:80px auto;text-align:center;">
+  <h1 class="ab-h2">Confirm sign-in</h1>
+  <p class="ab-lede">Click below to finish signing in to housedata.ng.</p>
+  <button type="button" class="finance-btn finance-btn-primary" id="confirm-btn">Finish signing in</button>
+</main>
+<script>
+(function () {
+  var rawToken = <?php echo json_encode($rawToken); ?>;
+  function getCsrfCookie() {
+    var match = document.cookie.match(/(?:^|;\s*)hd_csrf=([^;]+)/);
+    return match ? decodeURIComponent(match[1]) : "";
+  }
+  document.getElementById("confirm-btn").addEventListener("click", function () {
+    var btn = this;
+    btn.disabled = true;
+    fetch("/api/session.php")
+      .then(function () {
+        return fetch("/api/auth.php?action=complete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-CSRF-Token": getCsrfCookie() },
+          body: JSON.stringify({ token: rawToken })
+        });
+      })
+      .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
+      .then(function (result) {
+        if (!result.ok) {
+          window.location.href = "/?login=error";
+          return;
+        }
+        window.location.href = result.data.redirectTo || "/";
+      })
+      .catch(function () {
+        window.location.href = "/?login=error";
+      });
+  });
+})();
+</script>
+</body>
+</html>
+    <?php
+    exit;
+}
+
 if ($action === 'verify') {
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') json_response(['error' => 'method not allowed'], 405);
 
     $rawToken = $_GET['token'] ?? '';
-    if (!$rawToken) {
+    if (!$rawToken || !lookup_usable_token(db(), $rawToken)) {
         header('Location: /?login=error');
         exit;
     }
+
+    render_confirm_page($rawToken);
+}
+
+if ($action === 'complete') {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_response(['error' => 'method not allowed'], 405);
+    check_csrf();
+
+    $body = json_body();
+    $rawToken = clean_string($body['token'] ?? null, 80);
+    $pdo = db();
+    $token = $rawToken ? lookup_usable_token($pdo, $rawToken) : null;
+    if (!$token) json_response(['error' => 'invalid or expired'], 400);
 
     $tokenHash = hash('sha256', $rawToken);
-    $pdo = db();
-
-    $stmt = $pdo->prepare('SELECT * FROM magic_link_tokens WHERE token_hash = :hash');
-    $stmt->execute([':hash' => $tokenHash]);
-    $token = $stmt->fetch();
-
-    if (!$token || $token['used_at'] !== null || strtotime($token['expires_at']) < time()) {
-        header('Location: /?login=error');
-        exit;
-    }
-
     $pdo->beginTransaction();
     $pdo->prepare('UPDATE magic_link_tokens SET used_at = now() WHERE token_hash = :hash')
         ->execute([':hash' => $tokenHash]);
@@ -114,9 +192,7 @@ if ($action === 'verify') {
         'samesite' => 'Lax',
     ]);
 
-    $redirect = $token['redirect_to'] ?: '/';
-    header('Location: ' . $redirect);
-    exit;
+    json_response(['ok' => true, 'redirectTo' => $token['redirect_to'] ?: '/']);
 }
 
 if ($action === 'logout') {
