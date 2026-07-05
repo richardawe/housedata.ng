@@ -37,7 +37,7 @@
 
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 
-<link rel="stylesheet" href="styles.css?v=20260710">
+<link rel="stylesheet" href="styles.css?v=20260711">
 
 <script type="application/ld+json">
 {
@@ -68,6 +68,7 @@
   <div class="account-control">
     <button type="button" class="account-btn" id="account-signin-btn" data-open-modal="modal-login">Sign in</button>
     <div class="account-signed-in" id="account-signed-in" hidden>
+      <button type="button" class="account-btn saved-btn" id="bookmarked-filter-btn">★ Saved<span class="saved-count" id="saved-count" hidden></span></button>
       <span class="account-email" id="account-email"></span>
       <button type="button" class="account-btn" id="account-signout-btn">Log out</button>
     </div>
@@ -120,7 +121,6 @@
         <option value="all">All areas</option>
       </select>
     </div>
-    <button type="button" class="compact-btn" id="bookmarked-filter-btn">★ Bookmarked</button>
     <button type="button" class="compact-btn toolbar-financing-btn" data-open-sheet="sheet-financing">Financing</button>
   </div>
 </div>
@@ -288,8 +288,8 @@
 </div>
 
 <script src="vendor/leaflet/leaflet.js"></script>
-<script src="infrastructure.js?v=20260710"></script>
-<script src="app.js?v=20260710"></script>
-<script src="analytics.js?v=20260710"></script>
+<script src="infrastructure.js?v=20260711"></script>
+<script src="app.js?v=20260711"></script>
+<script src="analytics.js?v=20260711"></script>
 </body>
 </html>
