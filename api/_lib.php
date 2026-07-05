@@ -1,8 +1,20 @@
 <?php
-/** Sends a JSON response with the given status code and exits. */
+/**
+ * Sends a JSON response with the given status code and exits. Defaults to
+ * Cache-Control: no-store, since most endpoints return session-specific or
+ * otherwise dynamic data — callers that want the public estates listing's
+ * 5-minute cache set their own Cache-Control header before calling this.
+ */
 function json_response($data, int $code = 200): void {
     http_response_code($code);
     header('Content-Type: application/json');
+    $hasCacheControl = false;
+    foreach (headers_list() as $header) {
+        if (stripos($header, 'Cache-Control:') === 0) { $hasCacheControl = true; break; }
+    }
+    if (!$hasCacheControl) {
+        header('Cache-Control: no-store');
+    }
     echo json_encode($data);
     exit;
 }
