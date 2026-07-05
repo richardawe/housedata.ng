@@ -157,6 +157,30 @@ const AGENCIES = {
     phone: null,
     email: null,
     website: "https://oyostate.gov.ng"
+  },
+  ABIA_HOUSING: {
+    name: "Abia State Ministry of Lands & Housing",
+    phone: null,
+    email: null,
+    website: "https://landsandhousing.abiastate.gov.ng"
+  },
+  ASHDC: {
+    name: "Anambra State Housing Development Corporation (ASHDC)",
+    phone: null,
+    email: null,
+    website: null
+  },
+  EBONYI_HOUSING: {
+    name: "Ebonyi State Ministry of Housing and Urban Development",
+    phone: null,
+    email: null,
+    website: "https://www.ebonyistate.gov.ng/ministry/housing-and-urban-development"
+  },
+  IMO_HOUSING: {
+    name: "Imo State Housing Corporation",
+    phone: null,
+    email: null,
+    website: "https://imostate.gov.ng"
   }
 };
 
@@ -3777,5 +3801,355 @@ const ESTATES = [
     agency: "PWAN Group (MAX Ibadan Estates)",
     enquiryContact: { name: "PWAN Group", phone: null, email: null, website: "https://www.pwanmax.com/ibadan-estates/" },
     sourceNote: "Land-sale/land-flipping subscription stage as listed. Source: pwanmax.com — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // ABIA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "abia-fha-renewed-hope-umuahia",
+    name: "FHA Renewed Hope Estate, Umuahia",
+    state: "Abia", type: "Government",
+    lat: 5.5450, lng: 7.5200,
+    area: "Ubani-Uzuakoli Road, Umuahia North",
+    lga: "Umuahia North",
+    unitTypes: "Mixed low/middle/high-income units",
+    status: "Announced",
+    units: "1,200 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.FHA.name,
+    enquiryContact: AGENCIES.FHA,
+    sourceNote: "Federal Housing Authority / Abia State joint project; state provided the land. Groundbreaking held April 2026. Source: Premium Times, Federal Ministry of Information — verify before publishing."
+  },
+  {
+    id: "abia-civil-service-pocket-layout",
+    name: "Civil Service Commission / Pocket Layout Estate",
+    state: "Abia", type: "Government",
+    lat: 5.5300, lng: 7.4950,
+    area: "Umuahia",
+    lga: "Umuahia North",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.ABIA_HOUSING.name,
+    enquiryContact: AGENCIES.ABIA_HOUSING,
+    sourceNote: "One of 4 estates announced by Abia State's Ministry of Lands & Housing for civil servants and the public. Source: housingtvafrica.com — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // ANAMBRA — Government
+  // ---------------------------------------------------------------
+  {
+    id: "anambra-ngozika-estate",
+    name: "Ngozika Estate",
+    state: "Anambra", type: "Government",
+    lat: 6.2200, lng: 7.0800,
+    area: "Awka",
+    lga: "Awka South",
+    unitTypes: "1, 2, 3, 4 bed bungalows",
+    status: "In Progress",
+    units: "200 units (inherited) + 241 developer plots",
+    priceRange: null,
+    agency: AGENCIES.ASHDC.name,
+    enquiryContact: AGENCIES.ASHDC,
+    sourceNote: "Handed to ASHDC in 2006, corporation has worked to complete inherited unfinished units and allocated additional plots. Source: ashdc.org.ng (via directory listing) — verify before publishing."
+  },
+  {
+    id: "anambra-udoka-estate",
+    name: "Udoka Estate",
+    state: "Anambra", type: "Government",
+    lat: 6.2050, lng: 7.0650,
+    area: "Awka",
+    lga: "Awka South",
+    unitTypes: "Detached/semi-detached houses",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.ASHDC.name,
+    enquiryContact: AGENCIES.ASHDC,
+    sourceNote: "Described as ASHDC's high-brow Awka estate. Source: ashdc.org.ng (via directory listing) — verify before publishing."
+  },
+  {
+    id: "anambra-isiagu-housing-project",
+    name: "Isiagu Housing Project",
+    state: "Anambra", type: "Government",
+    lat: 6.1600, lng: 7.0500,
+    area: "Isiagu, Awka South (Awka Capital Territory, ~7km from Awka)",
+    lga: "Awka South",
+    unitTypes: "Not yet detailed publicly",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.ASHDC.name,
+    enquiryContact: AGENCIES.ASHDC,
+    sourceNote: "Public-private partnership between ASHDC and private developer Rockland Development Ltd on behalf of Anambra State Government. Source: ashdc.org.ng (via directory listing) — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // EBONYI — Government
+  // ---------------------------------------------------------------
+  {
+    id: "ebonyi-izzo-amaeze-estate",
+    name: "Izzo-Amaeze Housing Estate",
+    state: "Ebonyi", type: "Government",
+    lat: 6.4500, lng: 7.9800,
+    area: "Ishielu LGA",
+    lga: "Ishielu",
+    unitTypes: "3 bed bungalows",
+    status: "In Progress",
+    units: "140 units",
+    priceRange: null,
+    agency: AGENCIES.EBONYI_HOUSING.name,
+    enquiryContact: AGENCIES.EBONYI_HOUSING,
+    sourceNote: "Built for families displaced by communal conflict in Ishielu, 70 units allocated per affected community. Source: Tribune, Independent Newspaper Nigeria — verify before publishing."
+  },
+  {
+    id: "ebonyi-civil-servants-estate",
+    name: "Public and Civil Servants Housing Estate",
+    state: "Ebonyi", type: "Government",
+    lat: 6.3300, lng: 8.1200,
+    area: "Abakaliki",
+    lga: "Abakaliki",
+    unitTypes: "4 bed duplexes",
+    status: "In Progress",
+    units: "140 units",
+    priceRange: null,
+    agency: AGENCIES.EBONYI_HOUSING.name,
+    enquiryContact: AGENCIES.EBONYI_HOUSING,
+    sourceNote: "State commissioner reported 80–98% completion across the government's current estate projects as of early 2026. Source: Tribune, Guardian Nigeria — verify before publishing."
+  },
+  {
+    id: "ebonyi-nnodo-estate",
+    name: "Nnodo Ekumenyi Palm Boulevard Estate",
+    state: "Ebonyi", type: "Government",
+    lat: 6.3400, lng: 8.1000,
+    area: "Abakaliki",
+    lga: "Abakaliki",
+    unitTypes: "3–5 bed units",
+    status: "In Progress",
+    units: "162 buildings",
+    priceRange: null,
+    agency: AGENCIES.EBONYI_HOUSING.name,
+    enquiryContact: AGENCIES.EBONYI_HOUSING,
+    sourceNote: "Includes event halls, a cultural centre, and self-sustaining power/water utilities per state reporting. Source: propertyaccess.ng — verify before publishing."
+  },
+  {
+    id: "ebonyi-centenary-city",
+    name: "Centenary City",
+    state: "Ebonyi", type: "Government",
+    lat: 6.3200, lng: 8.1300,
+    area: "Abakaliki",
+    lga: "Abakaliki",
+    unitTypes: "Mixed-income units",
+    status: "Announced",
+    units: "140 units (planned)",
+    priceRange: null,
+    agency: AGENCIES.EBONYI_HOUSING.name,
+    enquiryContact: AGENCIES.EBONYI_HOUSING,
+    sourceNote: "Ground-breaking slated for early 2026 per state officials — not yet under construction as of sourcing. Source: propertyaccess.ng — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // IMO — Government
+  // ---------------------------------------------------------------
+  {
+    id: "imo-world-bank-estate",
+    name: "World Bank Housing Estate",
+    state: "Imo", type: "Government",
+    lat: 5.4900, lng: 7.0300,
+    area: "Owerri",
+    lga: "Owerri Municipal",
+    unitTypes: "Duplexes, flats",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.IMO_HOUSING.name,
+    enquiryContact: AGENCIES.IMO_HOUSING,
+    sourceNote: "Long-established estate, shares a boundary with Umuguma Housing Estate. Source: mccapitalproperties.com listings — verify before publishing."
+  },
+  {
+    id: "imo-redemption-estate",
+    name: "Redemption Estate",
+    state: "Imo", type: "Government",
+    lat: 5.4700, lng: 7.0400,
+    area: "Owerri",
+    lga: "Owerri Municipal",
+    unitTypes: "Not yet detailed publicly",
+    status: "Completed",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.IMO_HOUSING.name,
+    enquiryContact: AGENCIES.IMO_HOUSING,
+    sourceNote: "Imo State Housing Corporation owns Redemption Estates 1 through 4 in Owerri. Source: iiardjournals.org abstract — verify before publishing."
+  },
+  {
+    id: "imo-diaspora-estate",
+    name: "Imo State Diaspora Estate",
+    state: "Imo", type: "Government",
+    lat: 5.4600, lng: 7.0450,
+    area: "Okigwe Road by IMSU Junction, Owerri",
+    lga: "Owerri Municipal",
+    unitTypes: "Not yet detailed publicly",
+    status: "Announced",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.IMO_HOUSING.name,
+    enquiryContact: AGENCIES.IMO_HOUSING,
+    sourceNote: "Aimed at Imo indigenes in the diaspora (USA, UAE, Europe); allocation on a first-come, first-served basis per the state Housing Commissioner. Source: starpostexpress.com — verify before publishing."
+  },
+  {
+    id: "imo-umuguma-estate",
+    name: "Umuguma Housing Estate",
+    state: "Imo", type: "Government",
+    lat: 5.4950, lng: 7.0250,
+    area: "Owerri",
+    lga: "Owerri West",
+    unitTypes: "Duplexes, flats",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: AGENCIES.IMO_HOUSING.name,
+    enquiryContact: AGENCIES.IMO_HOUSING,
+    sourceNote: "Mixed residential/commercial, still expanding. Source: mccapitalproperties.com listings — verify before publishing."
+  },
+
+  // ---------------------------------------------------------------
+  // PRIVATE ESTATES — Abia, Anambra, Ebonyi, Imo
+  // ---------------------------------------------------------------
+  {
+    id: "pv-flourish-luxury-villas-abia",
+    name: "Flourish Luxury Villas",
+    state: "Abia", type: "Private",
+    lat: 5.4800, lng: 7.5100,
+    area: "Amibo-Ubakala, Umuahia South",
+    lga: "Umuahia South",
+    unitTypes: "464 sqm plots",
+    status: "In Progress",
+    units: null,
+    priceRange: "₦3M/plot",
+    agency: "PWAN Group",
+    enquiryContact: { name: "PWAN Group", phone: null, email: null, website: "https://pwanhomes.com/estates/south-east/abia" },
+    sourceNote: "Government Allocation title as listed. Source: pwanhomes.com — verify before publishing."
+  },
+  {
+    id: "pv-flourish-pride-abia",
+    name: "Flourish Pride",
+    state: "Abia", type: "Private",
+    lat: 5.5500, lng: 7.5300,
+    area: "Ereote Ibeku, Bende Road, Umuahia",
+    lga: "Umuahia North",
+    unitTypes: "464 sqm plots",
+    status: "In Progress",
+    units: null,
+    priceRange: "₦4M–₦5M/plot",
+    agency: "PWAN Group",
+    enquiryContact: { name: "PWAN Group", phone: null, email: null, website: "https://pwanhomes.com/estates/south-east/abia" },
+    sourceNote: "Source: pwanhomes.com — verify before publishing."
+  },
+  {
+    id: "pv-landview-city-aba",
+    name: "Landview City Aba",
+    state: "Abia", type: "Private",
+    lat: 5.1300, lng: 7.3500,
+    area: "Ogbor Hill, Aba",
+    lga: "Aba South",
+    unitTypes: "300, 450 sqm plots",
+    status: "In Progress",
+    units: null,
+    priceRange: "₦3.6M–₦5.4M/plot",
+    agency: "Developer unconfirmed",
+    enquiryContact: { name: "Landview City Aba", phone: null, email: null, website: null },
+    sourceNote: "Source: property listing aggregators — verify before publishing."
+  },
+  {
+    id: "pv-dubai-estate-awka",
+    name: "Dubai Estate",
+    state: "Anambra", type: "Private",
+    lat: 6.2300, lng: 7.0900,
+    area: "Trans-Obibia Layout, Awka",
+    lga: "Awka South",
+    unitTypes: "Serviced plots, private homes",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "GSS Group",
+    enquiryContact: { name: "GSS Group", phone: null, email: null, website: null },
+    sourceNote: "30-hectare private development; local reporting has also raised infrastructure/security concerns (no streetlights, some crime reports) — worth confirming current state before relying on this. Source: Vanguard, Fides Media — verify before publishing."
+  },
+  {
+    id: "pv-legend-villas-anambra",
+    name: "Legend Villas",
+    state: "Anambra", type: "Private",
+    lat: 6.1700, lng: 6.8200,
+    area: "Oba, off Onitsha/Owerri Expressway",
+    lga: "Idemili South",
+    unitTypes: "464 sqm plots",
+    status: "In Progress",
+    units: null,
+    priceRange: "₦3.5M/plot",
+    agency: "Developer unconfirmed",
+    enquiryContact: { name: "Legend Villas listing", phone: null, email: null, website: null },
+    sourceNote: "Source: Nigeria Property Centre listings — verify before publishing."
+  },
+  {
+    id: "pv-ivy-estate-ebonyi",
+    name: "Ivy Estate",
+    state: "Ebonyi", type: "Private",
+    lat: 6.2800, lng: 8.0500,
+    area: "Ezzangbo, Ishielu, Ohaukwu LGA",
+    lga: "Ohaukwu",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Reg Integrated Services",
+    enquiryContact: { name: "Reg Integrated Services", phone: null, email: null, website: null },
+    sourceNote: "Source: property listing aggregators — verify before publishing."
+  },
+  {
+    id: "pv-cedar-city-ebonyi",
+    name: "Cedar City Estate",
+    state: "Ebonyi", type: "Private",
+    lat: 6.3100, lng: 8.0900,
+    area: "Ikelegu, Ishieke, Abakaliki",
+    lga: "Abakaliki",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Developer unconfirmed",
+    enquiryContact: { name: "Cedar City Estate listing", phone: null, email: null, website: null },
+    sourceNote: "Source: property listing aggregators — verify before publishing."
+  },
+  {
+    id: "pv-fortune-garden-imo",
+    name: "Fortune Garden Estate Phase 3",
+    state: "Imo", type: "Private",
+    lat: 5.4550, lng: 7.0300,
+    area: "Poly/Ihiagwa Road, Owerri",
+    lga: "Owerri West",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "Fortress Symbols Nig Ltd",
+    enquiryContact: { name: "Fortress Symbols Nig Ltd", phone: null, email: null, website: null },
+    sourceNote: "Source: property listing aggregators — verify before publishing."
+  },
+  {
+    id: "pv-eastern-haven-imo",
+    name: "Eastern Haven Estate Owerri Phase 2",
+    state: "Imo", type: "Private",
+    lat: 5.4300, lng: 7.0500,
+    area: "Umuelu Umuagwo, off Port Harcourt Express Road, Owerri",
+    lga: "Owerri West",
+    unitTypes: "Serviced plots",
+    status: "In Progress",
+    units: null,
+    priceRange: null,
+    agency: "PWAN Haven",
+    enquiryContact: { name: "PWAN Haven", phone: null, email: null, website: null },
+    sourceNote: "Source: property listing aggregators — verify before publishing."
   }
 ];
