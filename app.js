@@ -788,12 +788,25 @@
 
   function initLogout() {
     document.getElementById("account-signout-btn").addEventListener("click", function () {
-      fetch("api/auth.php?action=logout", {
-        method: "POST",
-        headers: { "X-CSRF-Token": getCsrfCookie() }
-      }).then(function () {
-        updateAccountUI({ loggedIn: false });
-      });
+      // Refresh the CSRF cookie first, same as the magic-link confirm page
+      // does before its own CSRF-protected POST — otherwise a stale/missing
+      // hd_csrf cookie makes this 403 silently, and the optimistic UI
+      // update below used to fire regardless, making it look like logout
+      // worked when the session was never actually revoked server-side.
+      fetch("api/session.php")
+        .then(function () {
+          return fetch("api/auth.php?action=logout", {
+            method: "POST",
+            headers: { "X-CSRF-Token": getCsrfCookie() }
+          });
+        })
+        .then(function (r) {
+          if (!r.ok) throw new Error("logout failed");
+          updateAccountUI({ loggedIn: false });
+        })
+        .catch(function () {
+          initSession();
+        });
     });
   }
 
